@@ -1,0 +1,7 @@
+{
+  "name": "com.stansassets.foundation",
+  "displayName": "Stans Assets - Foundation Lib",
+  "version": "0.0.1",
+  "unity": "2019.3",
+  "description": "Foundation package is the collection of a variety of utility methods and extantions."
+}
