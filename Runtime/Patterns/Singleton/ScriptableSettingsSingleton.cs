@@ -1,4 +1,5 @@
 #if UNITY_EDITOR
+using System.IO;
 using UnityEditor;
 #endif
 
@@ -10,9 +11,9 @@ namespace  StansAssets.Foundation.Patterns
     /// This class simplifies a singleton pattern implementation,
     /// that can be used with classes extended from a ScriptableObject.
     /// </summary>
-    public abstract class ScriptableSingleton<T> : ScriptableSettings where T : ScriptableSettings
+    public abstract class ScriptableSettingsSingleton<T> : ScriptableSettings where T : ScriptableSettings
     {
-        static T s_Instance = null;
+        static T s_Instance;
 
         /// <summary>
         /// Returns a singleton class instance
@@ -20,11 +21,15 @@ namespace  StansAssets.Foundation.Patterns
         /// in case instance already exists in a project. If not, new instance will be created,
         /// and saved under a <see cref="Instance.BasePath"/> location
         /// </summary>
-        public static T Instance {
-            get {
-                if (s_Instance == null) {
+        public static T Instance
+        {
+            get
+            {
+                if (s_Instance == null)
+                {
                     s_Instance = Resources.Load(typeof(T).Name) as T;
-                    if (s_Instance == null) {
+                    if (s_Instance == null)
+                    {
                         s_Instance = CreateInstance<T>();
                         SaveToAssetDatabase(s_Instance);
                     }
@@ -76,6 +81,10 @@ namespace  StansAssets.Foundation.Patterns
         static void SaveToAssetDatabase(T asset) {
 #if UNITY_EDITOR
             var path = $"{Instance.BasePath}{asset.GetType().Name}.asset";
+            var directory = Path.GetDirectoryName(path);
+            
+            if (!Directory.Exists(directory))
+                Directory.CreateDirectory(directory);
             AssetDatabase.CreateAsset(asset, path);
 #endif
         }
