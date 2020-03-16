@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -28,36 +29,14 @@ namespace StansAssets.Foundation.UIElements
         readonly List<string> m_Labels = new List<string>();
         readonly List<Button> m_Buttons = new List<Button>();
 
-        public IEnumerable<string> Choices
+        public IEnumerable<string> Choices => m_Choices;
+
+        public IEnumerable<string> Labels => m_Labels;
+
+        public string ActiveChoice
         {
-            get => m_Choices;
-            set
-            {
-                m_Choices.Clear();
-
-                if (value == null)
-                    return;
-
-                m_Choices.AddRange(value);
-
-                RecreateButtons();
-            }
-        }
-
-        public IEnumerable<string> Labels
-        {
-            get => m_Labels;
-            set
-            {
-                m_Labels.Clear();
-
-                if (value == null)
-                    return;
-
-                m_Labels.AddRange(value);
-
-                RecreateButtons();
-            }
+            get;
+            private set;
         }
 
         public Action<EventBase> OnButtonClick { get; set; }
@@ -72,14 +51,34 @@ namespace StansAssets.Foundation.UIElements
             AddToClassList(UssClassName);
             styleSheets.Add( Resources.Load<StyleSheet>("ButtonStrip"));
 
-            /*
+            var collection = choices.ToList();
+            m_Choices.AddRange(collection);
+            m_Labels.AddRange(collection);
+            RecreateButtons();
+        }
 
-            if (EditorGUIUtility.isProSkin)
-                styleSheets.Add(AssetDatabase.LoadAssetAtPath<StyleSheet>(s_UssDarkPath));
-            else
-                styleSheets.Add(AssetDatabase.LoadAssetAtPath<StyleSheet>(s_UssLightPath));
-*/
-            Choices = choices;
+        public void EnsureSelectedButton()
+        {
+            if (m_Buttons.Count > 0)
+            {
+                ToggleButtonStates(m_Buttons[0]);
+                ActiveChoice = m_Choices[0];
+            }
+        }
+
+        public void AddChoice(string choice)
+        {
+            m_Choices.Add(choice);
+            m_Labels.Add(choice);
+            RecreateButtons();
+        }
+
+        public void CleanUp()
+        {
+            Clear();
+            m_Choices.Clear();
+            m_Labels.Clear();
+            m_Buttons.Clear();
         }
 
         void RecreateButtons()
@@ -110,7 +109,7 @@ namespace StansAssets.Foundation.UIElements
                 else
                     button.AddToClassList(k_ButtonMidClassName);
 
-                button.clicked += () => { ToggleButtonStates(button);};
+                button.clicked += () => { ToggleButtonStates(button); };
                 m_Buttons.Add(button);
 
                 if (OnButtonClick != null)
@@ -130,12 +129,6 @@ namespace StansAssets.Foundation.UIElements
             }
         }
 
-        void OnOptionChange(EventBase evt)
-        {
-            var button = evt.target as Button;
-            ToggleButtonStates(button);
-        }
-
         void ToggleButtonStates(Button button)
         {
             foreach (var btn in m_Buttons)
@@ -144,6 +137,7 @@ namespace StansAssets.Foundation.UIElements
             }
 
             button.AddToClassList(k_ButtonActiveClassName);
+            ActiveChoice = m_Choices[m_Buttons.IndexOf(button)];
         }
     }
 }

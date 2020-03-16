@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using StansAssets.Foundation.UIElements;
 using UnityEditor;
 using UnityEngine;
@@ -15,7 +16,11 @@ namespace StansAssets.Foundation.Editor
     {
         protected abstract PackageInfo GetPackageInfo();
         protected abstract void OnWindowEnable(VisualElement root);
-        ButtonStrip m_TabsButtons;
+        protected ButtonStrip m_TabsButtons;
+
+        protected VisualElement m_WindowRoot;
+        protected string m_ActiveChoice;
+        protected readonly Dictionary<string, VisualElement> m_Tabs = new Dictionary<string, VisualElement>();
 
         public void OnEnable()
         {
@@ -25,7 +30,8 @@ namespace StansAssets.Foundation.Editor
             var uxmlPath = $"{FoundationPackage.SettingsWindowPath}/PackageSettingsWindow.uxml";
             var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(uxmlPath);
             var template = visualTree.CloneTree();
-            root.Add(template[0]);
+            m_WindowRoot = template[0];
+            root.Add(m_WindowRoot);
 
             var packageInfo = GetPackageInfo();
             root.Q<Label>("displayName").text = packageInfo.displayName;
@@ -35,15 +41,39 @@ namespace StansAssets.Foundation.Editor
             m_TabsButtons = root.Q<ButtonStrip>();
             m_TabsButtons.OnButtonClick += e =>
             {
-
+                ActivateTab(m_TabsButtons.ActiveChoice, true);
             };
 
+            m_TabsButtons.CleanUp();
             OnWindowEnable(root);
+
+            m_TabsButtons.EnsureSelectedButton();
+            ActivateTab(m_TabsButtons.ActiveChoice, false);
+        }
+
+        void ActivateTab(string choice, bool removeOld)
+        {
+            if (removeOld)
+            {
+                //Removing old active Tab
+                m_WindowRoot.Remove(m_Tabs[m_ActiveChoice]);
+            }
+
+            m_WindowRoot.Add(m_Tabs[choice]);
+            m_ActiveChoice = choice;
         }
 
         protected void AddTab(string label, VisualElement content)
         {
-
+            if (!m_Tabs.ContainsKey(label))
+            {
+                m_TabsButtons.AddChoice(label);
+                m_Tabs.Add(label, content);
+            }
+            else
+            {
+                throw new Exception($"Tab '{label}' already added");
+            }
         }
 
         /// <summary>
