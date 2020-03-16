@@ -1,0 +1,20 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement name="window-root" class="window-root">
+        <Style src="PackageSettingsWindow.uss" />
+        <uie:Toolbar style="flex-direction: row;&#10;">
+            <uie:ToolbarButton text="Go To Documentation" class="toolbar" />
+            <ui:VisualElement class="toolbar__flexible-space" />
+            <uie:ToolbarSearchField focusable="True" class="toolbar__search-field" />
+        </uie:Toolbar>
+        <ui:VisualElement class="title-bar">
+            <ui:Label text="Package Name" name="displayName" class="title" style="margin-top: 5px;&#10;margin-bottom: 5px;&#10;" />
+            <ui:Label text="version: 1.0" name="version" class="version" />
+        </ui:VisualElement>
+        <ui:Label text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&apos;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. " name="description" class="description" />
+        <ui:VisualElement class="tabs-bar">
+            <ui:VisualElement class="toolbar__flexible-space" />
+            <StansAssets.Foundation.UIElements.ButtonStrip name="tabs" />
+            <ui:VisualElement class="toolbar__flexible-space" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

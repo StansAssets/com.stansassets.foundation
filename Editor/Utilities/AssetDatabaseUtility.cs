@@ -3,8 +3,11 @@ using System.Reflection;
 using UnityEditor;
 using Object = UnityEngine.Object;
 
-namespace SA.Foundation.Editor
+namespace StansAssets.Foundation.Editor
 {
+    /// <summary>
+    /// AssetDatabase Utility methods.
+    /// </summary>
     public static class AssetDatabaseUtility
     {
         /// <summary>
@@ -20,7 +23,7 @@ namespace SA.Foundation.Editor
 
             var serializedObject = new SerializedObject(unityObject);
             inspectorModeInfo.SetValue(serializedObject, InspectorMode.Debug, null);
-            SerializedProperty localIdProp = serializedObject.FindProperty("m_LocalIdentfierInFile");   //note the misspelling!
+            var localIdProp = serializedObject.FindProperty("m_LocalIdentfierInFile");   //note the misspelling!
             return localIdProp.intValue;
         }
     }

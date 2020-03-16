@@ -1,6 +1,8 @@
 {
     "name": "StansAssets.Foundation.Editor",
-    "references": [],
+    "references": [
+        "StansAssets.Foundation"
+    ],
     "includePlatforms": [
         "Editor"
     ],

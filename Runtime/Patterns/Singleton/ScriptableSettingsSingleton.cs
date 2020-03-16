@@ -5,7 +5,7 @@ using UnityEditor;
 
 using UnityEngine;
 
-namespace  StansAssets.Foundation.Patterns
+namespace  StansAssets.Foundation
 {
     /// <summary>
     /// This class simplifies a singleton pattern implementation,
@@ -82,7 +82,7 @@ namespace  StansAssets.Foundation.Patterns
 #if UNITY_EDITOR
             var path = $"{Instance.BasePath}{asset.GetType().Name}.asset";
             var directory = Path.GetDirectoryName(path);
-            
+
             if (!Directory.Exists(directory))
                 Directory.CreateDirectory(directory);
             AssetDatabase.CreateAsset(asset, path);

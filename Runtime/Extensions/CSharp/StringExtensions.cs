@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace StansAssets.Foundation.Extensions
+namespace StansAssets.Foundation
 {
     public static class StringExtensions
     {
