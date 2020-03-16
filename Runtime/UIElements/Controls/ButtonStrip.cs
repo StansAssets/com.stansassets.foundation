@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -8,17 +9,13 @@ namespace StansAssets.Foundation.UIElements
 {
     public sealed class ButtonStrip : VisualElement
     {
+        [UsedImplicitly]
         public new class UxmlFactory : UxmlFactory<ButtonStrip, UxmlTraits> {}
-        public new class UxmlTraits : BindableElement.UxmlTraits
-        {
-            public UxmlTraits()
-            {
-            }
-        }
+        public new class UxmlTraits : BindableElement.UxmlTraits { }
 
         public const string UssClassName = "stansassets-button-strip";
-        const string k_ButtonClassName = UssClassName + "__button";
 
+        const string k_ButtonClassName = UssClassName + "__button";
         const string k_ButtonLeftClassName = k_ButtonClassName + "--left";
         const string k_ButtonMidClassName = k_ButtonClassName + "--mid";
         const string k_ButtonRightClassName = k_ButtonClassName + "--right";
@@ -30,15 +27,9 @@ namespace StansAssets.Foundation.UIElements
         readonly List<Button> m_Buttons = new List<Button>();
 
         public IEnumerable<string> Choices => m_Choices;
-
         public IEnumerable<string> Labels => m_Labels;
 
-        public string ActiveChoice
-        {
-            get;
-            private set;
-        }
-
+        public string ActiveChoice {  get;  private set;}
         public Action<EventBase> OnButtonClick { get; set; }
 
         public ButtonStrip() : this(new [] {"Left", "Middle", "Right"})
@@ -66,10 +57,10 @@ namespace StansAssets.Foundation.UIElements
             }
         }
 
-        public void AddChoice(string choice)
+        public void AddChoice(string choice, string label)
         {
             m_Choices.Add(choice);
-            m_Labels.Add(choice);
+            m_Labels.Add(label);
             RecreateButtons();
         }
 
@@ -85,7 +76,7 @@ namespace StansAssets.Foundation.UIElements
         {
             Clear();
             m_Buttons.Clear();
-            for (int i = 0; i < m_Choices.Count; ++i)
+            for (var i = 0; i < m_Choices.Count; ++i)
             {
                 var choice = m_Choices[i];
                 string label = null;
@@ -97,7 +88,6 @@ namespace StansAssets.Foundation.UIElements
 
                 // Set button name for styling.
                 button.name = choice;
-                button.text = choice;
 
                 // Set tooltip.
                 button.tooltip = choice;
