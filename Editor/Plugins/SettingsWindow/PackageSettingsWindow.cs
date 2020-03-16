@@ -41,23 +41,20 @@ namespace StansAssets.Foundation.Editor
             m_TabsButtons = root.Q<ButtonStrip>();
             m_TabsButtons.OnButtonClick += e =>
             {
-                ActivateTab(m_TabsButtons.ActiveChoice, true);
+                ActivateTab(m_TabsButtons.ActiveChoice);
             };
 
             m_TabsButtons.CleanUp();
             OnWindowEnable(root);
 
             m_TabsButtons.EnsureSelectedButton();
-            ActivateTab(m_TabsButtons.ActiveChoice, false);
+            ActivateTab(m_TabsButtons.ActiveChoice);
         }
 
-        void ActivateTab(string choice, bool removeOld)
+        void ActivateTab(string choice)
         {
-            if (removeOld)
-            {
-                //Removing old active Tab
-                m_WindowRoot.Remove(m_Tabs[m_ActiveChoice]);
-            }
+            if(m_ActiveChoice != null)
+                m_Tabs[m_ActiveChoice].RemoveFromHierarchy();
 
             m_WindowRoot.Add(m_Tabs[choice]);
             m_ActiveChoice = choice;
@@ -67,12 +64,12 @@ namespace StansAssets.Foundation.Editor
         {
             if (!m_Tabs.ContainsKey(label))
             {
-                m_TabsButtons.AddChoice(label);
+                m_TabsButtons.AddChoice(label, label);
                 m_Tabs.Add(label, content);
             }
             else
             {
-                throw new Exception($"Tab '{label}' already added");
+                throw new ArgumentException($"Tab '{label}' already added", nameof(label));
             }
         }
 
