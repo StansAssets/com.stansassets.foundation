@@ -50,14 +50,11 @@ namespace StansAssets.Foundation.UIElements
 
         public void EnsureSelectedButton()
         {
-            Debug.Log(m_Buttons.Count);
             if (m_Buttons.Count > 0)
             {
                 ToggleButtonStates(m_Buttons[0]);
                 ActiveChoice = m_Choices[0];
             }
-
-            Debug.Log(ActiveChoice);
         }
 
         public void AddChoice(string choice, string label)
