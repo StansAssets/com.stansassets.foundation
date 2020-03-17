@@ -6,13 +6,15 @@
     padding-bottom: 3px;
     padding-left: 4px;
     padding-right: 4px;
-    -unity-font-style: normal;
+    -unity-font-style: bold;
     padding-bottom: 2px;
     padding-top: 2px;
+    border-color: rgba(0, 0, 0, 0);
+    background-color: rgba(0, 0, 0, 0);
 }
 
 .stansassets-button-strip__button--active {
-    background-color: red;
+    color: aqua;
 }
 
 .stansassets-button-strip__button--left {

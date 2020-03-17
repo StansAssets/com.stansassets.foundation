@@ -32,7 +32,7 @@ namespace StansAssets.Foundation.UIElements
         public string ActiveChoice {  get;  private set;}
         public Action<EventBase> OnButtonClick { get; set; }
 
-        public ButtonStrip() : this(new [] {"Left", "Middle", "Right"})
+        public ButtonStrip() : this(new [] {"LEFT", "MIDDLE", "RIGHT"})
         {
 
         }
