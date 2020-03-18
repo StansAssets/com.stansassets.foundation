@@ -6,11 +6,8 @@
     padding-bottom: 3px;
     padding-left: 4px;
     padding-right: 4px;
-    -unity-font-style: bold;
     padding-bottom: 2px;
     padding-top: 2px;
-    border-color: rgba(0, 0, 0, 0);
-    background-color: rgba(0, 0, 0, 0);
 }
 
 .stansassets-button-strip__button--active {
@@ -21,16 +18,25 @@
     padding-left: 4px;
     margin-right: 0;
     margin-left: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-right-width: 0;
 }
 
 .stansassets-button-strip__button--mid {
+    border-radius: 0;
     margin-left: 1px;
     margin-right: 0;
+    border-left-width: 0;
+    border-right-width: 0;
 }
 
 .stansassets-button-strip__button--right {
     padding-right: 4px;
     margin-left: 1px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-left-width: 0;
 }
 
 .stansassets-button-strip__button-icon {
