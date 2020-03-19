@@ -49,4 +49,11 @@
 .stansassets-button-strip__button {
     min-width: 80px;
     cursor: link;
+    -unity-font-style: bold;
+    border-color: rgba(0, 0, 0, 0);
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.stansassets-button-strip__button--active {
+    background-color: rgba(0, 0, 0, 0);
 }
