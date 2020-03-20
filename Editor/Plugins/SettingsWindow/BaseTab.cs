@@ -9,7 +9,7 @@ namespace StansAssets.Foundation.Editor
         {
             // Import UXML
             var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(uxmlPath);
-            Add(visualTree.CloneTree());
+            visualTree.CloneTree(this);
         }
     }
 }
