@@ -72,5 +72,43 @@ namespace StansAssets.Foundation
             textEditor.SelectAll();
             textEditor.Copy();
         }
+
+        /// <summary>
+        /// Removes all the leading occurrences of specified string from the current string.
+        /// </summary>
+        /// <param name="target">Current string.</param>
+        /// <param name="trimString">A string to remove.</param>
+        /// <returns>The string that remains after all occurrences of trimString parameter are removed from the start of the current string.</returns>
+        public static string TrimStart(this string target, string trimString)
+        {
+            if (string.IsNullOrEmpty(trimString)) return target;
+
+            var result = target;
+            while (result.StartsWith(trimString))
+            {
+                result = result.Substring(trimString.Length);
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Removes all the trailing occurrences of specified string from the current string.
+        /// </summary>
+        /// <param name="target">Current string</param>
+        /// <param name="trimString">A string to remove.</param>
+        /// <returns>The string that remains after all occurrences of trimString parameter are removed from the end of the current string.</returns>
+        public static string TrimEnd(this string target, string trimString)
+        {
+            if (string.IsNullOrEmpty(trimString)) return target;
+
+            var result = target;
+            while (result.EndsWith(trimString))
+            {
+                result = result.Substring(0, result.Length - trimString.Length);
+            }
+
+            return result;
+        }
     }
 }
