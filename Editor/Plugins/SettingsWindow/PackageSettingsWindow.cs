@@ -19,7 +19,6 @@ namespace StansAssets.Foundation.Editor
         protected ButtonStrip m_TabsButtons;
 
         protected VisualElement m_WindowRoot;
-        protected string m_ActiveChoice;
         protected readonly Dictionary<string, VisualElement> m_Tabs = new Dictionary<string, VisualElement>();
 
         public void OnEnable()
@@ -34,30 +33,24 @@ namespace StansAssets.Foundation.Editor
             root.Add(m_WindowRoot);
 
             var packageInfo = GetPackageInfo();
-            root.Q<Label>("displayName").text = packageInfo.displayName;
+            root.Q<Label>("displayName").text = packageInfo.displayName.TrimStart("Stans Assets - ");
             root.Q<Label>("description").text = packageInfo.description;
             root.Q<Label>("version").text = $"Version: {packageInfo.version}";
 
             m_TabsButtons = root.Q<ButtonStrip>();
-            m_TabsButtons.OnButtonClick += e =>
-            {
-                ActivateTab(m_TabsButtons.ActiveChoice);
-            };
-
             m_TabsButtons.CleanUp();
-            OnWindowEnable(root);
+            m_TabsButtons.OnButtonClick += ActivateTab;
 
-            m_TabsButtons.EnsureSelectedButton();
-            ActivateTab(m_TabsButtons.ActiveChoice);
+            OnWindowEnable(root);
+            ActivateTab();
         }
 
-        void ActivateTab(string choice)
+        void ActivateTab()
         {
-            if(m_ActiveChoice != null)
-                m_Tabs[m_ActiveChoice].RemoveFromHierarchy();
+            foreach (var tab in m_Tabs)
+                tab.Value.RemoveFromHierarchy();
 
-            m_WindowRoot.Add(m_Tabs[choice]);
-            m_ActiveChoice = choice;
+            m_WindowRoot.Add(m_Tabs[m_TabsButtons.Value]);
         }
 
         protected void AddTab(string label, VisualElement content)

@@ -29,8 +29,10 @@ namespace StansAssets.Foundation.UIElements
         public IEnumerable<string> Choices => m_Choices;
         public IEnumerable<string> Labels => m_Labels;
 
-        public string ActiveChoice {  get;  private set;}
-        public Action<EventBase> OnButtonClick { get; set; }
+        readonly TextField m_TextField;
+
+        public string Value { get; set; }
+        public Action OnButtonClick { get; set; }
 
         public ButtonStrip() : this(new [] {"LEFT", "MIDDLE", "RIGHT"})
         {
@@ -46,15 +48,33 @@ namespace StansAssets.Foundation.UIElements
             m_Choices.AddRange(collection);
             m_Labels.AddRange(collection);
             RecreateButtons();
+
+            m_TextField = new TextField { viewDataKey = "btn-data" };
+            m_TextField.style.display = DisplayStyle.None;
+            Add(m_TextField);
+
+            // This is only possible when data is restored.
+            m_TextField.RegisterValueChangedCallback(e =>
+            {
+                SetValue(e.newValue);
+            });
         }
 
-        public void EnsureSelectedButton()
+        public void SetValue(string value)
         {
-            if (m_Buttons.Count > 0)
-            {
-                ToggleButtonStates(m_Buttons[0]);
-                ActiveChoice = m_Choices[0];
-            }
+            SetValueWithoutNotify(value);
+            OnButtonClick?.Invoke();
+        }
+
+        public void SetValueWithoutNotify(string value)
+        {
+            var index = m_Choices.IndexOf(value);
+            if(index == -1)
+                return;
+
+            Value = value;
+            m_TextField.SetValueWithoutNotify(value);
+            ToggleButtonStates(m_Buttons[index]);
         }
 
         public void AddChoice(string choice, string label)
@@ -62,11 +82,16 @@ namespace StansAssets.Foundation.UIElements
             m_Choices.Add(choice);
             m_Labels.Add(label);
             RecreateButtons();
+
+            if(m_Choices.Count == 1)
+                SetValueWithoutNotify(choice);
         }
 
         public void CleanUp()
         {
-            Clear();
+            foreach (var button in m_Buttons)
+                button.RemoveFromHierarchy();
+
             m_Choices.Clear();
             m_Labels.Clear();
             m_Buttons.Clear();
@@ -74,7 +99,9 @@ namespace StansAssets.Foundation.UIElements
 
         void RecreateButtons()
         {
-            Clear();
+            foreach (var button in m_Buttons)
+                button.RemoveFromHierarchy();
+
             m_Buttons.Clear();
             for (var i = 0; i < m_Choices.Count; ++i)
             {
@@ -99,13 +126,14 @@ namespace StansAssets.Foundation.UIElements
                 else
                     button.AddToClassList(k_ButtonMidClassName);
 
-                button.clicked += () => { ToggleButtonStates(button); };
+                button.clicked += () =>
+                {
+                    SetValue(choice);
+                };
+
                 m_Buttons.Add(button);
 
-                if (OnButtonClick != null)
-                    button.clickable.clickedWithEventInfo += OnButtonClick;
                 Add(button);
-
                 if (string.IsNullOrEmpty(label))
                 {
                     var icon = new VisualElement();
@@ -117,6 +145,8 @@ namespace StansAssets.Foundation.UIElements
                     button.text = label;
                 }
             }
+
+            SetValueWithoutNotify(Value);
         }
 
         void ToggleButtonStates(Button button)
@@ -127,7 +157,6 @@ namespace StansAssets.Foundation.UIElements
             }
 
             button.AddToClassList(k_ButtonActiveClassName);
-            ActiveChoice = m_Choices[m_Buttons.IndexOf(button)];
         }
     }
 }
