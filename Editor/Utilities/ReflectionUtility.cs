@@ -29,14 +29,7 @@ namespace StansAssets.Foundation.Editor
         /// <returns>Type object.</returns>
         public static Type FindType(string typeFullName)
         {
-
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-
-            foreach (var assembly in assemblies)
-            {
-//                Debug.Log(assembly.FullName);
-            }
-
             return assemblies
                 .SelectMany(assembly => assembly.GetTypes())
                 .FirstOrDefault(type => type.FullName == null || type.FullName.Equals(typeFullName));
