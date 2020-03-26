@@ -49,7 +49,7 @@ namespace StansAssets.Foundation.UIElements
             m_Labels.AddRange(collection);
             RecreateButtons();
 
-            m_TextField = new TextField { viewDataKey = "btn-data" };
+            m_TextField = new TextField { viewDataKey = "view-data" };
             m_TextField.style.display = DisplayStyle.None;
             Add(m_TextField);
 
