@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using StansAssets.Foundation.Extensions;
 using StansAssets.Foundation.UIElements;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 using PackageInfo = UnityEditor.PackageManager.PackageInfo;
 
-namespace StansAssets.Foundation.Editor
+namespace StansAssets.Foundation.Editor.Plugins
 {
     /// <summary>
     /// Base class for Plugin Settings Window
@@ -21,12 +22,14 @@ namespace StansAssets.Foundation.Editor
         protected VisualElement m_WindowRoot;
         protected readonly Dictionary<string, VisualElement> m_Tabs = new Dictionary<string, VisualElement>();
 
-        public void OnEnable()
+        readonly string m_WindowUIFilesRootPath = $"{FoundationPackage.RootPath}/Editor/Plugins/SettingsWindow";
+
+        void OnEnable()
         {
             var root = rootVisualElement;
 
             // Import UXML
-            var uxmlPath = $"{FoundationPackage.SettingsWindowPath}/PackageSettingsWindow.uxml";
+            var uxmlPath = $"{m_WindowUIFilesRootPath}/PackageSettingsWindow.uxml";
             var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(uxmlPath);
             var template = visualTree.CloneTree();
             m_WindowRoot = template[0];
@@ -53,6 +56,12 @@ namespace StansAssets.Foundation.Editor
             m_WindowRoot.Add(m_Tabs[m_TabsButtons.Value]);
         }
 
+        /// <summary>
+        /// Add tab to the window top bar.
+        /// </summary>
+        /// <param name="label">Tab label.</param>
+        /// <param name="content">Tab content.</param>
+        /// <exception cref="ArgumentException">Will throw tab with the same label was already added.</exception>
         protected void AddTab(string label, VisualElement content)
         {
             if (!m_Tabs.ContainsKey(label))

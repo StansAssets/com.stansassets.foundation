@@ -1,7 +1,10 @@
 using UnityEngine;
 
-namespace StansAssets.Foundation.Editor
+namespace StansAssets.Foundation
 {
+    /// <summary>
+    /// IdFactory is the static class with the helper methods to generate unique Ids.
+    /// </summary>
     public static class IdFactory
     {
         const string k_PlayerPrefsFactoryKey = "IdFactory.Key";

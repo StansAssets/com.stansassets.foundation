@@ -1,7 +1,7 @@
 using System;
 using UnityEditor;
 
-namespace SA.Foundation.Editor
+namespace StansAssets.Foundation.Editor
 {
     /// <summary>
     /// Provides method for managing the <see cref="PlayerSettings"/> script defines

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEditor;
 #endif
 
-namespace StansAssets.Foundation
+namespace StansAssets.Foundation.Patterns
 {
     /// <summary>
     /// Package Scriptable Settings singleton pattern implementation.

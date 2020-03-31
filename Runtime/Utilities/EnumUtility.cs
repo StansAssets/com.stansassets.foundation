@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace StansAssets.Foundation.Editor
+namespace StansAssets.Foundation
 {
     /// <summary>
     /// Enum Utility Methods.

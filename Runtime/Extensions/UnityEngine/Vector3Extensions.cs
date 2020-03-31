@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace StansAssets.Foundation
+namespace StansAssets.Foundation.Extensions
 {
     /// <summary>
     /// Unity <see cref="Vector3"/> extension methods.

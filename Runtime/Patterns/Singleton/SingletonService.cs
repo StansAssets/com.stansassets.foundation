@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace StansAssets.Foundation
+namespace StansAssets.Foundation.Patterns
 {
     static class SingletonService
     {

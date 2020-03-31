@@ -2,8 +2,11 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace StansAssets.Foundation
+namespace StansAssets.Foundation.Extensions
 {
+    /// <summary>
+    /// String extension methods.
+    /// </summary>
     public static class StringExtensions
     {
         /// <summary>

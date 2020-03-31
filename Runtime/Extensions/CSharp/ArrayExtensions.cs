@@ -1,4 +1,4 @@
-﻿namespace StansAssets.Foundation
+﻿namespace StansAssets.Foundation.Extensions
 {
     /// <summary>
     /// CSharp Array extension methods.

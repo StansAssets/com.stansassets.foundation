@@ -1,5 +1,4 @@
-
-namespace StansAssets.Foundation
+namespace StansAssets.Foundation.Patterns
 {
 	/// <summary>
 	/// Singleton pattern implementation.

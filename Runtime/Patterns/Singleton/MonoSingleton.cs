@@ -1,11 +1,11 @@
 using UnityEngine;
 
-namespace StansAssets.Foundation
+namespace StansAssets.Foundation.Patterns
 {
 	/// <summary>
     /// Singleton pattern implementation.
     /// Can be used with classes extended from a MonoBehaviour.
-    /// Once instance is found or created, game object will be marked as DontDestroyOnLoad
+    /// Once instance is found or created, game object will be marked as DontDestroyOnLoadю
     /// </summary>
     public abstract class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
 	{

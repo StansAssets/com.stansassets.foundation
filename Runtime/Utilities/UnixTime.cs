@@ -1,6 +1,6 @@
 using System;
 
-namespace StansAssets.Foundation.Editor
+namespace StansAssets.Foundation
 {
     /// <summary>
     /// Helper methods to work with unix time representation.

@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 
-namespace StansAssets.Foundation.Editor
+namespace StansAssets.Foundation
 {
     /// <summary>
     /// Reflection Utility Methods.
