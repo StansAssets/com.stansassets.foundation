@@ -9,11 +9,14 @@ namespace StansAssets.Foundation.Editor.Shading
     /// 
     /// Use with **[ShowIf(KEYWORD_NAME, ...)]** before a shader property.
     /// Most often used in combination with the **[Toggle(KEYWORD_NAME)]** attribute.
-    /// 
+    /// </summary>
+    /// <example>
     /// Usage example:
+    /// <code>
     ///     [Toggle(_BASE_COLOR_ON)] _ToggleBaseColor("Color", Int) = 0
 	///     [ShowIf(_BASE_COLOR_ON)] _BaseColor("", Color) = (1,1,1,1)
-    /// </summary>
+    /// </code>
+    /// </example>
     class ShowIfDrawer : MaterialPropertyDrawer
     {
         string[] m_RequiredKeywords;
