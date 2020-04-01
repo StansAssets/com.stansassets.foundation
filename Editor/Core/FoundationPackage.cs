@@ -8,18 +8,18 @@ namespace StansAssets.Foundation.Editor
     public static class FoundationPackage
     {
         /// <summary>
-        /// Package full name.
+        /// Foundation package full name.
         /// </summary>
         public const string Name = "com.stansassets.foundation";
 
         /// <summary>
-        /// Package root path.
+        /// Foundation package root path.
         /// </summary>
         public static readonly string RootPath = PackageManagerUtility.GetPackageRootPath(Name);
 
         /// <summary>
-        /// Package info.
+        /// Foundation package info.
         /// </summary>
-        public static readonly PackageInfo Info = PackageManagerUtility.GetPackageInfo(Name);
+        public static PackageInfo GetPackageInfo() => PackageManagerUtility.GetPackageInfo(Name);
     }
 }
