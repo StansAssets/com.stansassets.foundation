@@ -2,26 +2,26 @@ using UnityEngine;
 using UnityEditor;
 
 namespace StansAssets.Foundation.Editor.Shading
-{ 
+{
     /// <summary>
     /// Material property attribute that allows you to display the material property
     /// only if the specified material keywords are enabled.
-    /// 
+    ///
     /// Use with **[ShowIf(KEYWORD_NAME, ...)]** before a shader property.
     /// Most often used in combination with the **[Toggle(KEYWORD_NAME)]** attribute.
     /// </summary>
     /// <example>
-    /// Usage example:
+    /// Use example:
     /// <code>
     ///     [Toggle(_BASE_COLOR_ON)] _ToggleBaseColor("Color", Int) = 0
 	///     [ShowIf(_BASE_COLOR_ON)] _BaseColor("", Color) = (1,1,1,1)
     /// </code>
     /// </example>
-    class ShowIfDrawer : MaterialPropertyDrawer
+    public class ShowIfDrawer : MaterialPropertyDrawer
     {
         string[] m_RequiredKeywords;
         bool m_IsElementHidden;
- 
+
         /// <summary>
         /// Creates ShowIfDrawer with one required keyword.
         /// </summary>
@@ -30,7 +30,7 @@ namespace StansAssets.Foundation.Editor.Shading
         {
             m_RequiredKeywords = new string[] {keyword0};
         }
- 
+
         /// <summary>
         /// Creates ShowIfDrawer with two required keywords.
         /// </summary>
@@ -40,7 +40,7 @@ namespace StansAssets.Foundation.Editor.Shading
         {
             m_RequiredKeywords = new string[] {keyword0, keyword1};
         }
- 
+
         /// <summary>
         /// Creates ShowIfDrawer with three required keywords.
         /// </summary>
@@ -51,7 +51,7 @@ namespace StansAssets.Foundation.Editor.Shading
         {
             m_RequiredKeywords = new string[] {keyword0, keyword1, keyword2};
         }
- 
+
         /// <summary>
         /// Creates ShowIfDrawer with four required keywords.
         /// </summary>
@@ -63,7 +63,7 @@ namespace StansAssets.Foundation.Editor.Shading
         {
             m_RequiredKeywords = new string[] {keyword0, keyword1, keyword2, keyword3};
         }
- 
+
         public override void OnGUI(
             Rect position,
             MaterialProperty prop,
@@ -88,7 +88,7 @@ namespace StansAssets.Foundation.Editor.Shading
                     }
                 }
             }
- 
+
             if (!m_IsElementHidden)
             {
                 editor.DefaultShaderProperty(prop, label);
@@ -99,7 +99,7 @@ namespace StansAssets.Foundation.Editor.Shading
             MaterialProperty prop,
             string label,
             MaterialEditor editor)
-        { 
+        {
             return 0;
         }
     }
