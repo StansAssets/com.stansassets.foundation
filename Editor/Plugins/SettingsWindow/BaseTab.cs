@@ -17,6 +17,7 @@ namespace StansAssets.Foundation.Editor.Plugins
             // Import UXML
             var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(uxmlPath);
             visualTree.CloneTree(this);
+            style.flexGrow = 1.0f;
         }
     }
 }
