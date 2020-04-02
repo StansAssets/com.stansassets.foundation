@@ -53,7 +53,7 @@ namespace StansAssets.Foundation.Patterns
         static void SaveToAssetDatabase(T asset)
         {
 #if UNITY_EDITOR
-            var path = $"{Instance.SettingsLocations}{asset.GetType().Name}.asset";
+            var path = Path.Combine(Instance.SettingsLocations, $"{asset.GetType().Name}" + ".asset");
             var directory = Path.GetDirectoryName(path);
 
             if (directory == null)
