@@ -19,7 +19,7 @@ namespace StansAssets.Foundation.Editor.Shading
     /// </example>
     public class ShowIfDrawer : MaterialPropertyDrawer
     {
-        string[] m_RequiredKeywords;
+        readonly string[] m_RequiredKeywords;
         bool m_IsElementHidden;
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace StansAssets.Foundation.Editor.Shading
         public ShowIfDrawer(
             string keyword0)
         {
-            m_RequiredKeywords = new string[] {keyword0};
+            m_RequiredKeywords = new[] {keyword0};
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace StansAssets.Foundation.Editor.Shading
             string keyword0,
             string keyword1)
         {
-            m_RequiredKeywords = new string[] {keyword0, keyword1};
+            m_RequiredKeywords = new[] {keyword0, keyword1};
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace StansAssets.Foundation.Editor.Shading
             string keyword1,
             string keyword2)
         {
-            m_RequiredKeywords = new string[] {keyword0, keyword1, keyword2};
+            m_RequiredKeywords = new[] {keyword0, keyword1, keyword2};
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace StansAssets.Foundation.Editor.Shading
             string keyword2,
             string keyword3)
         {
-            m_RequiredKeywords = new string[] {keyword0, keyword1, keyword2, keyword3};
+            m_RequiredKeywords = new[] {keyword0, keyword1, keyword2, keyword3};
         }
 
         public override void OnGUI(
@@ -72,15 +72,15 @@ namespace StansAssets.Foundation.Editor.Shading
         {
             m_IsElementHidden = false;
 
-            for (int i = 0; i < editor.targets.Length; ++i)
+            foreach (var target in editor.targets)
             {
-                Material mat = editor.targets[i] as Material;
+                var mat = target as Material;
 
                 if (mat != null)
                 {
-                    for (int j = 0; j < m_RequiredKeywords.Length; ++j)
+                    foreach (var keyword in m_RequiredKeywords)
                     {
-                        if (!mat.IsKeywordEnabled(m_RequiredKeywords[j]))
+                        if (!mat.IsKeywordEnabled(keyword))
                         {
                             m_IsElementHidden = true;
                             break;
@@ -95,6 +95,13 @@ namespace StansAssets.Foundation.Editor.Shading
             }
         }
 
+        /// <summary>
+        /// Will always return <c>0</c>
+        /// </summary>
+        /// <param name="prop">The <see cref="MaterialProperty"/> to make the custom GUI for.</param>
+        /// <param name="label">The label of this property.</param>
+        /// <param name="editor">Current material editor.</param>
+        /// <returns>Property height in pixels</returns>
         public override float GetPropertyHeight (
             MaterialProperty prop,
             string label,
