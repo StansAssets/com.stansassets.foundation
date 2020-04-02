@@ -17,7 +17,7 @@ namespace StansAssets.Foundation.Editor.Shading
 	///     [ShowIf(_BASE_COLOR_ON)] _BaseColor("", Color) = (1,1,1,1)
     /// </code>
     /// </example>
-    public class ShowIfMaterialPropertyDrawer : MaterialPropertyDrawer
+    public class ShowIfDrawer : MaterialPropertyDrawer
     {
         readonly string[] m_RequiredKeywords;
         bool m_IsElementHidden;
@@ -25,7 +25,7 @@ namespace StansAssets.Foundation.Editor.Shading
         /// <summary>
         /// Creates ShowIfDrawer with one required keyword.
         /// </summary>
-        public ShowIfMaterialPropertyDrawer(
+        public ShowIfDrawer(
             string keyword0)
         {
             m_RequiredKeywords = new[] {keyword0};
@@ -34,7 +34,7 @@ namespace StansAssets.Foundation.Editor.Shading
         /// <summary>
         /// Creates ShowIfDrawer with two required keywords.
         /// </summary>
-        public ShowIfMaterialPropertyDrawer(
+        public ShowIfDrawer(
             string keyword0,
             string keyword1)
         {
@@ -44,7 +44,7 @@ namespace StansAssets.Foundation.Editor.Shading
         /// <summary>
         /// Creates ShowIfDrawer with three required keywords.
         /// </summary>
-        public ShowIfMaterialPropertyDrawer(
+        public ShowIfDrawer(
             string keyword0,
             string keyword1,
             string keyword2)
@@ -55,7 +55,7 @@ namespace StansAssets.Foundation.Editor.Shading
         /// <summary>
         /// Creates ShowIfDrawer with four required keywords.
         /// </summary>
-        public ShowIfMaterialPropertyDrawer(
+        public ShowIfDrawer(
             string keyword0,
             string keyword1,
             string keyword2,
