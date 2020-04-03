@@ -15,6 +15,6 @@ namespace StansAssets.Foundation.Patterns
         /// <summary>
         /// Plugin settings location folder.
         /// </summary>
-        public virtual string SettingsLocations => $"Assets/Settings/{PackageName}";
+        public abstract string SettingsLocations { get; }
     }
 }
