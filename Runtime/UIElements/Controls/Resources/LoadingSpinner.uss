@@ -1,0 +1,16 @@
+﻿.stansassets-loading-spinner {
+    align-items: flex-start;
+    width: 16px;
+    height: 16px;
+    left: 8px;
+    top: 8px;
+}
+
+.stansassets-loading-spinner .image {
+    width: 16px;
+    height: 16px;
+    left: -8px;
+    top: -8px;
+    position: relative;
+    background-image: resource('loading-spinner');
+}
