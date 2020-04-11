@@ -15,7 +15,7 @@ namespace StansAssets.Foundation.UIElements
         internal new class UxmlTraits : BindableElement.UxmlTraits { }
 
         /// <summary>
-        /// Returns true if control is visible and updating it's progress
+        /// Returns true if control is visible and animating
         /// </summary>
         public bool Started { get; private set; }
 
@@ -59,7 +59,7 @@ namespace StansAssets.Foundation.UIElements
         }
 
         /// <summary>
-        /// Makes control visible and starts updating it's progress
+        /// Makes control visible and starts animation
         /// </summary>
         public void Start()
         {
@@ -74,7 +74,7 @@ namespace StansAssets.Foundation.UIElements
         }
 
         /// <summary>
-        /// Hides control and stops updating it's progress
+        /// Hides control and stops animation
         /// </summary>
         public void Stop()
         {
