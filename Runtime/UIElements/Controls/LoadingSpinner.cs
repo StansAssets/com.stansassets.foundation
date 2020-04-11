@@ -14,13 +14,10 @@ namespace StansAssets.Foundation.UIElements
 
         internal new class UxmlTraits : BindableElement.UxmlTraits { }
 
-        /// <summary>
-        /// Returns true if control is visible and animating
-        /// </summary>
-        public bool Started { get; private set; }
+        bool m_IsActive;
+        int m_RotationAngle;
 
         readonly IVisualElementScheduledItem m_ScheduledUpdate;
-        int m_RotationAngle;
 
         const long k_RotationUpdateInterval = 1L;
         const int k_RotationAngleDelta = 10;
@@ -38,8 +35,7 @@ namespace StansAssets.Foundation.UIElements
             styleSheets.Add( Resources.Load<StyleSheet>("LoadingSpinner"));
             AddToClassList(UssClassName);
 
-            Started = false;
-            style.display = DisplayStyle.None;
+            m_IsActive = false;
 
             // add child elements to set up centered spinner rotation
             var innerElement = new VisualElement();
@@ -48,6 +44,19 @@ namespace StansAssets.Foundation.UIElements
 
             m_ScheduledUpdate = schedule.Execute(UpdateProgress).Every(k_RotationUpdateInterval);
             m_ScheduledUpdate.Pause();
+
+            RegisterCallback<AttachToPanelEvent>(OnAttachToPanelEventHandler, TrickleDown.TrickleDown);
+            RegisterCallback<DetachFromPanelEvent>(OnDetachFromPanelEventHandler, TrickleDown.TrickleDown);
+        }
+
+        void OnAttachToPanelEventHandler(AttachToPanelEvent e)
+        {
+            Activate();
+        }
+
+        void OnDetachFromPanelEventHandler(DetachFromPanelEvent e)
+        {
+            Deactivate();
         }
 
         void UpdateProgress()
@@ -58,33 +67,25 @@ namespace StansAssets.Foundation.UIElements
                 m_RotationAngle -= 360;
         }
 
-        /// <summary>
-        /// Makes control visible and starts animation
-        /// </summary>
-        public void Start()
+        void Activate()
         {
-            if (Started)
+            if (m_IsActive)
                 return;
 
             m_RotationAngle = 0;
             m_ScheduledUpdate.Resume();
 
-            Started = true;
-            style.display = DisplayStyle.Flex;
+            m_IsActive = true;
         }
 
-        /// <summary>
-        /// Hides control and stops animation
-        /// </summary>
-        public void Stop()
+        void Deactivate()
         {
-            if (!Started)
+            if (!m_IsActive)
                 return;
 
             m_ScheduledUpdate.Pause();
 
-            Started = false;
-            style.display = DisplayStyle.None;
+            m_IsActive = false;
         }
     }
 }
