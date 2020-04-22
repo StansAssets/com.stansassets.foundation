@@ -42,7 +42,7 @@ namespace StansAssets.Foundation.Editor
             }
 
             settings = importer.GetDefaultPlatformTextureSettings();
-            if (!settings.textureCompression.Equals(TextureImporterCompression.Uncompressed))
+            if (settings.textureCompression != TextureImporterCompression.Uncompressed)
             {
                 settings.textureCompression = TextureImporterCompression.Uncompressed;
                 importRequired = true;

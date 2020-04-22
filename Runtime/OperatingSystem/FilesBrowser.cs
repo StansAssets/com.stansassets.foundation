@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace StansAssets.Foundation.OperatingSystem
@@ -23,6 +24,8 @@ namespace StansAssets.Foundation.OperatingSystem
                 case RuntimePlatform.OSXPlayer:
                     OpenAtPathWindows(path);
                     break;
+                default:
+                    throw new PlatformNotSupportedException($"{Application.platform} is not supported.");
             }
         }
 
