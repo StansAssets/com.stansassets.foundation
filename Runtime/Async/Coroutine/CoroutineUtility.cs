@@ -24,7 +24,7 @@ namespace StansAssets.Foundation.Async
         ///
         /// Yielding of any type, including null, results in the execution coming back on a later frame, unless the coroutine is stopped or has completed.
         ///
-        /// _Note:_ You can stop a coroutine using MonoBehaviour.StopCoroutine
+        /// **Note:** You can stop a coroutine using <see cref="Stop"/>
         /// </summary>
         /// <param name="routine"> The <see cref="IEnumerator"/> routine you would like to start.</param>
         /// <returns>Started Coroutine.</returns>
