@@ -3,7 +3,7 @@
 namespace StansAssets.Foundation.Extensions
 {
     /// <summary>
-    /// Unity <see cref="Vector2"/> extension methods.
+    /// Unity `Vector2` extension methods.
     /// </summary>
     public static class Vector2Extensions
     {

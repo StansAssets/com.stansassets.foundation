@@ -3,7 +3,7 @@
 namespace StansAssets.Foundation.Extensions
 {
     /// <summary>
-    /// Unity <see cref="Object"/> extension methods.
+    /// Unity `Object` extension methods.
     /// </summary>
     public static class ObjectExtensions
     {
