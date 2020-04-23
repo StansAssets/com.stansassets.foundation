@@ -6,8 +6,8 @@ namespace StansAssets.Foundation.Patterns.EditorTests
 {
     public class TestClassObject
     {
-        public string StringValue;
         public int IntValue;
+        public string StringValue;
     }
 
     [TestFixture(typeof(TestClassObject))]

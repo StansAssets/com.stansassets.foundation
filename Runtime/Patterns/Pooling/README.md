@@ -16,9 +16,85 @@ You can achieve very significant performance and scaling benefits by reusing obj
 * You can administratively configure pooling to take the best advantage of available hardware resources—you can easily adjust the pool configuration as available hardware resources change.
 * You can speed reactivation time for objects that use Just-in-Time (JIT) activation, while deliberately controlling how resources are dedicated to clients.
 
-## Pooling with `ObjectPool`
+## Pooling with ObjectPool
 * speed object use time...
 * share the cost of acquiring expensive resources...
 * pre-allocate objects when the application starts...
 * construct (configure) objects, like COM+ (not mentioned above)
 
+### Default pool
+The default pool implementation is used for the most common and simple poll use cases. 
+
+```csharp
+public class TestClassObject
+{
+    public int IntValue;
+    public string StringValue;
+}
+
+var pool = new DefaultPool<TestClassObject>();
+var testClassObject = pool.Get();
+
+ // Do something
+pool.Release(testClassObject);
+```
+
+using via `PooledObject`
+
+```csharp
+using (pool.Get(out var testClassObject2))
+{
+    // Do something
+}
+```
+
+### Collection Pool
+The collection is designed to reuse collection instances across the project. So instead:
+```csharp
+var myList = new List<string>();
+```
+
+you may use:
+```csharp
+var myList = ListPool<string>.Get();
+
+// Do something
+ListPool<string>.Release(myList);
+```
+or
+```csharp
+using (ListPool<string>.Get(out var myList))
+{
+    // Do something
+}
+```
+
+### Prefabs Spawn
+Spawning prefabs is the most common Unity use case. The code snippet below will demonstrate how to implement it using `ObjectPool`.
+
+Without a pool, your code would look similar to:
+
+```csharp
+GameObject prefabLink = null;
+var instance = Object.Instantiate(prefabLink);
+instance.SetActive(true);
+
+// Do something
+Object.Destroy(instance);
+```
+
+Same implementation but with `ObjectPool`.
+
+```csharp
+// Pool setup.
+var prefabsPool = new ObjectPool<GameObject>(
+        () => Object.Instantiate(prefabLink),
+        (prefab) => prefab.SetActive(true),
+        (prefab) => prefab.SetActive(false));
+
+// spawn
+var instance = prefabsPool.Get();
+
+// Do something
+prefabsPool.Release(instance);
+```
