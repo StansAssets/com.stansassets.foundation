@@ -3,7 +3,7 @@ using UnityEngine;
 namespace StansAssets.Foundation.Extensions
 {
     /// <summary>
-    /// Unity <see cref="Transform"/> extension methods.
+    /// Unity `Transform` extension methods.
     /// </summary>
     public static class TransformExtensions
     {

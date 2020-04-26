@@ -29,7 +29,7 @@ namespace StansAssets.Foundation.Patterns
 			{
 				if (s_ApplicationIsQuitting)
 				{
-                    Debug.LogError(typeof(T) + " [SA_Singleton] is already destroyed. Returning null. Please check HasInstance first before accessing instance in destructor.");
+                    Debug.LogError($"{typeof(T)} [MonoSingleton] is already destroyed. Please check HasInstance before accessing instance in the destructor.");
                     return null;
                 }
 
