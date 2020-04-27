@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace StansAssets.Foundation.Patterns
 {
-    interface IStackProxy<T>
+    interface IPoolStackProxy<T>
     {
         int Count { get; }
         void Clear();
@@ -14,12 +14,12 @@ namespace StansAssets.Foundation.Patterns
     }
 
 
-    class StackProxy<T> : IStackProxy<T>
+    class PoolStackProxy<T> : IPoolStackProxy<T>
     {
         readonly Stack<T> m_Stack;
 
-        public StackProxy() => m_Stack = new Stack<T>();
-        public StackProxy(int defaultCapacity) =>  m_Stack = new Stack<T>(defaultCapacity);
+        public PoolStackProxy() => m_Stack = new Stack<T>();
+        public PoolStackProxy(int defaultCapacity) =>  m_Stack = new Stack<T>(defaultCapacity);
 
         public int Count => m_Stack.Count;
         public void Clear() => m_Stack.Clear();
@@ -39,11 +39,11 @@ namespace StansAssets.Foundation.Patterns
         }
     }
 
-    class ConcurrentStackProxy<T> : IStackProxy<T>
+    class ConcurrentPoolStackProxy<T> : IPoolStackProxy<T>
     {
         readonly ConcurrentStack<T> m_Stack;
 
-        public ConcurrentStackProxy()
+        public ConcurrentPoolStackProxy()
         {
             m_Stack = new ConcurrentStack<T>();
         }

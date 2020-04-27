@@ -40,7 +40,7 @@ namespace StansAssets.Foundation.Patterns
         readonly Action<T> m_ActionOnGet;
         readonly Action<T> m_ActionOnRelease;
         readonly uint m_MaxSize;
-        readonly IStackProxy<T> m_Stack;
+        readonly IPoolStackProxy<T> m_PoolStack;
         readonly bool m_CollectionCheck;
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace StansAssets.Foundation.Patterns
         /// <summary>
         /// Number of objects that are currently available in the pool.
         /// </summary>
-        public int CountInactive => m_Stack.Count;
+        public int CountInactive => m_PoolStack.Count;
 
         /// <summary>
         /// Creates a new ObjectPool.
@@ -86,13 +86,13 @@ namespace StansAssets.Foundation.Patterns
 
             if (concurrent)
             {
-                m_Stack = new ConcurrentStackProxy<T>();
+                m_PoolStack = new ConcurrentPoolStackProxy<T>();
             }
             else
             {
-                m_Stack = defaultCapacity != k_UnsetCapacityValue
-                    ? new StackProxy<T>(defaultCapacity)
-                    : new StackProxy<T>();
+                m_PoolStack = defaultCapacity != k_UnsetCapacityValue
+                    ? new PoolStackProxy<T>(defaultCapacity)
+                    : new PoolStackProxy<T>();
             }
 
             m_ActionCreate = actionCreate ?? throw new ArgumentNullException(nameof(actionCreate));
@@ -122,7 +122,7 @@ namespace StansAssets.Foundation.Patterns
         /// <returns>A new object from the pool.</returns>
         public T Get()
         {
-            if (!m_Stack.TryPop(out var element))
+            if (!m_PoolStack.TryPop(out var element))
             {
                 element = m_ActionCreate();
                 CountAll++;
@@ -146,18 +146,16 @@ namespace StansAssets.Foundation.Patterns
         public void Release(T element)
         {
             #if UNITY_EDITOR // keep heavy checks in editor
-            if (m_CollectionCheck && m_Stack.Count > 0)
+            if (m_CollectionCheck && m_PoolStack.Count > 0)
             {
-                if (m_Stack.Contains(element))
+                if (m_PoolStack.Contains(element))
                     throw new InvalidOperationException("Trying to release an object that has already been released to the pool.");
             }
             #endif
 
+            m_ActionOnRelease?.Invoke(element);
             if (CountInactive < m_MaxSize)
-            {
-                m_ActionOnRelease?.Invoke(element);
-                m_Stack.Push(element);
-            }
+                m_PoolStack.Push(element);
         }
 
         /// <summary>
@@ -165,7 +163,7 @@ namespace StansAssets.Foundation.Patterns
         /// </summary>
         public void Clear()
         {
-            m_Stack.Clear();
+            m_PoolStack.Clear();
             CountAll = 0;
         }
     }
