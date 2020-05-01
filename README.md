@@ -17,7 +17,7 @@ Foundation Library is a free open source product that contains lots of useful AP
   * Ensure `com.stansassets` is part of `scopes`.
   * Add `com.stansassets.foundation` to the `dependencies`, stating the latest version.
 
-A minimal example ends up looking like this. Please note that the version `X.Y.Z` stated here is to be replaced with [the latest released version][Latest-Release] which is currently [![Release][Version-Release]][Releases].
+A minimal example ends up looking like this. Please note that the version `X.Y.Z` stated here is to be replaced with [the latest released version][https://github.com/StansAssets/com.stansassets.foundation/releases/latest] which is currently [![Release][Version-Release]][Releases].
   ```json
   {
     "scopedRegistries": [
