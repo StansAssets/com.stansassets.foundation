@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 using PackageInfo = UnityEditor.PackageManager.PackageInfo;
@@ -11,6 +13,11 @@ namespace StansAssets.Foundation.Editor
     /// </summary>
     public static class PackageManagerUtility
     {
+        /// <summary>
+        /// Project relative path to packages manifest.
+        /// </summary>
+        public const string ManifestPath = "Packages/manifest.json";
+
         /// <summary>
         /// Returns PackageInfo if package is installed in the project, <c>null</c> otherwise.
         /// </summary>
@@ -39,5 +46,17 @@ namespace StansAssets.Foundation.Editor
         /// <param name="packageName">Package name.</param>
         /// <returns>Package root path.</returns>
         public static string GetPackageRootPath(string packageName) => "Packages/" + packageName;
+
+        /// <summary>
+        /// Remove Package by name.
+        /// </summary>
+        /// <param name="packageName">Name of the package to remove</param>
+        public static void RemovePackage(string packageName)
+        {
+            var manifestContent = File.ReadAllText(ManifestPath);
+            var rgx = new Regex("\\s*\"" + packageName + "\" *: *\".*\"(,|(?=\\s+\\}))");
+            manifestContent = rgx.Replace(manifestContent, "");
+            File.WriteAllText(ManifestPath, manifestContent);
+        }
     }
 }
