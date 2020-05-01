@@ -3,10 +3,36 @@ Foundation Library is a free open source product that contains lots of useful AP
 
 [API Reference](https://api.stansassets.com/foundation/StansAssets.Foundation.html)
 
-
 #### Quick links to explore the library:
 * [Utilities.](https://api.stansassets.com/foundation/StansAssets.Foundation.html) The collection of various utility methods.
 * [Editor Utilities.](https://api.stansassets.com/foundation/StansAssets.Foundation.Editor.html)The collection of utility methods for the Unity Editor.
 * [Extensions.](https://api.stansassets.com/foundation/StansAssets.Foundation.Extensions.html) Extension methods for default C# and Unity Objects.
 * [Patterns.](https://api.stansassets.com/foundation/StansAssets.Foundation.Patterns.html) Implementation of well-known design patterns like Singleton, Factory, Pool, etc.
 * [UI Toolkit.](https://api.stansassets.com/foundation/StansAssets.Foundation.UIElements.html) Helper methods, extensions, utilities for the new Unity [UI Toolkit framework](https://docs.unity3d.com/Manual/UIElements.html).
+
+#### How to instal
+* Navigate to the `Packages` directory of your project.
+* Adjust the [project manifest file](https://docs.unity3d.com/Manual/upm-manifestPrj.html) `manifest.json` in a text editor.
+* Ensure `https://registry.npmjs.org/` is part of `scopedRegistries`.
+  * Ensure `com.stansassets` is part of `scopes`.
+  * Add `com.stansassets.foundation` to the `dependencies`, stating the latest version.
+
+A minimal example ends up looking like this. Please note that the version `X.Y.Z` stated here is to be replaced with [the latest released version][Latest-Release] which is currently [![Release][Version-Release]][Releases].
+  ```json
+  {
+    "scopedRegistries": [
+      {
+        "name": "npmjs",
+        "url": "https://registry.npmjs.org/",
+        "scopes": [
+          "com.stansasset"
+        ]
+      }
+    ],
+    "dependencies": {
+      "com.stansassets.foundation": "X.Y.Z",
+      ...
+    }
+  }
+  ```
+* Switch back to the Unity software and wait for it to finish importing the added package.
