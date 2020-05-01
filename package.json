@@ -1,7 +1,27 @@
 {
   "name": "com.stansassets.foundation",
   "displayName": "Stans Assets - Foundation Lib",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "unity": "2019.3",
-  "description": "Foundation package is the collection of a variety of utility methods and extantions."
+  "description": "Foundation package is the collection of a variety of utility methods and extantions.",
+  "keywords": [
+         "pattern",
+         "utility",
+         "unity",
+         "stansassets"
+     ],
+  "homepage": "https://api.stansassets.com/",
+  "bugs": {
+     "url": "https://github.com/StansAssets/com.stansassets.foundation/issues"
+   },
+  "repository": {
+      "type": "git",
+      "url": "ssh://git@github.com:StansAssets/com.stansassets.foundation.git"
+  },
+  "license": "MIT",
+  "author": {
+          "name": "Stan's Assets",
+          "email": "stan@stansassets.com",
+          "url": "https://stansassets.com/"
+    }
 }
