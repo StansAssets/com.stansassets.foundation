@@ -1,6 +1,9 @@
 # Foundation Library
 Foundation Library is a free open source product that contains lots of useful APIs, Utilities and Extension methods. We do not provide any articles or tutorials for these plugins. But we do try to keep every public API documented and self-explanatory.
 
+![Release](https://img.shields.io/npm/v/com.stansassets.foundation)
+![Licence](https://img.shields.io/npm/l/com.stansassets.foundation)
+
 [API Reference](https://api.stansassets.com/foundation/StansAssets.Foundation.html)
 
 #### Quick links to explore the library:
@@ -17,7 +20,7 @@ Foundation Library is a free open source product that contains lots of useful AP
   * Ensure `com.stansassets` is part of `scopes`.
   * Add `com.stansassets.foundation` to the `dependencies`, stating the latest version.
 
-A minimal example ends up looking like this. Please note that the version `X.Y.Z` stated here is to be replaced with [the latest released version][https://github.com/StansAssets/com.stansassets.foundation/releases/latest] which is currently [![Release][Version-Release]][Releases].
+A minimal example ends up looking like this. Please note that the version `X.Y.Z` stated here is to be replaced with [the latest released version](https://github.com/StansAssets/com.stansassets.foundation/releases/latest) which is currently [![Release][Version-Release]][Releases].
   ```json
   {
     "scopedRegistries": [
