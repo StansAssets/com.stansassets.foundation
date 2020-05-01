@@ -1,8 +1,10 @@
 # Foundation Library
 Foundation Library is a free open source product that contains lots of useful APIs, Utilities and Extension methods. We do not provide any articles or tutorials for these plugins. But we do try to keep every public API documented and self-explanatory.
 
-![Release](https://img.shields.io/npm/v/com.stansassets.foundation)
-![Licence](https://img.shields.io/npm/l/com.stansassets.foundation)
+[![NPM Package](https://img.shields.io/npm/v/com.stansassets.foundation)](https://www.npmjs.com/package/com.stansassets.foundation)
+[![Licence](https://img.shields.io/npm/l/com.stansassets.foundation)](https://github.com/StansAssets/com.stansassets.foundation/blob/master/LICENSE)
+[![Issues](https://img.shields.io/github/issues/StansAssets/com.stansassets.foundation)](https://github.com/StansAssets/com.stansassets.foundation/issues)
+
 
 [API Reference](https://api.stansassets.com/foundation/StansAssets.Foundation.html)
 
