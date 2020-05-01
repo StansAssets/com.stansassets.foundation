@@ -1,4 +1,7 @@
 # Foundation Library
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/a22ff0164da04d089f68d8209dbe6c10)](https://app.codacy.com/gh/StansAssets/com.stansassets.foundation?utm_source=github.com&utm_medium=referral&utm_content=StansAssets/com.stansassets.foundation&utm_campaign=Badge_Grade_Dashboard)
+
 Foundation Library is a free open source product that contains lots of useful APIs, Utilities and Extension methods. We do not provide any articles or tutorials for these plugins. But we do try to keep every public API documented and self-explanatory.
 
 ![Release](https://img.shields.io/npm/v/com.stansassets.foundation)
