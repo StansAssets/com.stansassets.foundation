@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace StansAssets.Foundation.Patterns
 {
@@ -20,7 +21,7 @@ namespace StansAssets.Foundation.Patterns
         /// }
         /// </code>
         /// </summary>
-        public struct PooledObject : IDisposable
+        public struct PooledObject : IDisposable, IEquatable<PooledObject>
         {
             readonly T m_ToReturn;
             readonly ObjectPool<T> m_Pool;
@@ -32,6 +33,24 @@ namespace StansAssets.Foundation.Patterns
             }
 
             void IDisposable.Dispose() => m_Pool.Release(m_ToReturn);
+
+            public bool Equals(PooledObject other)
+            {
+                return EqualityComparer<T>.Default.Equals(m_ToReturn, other.m_ToReturn) && Equals(m_Pool, other.m_Pool);
+            }
+
+            public override bool Equals(object obj)
+            {
+                return obj is PooledObject other && Equals(other);
+            }
+
+            public override int GetHashCode()
+            {
+                unchecked
+                {
+                    return (EqualityComparer<T>.Default.GetHashCode(m_ToReturn) * 397) ^ (m_Pool != null ? m_Pool.GetHashCode() : 0);
+                }
+            }
         }
 
         const int k_UnsetCapacityValue = -1;
