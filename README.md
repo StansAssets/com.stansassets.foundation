@@ -15,7 +15,7 @@ Foundation Library is a free open source product that contains lots of useful AP
 * [Patterns.](https://api.stansassets.com/foundation/StansAssets.Foundation.Patterns.html) Implementation of well-known design patterns like Singleton, Factory, Pool, etc.
 * [UI Toolkit.](https://api.stansassets.com/foundation/StansAssets.Foundation.UIElements.html) Helper methods, extensions, utilities for the new Unity [UI Toolkit framework](https://docs.unity3d.com/Manual/UIElements.html).
 
-#### How to instal
+### Recommended way to install
 * Navigate to the `Packages` directory of your project.
 * Adjust the [project manifest file](https://docs.unity3d.com/Manual/upm-manifestPrj.html) `manifest.json` in a text editor.
 * Ensure `https://registry.npmjs.org/` is part of `scopedRegistries`.
@@ -41,3 +41,20 @@ A minimal example ends up looking like this. Please note that the version `X.Y.Z
   }
   ```
 * Switch back to the Unity software and wait for it to finish importing the added package.
+
+### Fast way to install
+Yoy can also install this package a Git URL. To load a package from a Git URL:
+
+* Click the add **+** button in the status bar.
+* The options for adding packages appear.
+* Select Add package from git URL from the add menu. A text box and an Add button appear.
+* Enter the `https://github.com/StansAssets/com.stansassets.foundation.git` Git URL in the text box and click Add.
+* You may also install a psesific package version by using the URL with the specified version.
+  * `https://github.com/StansAssets/com.stansassets.foundation.git#X.Y.X`
+  * Please note that the version `X.Y.Z` stated here is to be replaced with the version you would like to get.
+  * You can find all the avaliable releases [here](https://github.com/StansAssets/com.stansassets.foundation/releases).
+  * The latest avaliable release version is [![Last Release](https://img.shields.io/github/v/release/stansassets/com.stansassets.foundation)](https://github.com/StansAssets/com.stansassets.foundation/releases/latest)
+
+For more information about what protocols Unity supports, see [Git URLs](https://docs.unity3d.com/Manual/upm-git.html).
+
+
