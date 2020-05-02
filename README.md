@@ -30,7 +30,7 @@ A minimal example ends up looking like this. Please note that the version `X.Y.Z
         "name": "npmjs",
         "url": "https://registry.npmjs.org/",
         "scopes": [
-          "com.stansasset"
+          "com.stansassets"
         ]
       }
     ],
