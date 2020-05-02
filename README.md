@@ -22,7 +22,7 @@ Foundation Library is a free open source product that contains lots of useful AP
   * Ensure `com.stansassets` is part of `scopes`.
   * Add `com.stansassets.foundation` to the `dependencies`, stating the latest version.
 
-A minimal example ends up looking like this. Please note that the version `X.Y.Z` stated here is to be replaced with [the latest released version](https://github.com/StansAssets/com.stansassets.foundation/releases/latest) which is currently [![Release][Version-Release]][Releases].
+A minimal example ends up looking like this. Please note that the version `X.Y.Z` stated here is to be replaced with [the latest released version](https://www.npmjs.com/package/com.stansassets.foundation) which is currently [![NPM Package](https://img.shields.io/npm/v/com.stansassets.foundation)](https://www.npmjs.com/package/com.stansassets.foundation).
   ```json
   {
     "scopedRegistries": [
