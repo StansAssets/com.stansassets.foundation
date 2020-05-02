@@ -6,7 +6,7 @@ Foundation Library is a free open source product that contains lots of useful AP
 [![Issues](https://img.shields.io/github/issues/StansAssets/com.stansassets.foundation)](https://github.com/StansAssets/com.stansassets.foundation/issues)
 
 
-[API Reference](https://api.stansassets.com/foundation/StansAssets.Foundation.html)
+[API Reference](https://api.stansassets.com/foundation/StansAssets.Foundation.html) | [Wiki](https://github.com/StansAssets/com.stansassets.foundation/wiki)
 
 #### Quick links to explore the library:
 * [Utilities.](https://api.stansassets.com/foundation/StansAssets.Foundation.html) The collection of various utility methods.
