@@ -3,7 +3,7 @@
   "displayName": "Stans Assets - Foundation Lib",
   "version": "1.0.1",
   "unity": "2019.3",
-  "description": "Foundation package is the collection of a variety of utility methods and extantions.",
+  "description": "Foundation package is a collection of utility methods, design patterns, and extensions for Unity.",
   "keywords": [
          "pattern",
          "utility",
