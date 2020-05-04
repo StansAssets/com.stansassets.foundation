@@ -11,6 +11,10 @@ namespace StansAssets.Foundation.Editor
     /// </summary>
     public static class PackageManagerUtility
     {
+        /// <summary>
+        /// Project relative path to packages manifest.
+        /// </summary>
+        public const string ManifestPath = "Packages/manifest.json";
 
 #if UNITY_2019_1_OR_NEWER
         /// <summary>
@@ -43,5 +47,17 @@ namespace StansAssets.Foundation.Editor
         /// <param name="packageName">Package name.</param>
         /// <returns>Package root path.</returns>
         public static string GetPackageRootPath(string packageName) => "Packages/" + packageName;
+        
+        /// <summary>
+        /// Remove Package by name.
+        /// </summary>
+        /// <param name="packageName">Name of the package to remove</param>
+        public static void RemovePackage(string packageName)
+        {
+            var manifestContent = File.ReadAllText(ManifestPath);
+            var rgx = new Regex("\\s*\"" + packageName + "\" *: *\".*\"(,|(?=\\s+\\}))");
+            manifestContent = rgx.Replace(manifestContent, "");
+            File.WriteAllText(ManifestPath, manifestContent);
+        }
     }
 }
