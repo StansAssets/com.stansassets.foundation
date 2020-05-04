@@ -46,7 +46,7 @@ A minimal example ends up looking like this. Please note that the version `X.Y.Z
 ### Install from OpenUPM
 * Install openupm-cli `npm install -g openupm-cli` or `yarn global add openupm-cli`
 * Enter your unity project folder `cd <YOUR_UNITY_PROJECT_FOLDER>`
-* Install package `openupm add com.littlebigfun.addressable-importer`
+* Install package `openupm add com.stansassets.foundation`
 
 ### Install from a Git URL
 Yoy can also install this package via Git URL. To load a package from a Git URL:
