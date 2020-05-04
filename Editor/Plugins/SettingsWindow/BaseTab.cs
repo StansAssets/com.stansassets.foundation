@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿#if UNITY_2019_1_OR_NEWER
+using UnityEditor;
 using UnityEngine.UIElements;
 
 namespace StansAssets.Foundation.Editor.Plugins
@@ -6,6 +7,7 @@ namespace StansAssets.Foundation.Editor.Plugins
     /// <summary>
     /// Base window tab implementation for <see cref="PackageSettingsWindow"/>
     /// </summary>
+
     public abstract class BaseTab : VisualElement
     {
         /// <summary>
@@ -21,3 +23,4 @@ namespace StansAssets.Foundation.Editor.Plugins
         }
     }
 }
+#endif

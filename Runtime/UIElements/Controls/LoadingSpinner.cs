@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿#if UNITY_2019_1_OR_NEWER
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -7,6 +8,7 @@ namespace StansAssets.Foundation.UIElements
     /// <summary>
     /// The LoadingSpinner control. let's you place buttons group with the labels or images
     /// </summary>
+
     public sealed class LoadingSpinner : VisualElement
     {
         [UsedImplicitly]
@@ -89,3 +91,4 @@ namespace StansAssets.Foundation.UIElements
         }
     }
 }
+#endif

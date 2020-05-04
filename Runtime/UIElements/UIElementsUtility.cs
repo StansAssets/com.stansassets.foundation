@@ -1,3 +1,4 @@
+#if UNITY_2019_1_OR_NEWER
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -14,6 +15,7 @@ namespace StansAssets.Foundation.UIElements
         /// </summary>
         /// <param name="systemEvent">System event instance.</param>
         /// <returns>New  <see cref="EventBase"/> instance.</returns>
+
         public static EventBase CreateEvent(Event systemEvent)
         {
             return CreateEvent(systemEvent, systemEvent.rawType);
@@ -25,6 +27,7 @@ namespace StansAssets.Foundation.UIElements
         /// <param name="systemEvent">System event instance.</param>
         /// <param name="eventType">System event type.</param>
         /// <returns>New  <see cref="EventBase"/> instance.</returns>
+
         public static EventBase CreateEvent(Event systemEvent, EventType eventType)
         {
             var uiElementsUtilityType = ReflectionUtility.FindType("UnityEngine.UIElements.UIElementsUtility");
@@ -43,3 +46,4 @@ namespace StansAssets.Foundation.UIElements
         }
     }
 }
+#endif

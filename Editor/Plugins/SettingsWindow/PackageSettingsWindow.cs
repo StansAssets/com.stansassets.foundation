@@ -4,7 +4,9 @@ using StansAssets.Foundation.Extensions;
 using StansAssets.Foundation.UIElements;
 using UnityEditor;
 using UnityEngine;
+#if UNITY_2019_1_OR_NEWER
 using UnityEngine.UIElements;
+#endif
 using PackageInfo = UnityEditor.PackageManager.PackageInfo;
 
 namespace StansAssets.Foundation.Editor.Plugins
@@ -16,6 +18,7 @@ namespace StansAssets.Foundation.Editor.Plugins
     public abstract class PackageSettingsWindow<TWindow> : EditorWindow where TWindow : EditorWindow
     {
         protected abstract PackageInfo GetPackageInfo();
+#if UNITY_2019_1_OR_NEWER
         protected abstract void OnWindowEnable(VisualElement root);
         protected ButtonStrip m_TabsButtons;
 
@@ -74,7 +77,7 @@ namespace StansAssets.Foundation.Editor.Plugins
                 throw new ArgumentException($"Tab '{label}' already added", nameof(label));
             }
         }
-
+#endif
         /// <summary>
         /// Method will show and doc window next to the Inspector Window.
         /// </summary>
