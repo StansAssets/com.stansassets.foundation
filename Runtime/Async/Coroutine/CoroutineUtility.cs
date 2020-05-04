@@ -7,7 +7,7 @@ namespace StansAssets.Foundation.Async
     /// <summary>
     /// Coroutine helper methods and <see cref="MonoBehaviour"/> callbacks.
     /// </summary>
-    public class CoroutineUtility
+    public static class CoroutineUtility
     {
         /// <summary>
         /// Starts a Coroutine.
