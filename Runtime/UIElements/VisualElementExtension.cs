@@ -16,7 +16,6 @@ namespace StansAssets.Foundation.UIElements
         /// </summary>
         /// <param name="visualElement">VisualElement instance.</param>
         /// <param name="state">Pseudo state of a VisualElement: Active, Hover, Checked, Disabled, Focus, Root.</param>
-
         public static void SetPseudoState(this VisualElement visualElement, PseudoStates state)
         {
             int intState = (int)state;
@@ -29,7 +28,6 @@ namespace StansAssets.Foundation.UIElements
         /// </summary>
         /// <param name="visualElement">VisualElement instance.</param>
         /// <param name="state">Pseudo state of a VisualElement: Active, Hover, Checked, Disabled, Focus, Root.</param>
-
         public static PseudoStates GetPseudoState(this VisualElement visualElement)
         {
             var property = typeof(VisualElement).GetProperty("pseudoStates", BindingFlags.Instance | BindingFlags.NonPublic);
@@ -44,7 +42,6 @@ namespace StansAssets.Foundation.UIElements
         /// <param name="element">Current element to search parents.</param>
         /// <typeparam name="T">Type which you want to find</typeparam>
         /// <returns>Collection of T instances found.</returns>
-
         public static IEnumerable<T> GetParentsOfType<T>(this VisualElement element) where T : VisualElement
         {
             var result = new List<T>();
@@ -67,7 +64,6 @@ namespace StansAssets.Foundation.UIElements
         /// <param name="element">Current element to search parent.</param>
         /// <typeparam name="T">Type which you want to find</typeparam>
         /// <returns>T instance found</returns>
-
         public static T GetFirstParentOfType<T>(this VisualElement element) where T : VisualElement
         {
             return GetParentsOfType<T>(element).FirstOrDefault();
