@@ -13,7 +13,6 @@ namespace StansAssets.Foundation.UIElements
     /// First and last buttons are styled to have round corners.
     /// Component is made to replace IMGUI Toolbar: <see href="https://docs.unity3d.com/ScriptReference/GUILayout.Toolbar.html"/>
     /// </summary>
-
     public sealed class ButtonStrip : VisualElement
     {
         /// <exclude/>
