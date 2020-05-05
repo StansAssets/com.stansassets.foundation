@@ -1,3 +1,4 @@
+#if UNITY_2019_1_OR_NEWER
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -210,3 +211,4 @@ namespace StansAssets.Foundation.UIElements
         }
     }
 }
+#endif

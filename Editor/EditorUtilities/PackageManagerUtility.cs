@@ -18,6 +18,7 @@ namespace StansAssets.Foundation.Editor
         /// </summary>
         public const string ManifestPath = "Packages/manifest.json";
 
+#if UNITY_2019_1_OR_NEWER
         /// <summary>
         /// Returns PackageInfo if package is installed in the project, <c>null</c> otherwise.
         /// </summary>
@@ -39,14 +40,13 @@ namespace StansAssets.Foundation.Editor
                 .Where(x => AssetDatabase.LoadAssetAtPath<TextAsset>(x) != null)
                 .Select(PackageInfo.FindForAssetPath).ToList();
         }
-
+#endif
         /// <summary>
         /// Returns package root path based on package name.
         /// </summary>
         /// <param name="packageName">Package name.</param>
         /// <returns>Package root path.</returns>
-        public static string GetPackageRootPath(string packageName) => "Packages/" + packageName;
-
+        public static string GetPackageRootPath(string packageName) => "Packages/" + packageName;      
         /// <summary>
         /// Remove Package by name.
         /// </summary>

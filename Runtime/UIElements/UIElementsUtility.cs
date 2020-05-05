@@ -1,3 +1,4 @@
+#if UNITY_2019_1_OR_NEWER
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -43,3 +44,4 @@ namespace StansAssets.Foundation.UIElements
         }
     }
 }
+#endif

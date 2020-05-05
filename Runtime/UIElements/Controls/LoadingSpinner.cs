@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿#if UNITY_2019_1_OR_NEWER
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -89,3 +90,4 @@ namespace StansAssets.Foundation.UIElements
         }
     }
 }
+#endif

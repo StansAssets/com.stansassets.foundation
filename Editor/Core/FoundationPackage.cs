@@ -17,9 +17,11 @@ namespace StansAssets.Foundation.Editor
         /// </summary>
         public static readonly string RootPath = PackageManagerUtility.GetPackageRootPath(Name);
 
+#if UNITY_2019_1_OR_NEWER
         /// <summary>
         /// Foundation package info.
         /// </summary>
         public static PackageInfo GetPackageInfo() => PackageManagerUtility.GetPackageInfo(Name);
+#endif
     }
 }
