@@ -1,0 +1,14 @@
+# .kodiak.toml
+
+# Kodiak's configuration file should be placed at `.kodiak.toml` (repository
+# root) or `.github/.kodiak.toml`.
+# docs: https://kodiakhq.com/docs/config-reference
+
+# version is the only required setting in a kodiak config.
+# `1` is the only valid setting for this field.
+version = 1
+
+[merge]
+require_automerge_label = false
+method = "squash"
+delete_branch_on_merge = true
