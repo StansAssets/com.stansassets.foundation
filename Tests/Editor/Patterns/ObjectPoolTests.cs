@@ -6,7 +6,7 @@ namespace StansAssets.Foundation.Patterns.EditorTests
 {
     public class TestClassObject
     {
-        public int IntValue { get; } = 0;
+        public int IntValue { get; } = 1;
         public string StringValue  { get; } = string.Empty;
     }
 
