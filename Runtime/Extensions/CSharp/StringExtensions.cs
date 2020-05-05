@@ -56,11 +56,14 @@ namespace StansAssets.Foundation.Extensions
                 throw new ArgumentException("The string to find should not be empty.", nameof(value));
 
             var index = 0;
+            var indexResult = 0;
             var indexes = new List<int>();
-            while (index != -1)
+            while (indexResult != -1)
             {
-                index = source.IndexOf(value, index, comparisonType);
-                indexes.Add(index);
+                indexResult = source.IndexOf(value, index, comparisonType);
+                if(indexResult != -1)
+                    indexes.Add(index);
+                
                 index++;
             }
 
