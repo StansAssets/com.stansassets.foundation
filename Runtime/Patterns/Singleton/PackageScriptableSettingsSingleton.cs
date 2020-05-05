@@ -40,9 +40,11 @@ namespace StansAssets.Foundation.Patterns
 
         /// <summary>
         /// Saves instance to an editor database.
+        /// Only applicable while in the editor.
         /// </summary>
         public static void Save()
         {
+            // Only applicable while in the editor.
 #if UNITY_EDITOR
             //TODO use Undo
             EditorUtility.SetDirty(Instance);
@@ -50,8 +52,12 @@ namespace StansAssets.Foundation.Patterns
         }
 
 
+        /// <summary>
+        /// // Only applicable while in the editor.
+        /// </summary>
         static void SaveToAssetDatabase(T asset)
         {
+            // Only applicable while in the editor.
 #if UNITY_EDITOR
             var path = Path.Combine(Instance.SettingsLocations, $"{asset.GetType().Name}" + ".asset");
             var directory = Path.GetDirectoryName(path);

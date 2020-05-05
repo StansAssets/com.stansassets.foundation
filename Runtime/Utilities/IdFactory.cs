@@ -1,3 +1,4 @@
+using System.Text;
 using UnityEngine;
 
 namespace StansAssets.Foundation
@@ -37,13 +38,13 @@ namespace StansAssets.Foundation
             get
             {
                 const string chars = "0123456789abcdefghijklmnopqrstuvwxABCDEFGHIJKLMNOPQRSTUVWXYZ";
-                var result = string.Empty;
+                var builder = new StringBuilder();
                 for (var i = 0; i < 20; i++)
                 {
                     var a = Random.Range(0, chars.Length);
-                    result = result + chars[a];
+                    builder.Append(chars[a]);
                 }
-                return result;
+                return builder.ToString();
             }
         }
     }
