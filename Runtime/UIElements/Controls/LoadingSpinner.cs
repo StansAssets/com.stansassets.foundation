@@ -8,7 +8,6 @@ namespace StansAssets.Foundation.UIElements
     /// <summary>
     /// The LoadingSpinner control. let's you place buttons group with the labels or images
     /// </summary>
-
     public sealed class LoadingSpinner : VisualElement
     {
         [UsedImplicitly]

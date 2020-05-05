@@ -7,7 +7,6 @@ namespace StansAssets.Foundation.Editor.Plugins
     /// <summary>
     /// Base window tab implementation for <see cref="PackageSettingsWindow"/>
     /// </summary>
-
     public abstract class BaseTab : VisualElement
     {
         /// <summary>

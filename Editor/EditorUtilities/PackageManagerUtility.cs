@@ -24,7 +24,6 @@ namespace StansAssets.Foundation.Editor
         /// </summary>
         /// <param name="packageName">Package name.</param>
         /// <returns>Returns PackageInfo if package is installed in the project, <c>null</c> otherwise.</returns>
-
         public static PackageInfo GetPackageInfo(string packageName)
         {
             return PackageInfo.FindForAssetPath(GetPackageRootPath(packageName));
@@ -34,7 +33,6 @@ namespace StansAssets.Foundation.Editor
         /// Sync method to return all the packages installed in the project.
         /// </summary>
         /// <returns>Returns all the packages installed in the project.</returns>
-
         public static List<PackageInfo> GetAllProjectPackages()
         {
             return AssetDatabase.FindAssets("package")
