@@ -1,6 +1,7 @@
 # Foundation Library
 Foundation Library is a free open source product that contains lots of useful APIs, Utilities and Extension methods. We do not provide any articles or tutorials for these plugins. But we do try to keep every public API documented and self-explanatory.
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/a22ff0164da04d089f68d8209dbe6c10)](https://app.codacy.com/gh/StansAssets/com.stansassets.foundation?utm_source=github.com&utm_medium=referral&utm_content=StansAssets/com.stansassets.foundation&utm_campaign=Badge_Grade_Dashboard)
 [![NPM Package](https://img.shields.io/npm/v/com.stansassets.foundation)](https://www.npmjs.com/package/com.stansassets.foundation)
 [![openupm](https://img.shields.io/npm/v/com.stansassets.foundation?label=openupm&registry_uri=https://package.openupm.com)](https://openupm.com/packages/com.stansassets.foundation/)
 [![Licence](https://img.shields.io/npm/l/com.stansassets.foundation)](https://github.com/StansAssets/com.stansassets.foundation/blob/master/LICENSE)
