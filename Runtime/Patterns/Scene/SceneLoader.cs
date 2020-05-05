@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace StansAssets.Foundation.Patterns
@@ -13,6 +14,7 @@ namespace StansAssets.Foundation.Patterns
         public static event Action<Scene, LoadSceneMode> SceneLoaded = delegate { };
 
         static readonly List<Scene> s_AdditiveScenes = new List<Scene>();
+        static readonly Dictionary<string, AsyncOperation> s_LoadSceneOperations = new Dictionary<string, AsyncOperation>();
         static readonly Dictionary<string, List<Action<Scene>>> s_LoadSceneRequests = new Dictionary<string, List<Action<Scene>>>();
         static readonly Dictionary<string, List<Action>> s_UnloadSceneCallbacks = new Dictionary<string, List<Action>>();
 
@@ -27,24 +29,39 @@ namespace StansAssets.Foundation.Patterns
         /// <param name="sceneName">Name of the scene to be loaded.</param>
         /// <param name="loadCompleted">Load Completed callback.</param>
         /// </summary>
-        public static void LoadAdditively(string sceneName, Action<Scene> loadCompleted = null)
+        public static AsyncOperation LoadAdditively(string sceneName, Action<Scene> loadCompleted = null)
         {
             if (!s_LoadSceneRequests.ContainsKey(sceneName))
             {
-                List<Action<Scene>> callbacks = null;
+                var callbacks = new List<Action<Scene>>();
                 if (loadCompleted != null)
-                    callbacks = new List<Action<Scene>> { loadCompleted };
-                s_LoadSceneRequests.Add(sceneName, callbacks);
-            }
-            else
-            {
-                if (loadCompleted != null) {
-                    var callbacks = s_LoadSceneRequests[sceneName] ?? new List<Action<Scene>>();
                     callbacks.Add(loadCompleted);
-                    s_LoadSceneRequests[sceneName] = callbacks;
-                }
+
+
+                var loadAsyncOperation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+                s_LoadSceneRequests.Add(sceneName, callbacks);
+                s_LoadSceneOperations.Add(sceneName, loadAsyncOperation);
+                return loadAsyncOperation;
             }
-            SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+
+            if (loadCompleted != null) {
+                var callbacks = s_LoadSceneRequests[sceneName] ?? new List<Action<Scene>>();
+                callbacks.Add(loadCompleted);
+                s_LoadSceneRequests[sceneName] = callbacks;
+            }
+
+            return s_LoadSceneOperations[sceneName];
+        }
+
+        /// <summary>
+        /// Current scene load async operation. Can be used to check if scene is loaded or current load progress.
+        /// </summary>
+        /// <param name="sceneName">Name of the scene.</param>
+        public static AsyncOperation GetLoadProgress(string sceneName)
+        {
+            return s_LoadSceneOperations.TryGetValue(sceneName, out var asyncOperation)
+                ? asyncOperation
+                : null;
         }
 
         /// <summary>
@@ -116,6 +133,8 @@ namespace StansAssets.Foundation.Patterns
 
                 s_UnloadSceneCallbacks.Remove(scene.name);
             }
+
+            s_LoadSceneOperations.Remove(scene.name);
         }
     }
 }

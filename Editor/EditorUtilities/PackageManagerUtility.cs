@@ -48,8 +48,7 @@ namespace StansAssets.Foundation.Editor
         /// </summary>
         /// <param name="packageName">Package name.</param>
         /// <returns>Package root path.</returns>
-        public static string GetPackageRootPath(string packageName) => "Packages/" + packageName;
-        
+        public static string GetPackageRootPath(string packageName) => "Packages/" + packageName;      
         /// <summary>
         /// Remove Package by name.
         /// </summary>
