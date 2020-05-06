@@ -1,0 +1,5 @@
+bug:
+    title: "^fix:.*"
+
+enhancement:
+    title: "^feat:.*"
