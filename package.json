@@ -12,7 +12,8 @@
      ],
   "homepage": "https://api.stansassets.com/",
   "bugs": {
-     "url": "https://github.com/StansAssets/com.stansassets.foundation/issues"
+     "url": "https://github.com/StansAssets/com.stansassets.foundation/issues",
+     "email" : "support@stansassets.com"
    },
   "repository": {
       "type": "git",
