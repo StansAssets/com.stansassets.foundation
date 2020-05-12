@@ -27,8 +27,8 @@ namespace StansAssets.Foundation.Editor
         /// <summary>
         /// Manifest's content deserializes to this field
         /// </summary>
-        public object ManifestDictionary;
-        
+        public object ManifestDictionary { get; }
+
         /// <summary>
         /// Constructor 
         /// </summary>
@@ -158,9 +158,9 @@ namespace StansAssets.Foundation.Editor
         public static readonly string KEY_URL = "url";
         public static readonly string KEY_SCOPES = "scopes";
 
-        public string Name;
-        public string Url;
-        public HashSet<string> Scopes ;
+        public string Name { get; }
+        public string Url { get; }
+        public HashSet<string> Scopes { get; }
 
         /// <summary>
         /// Constructor
@@ -191,6 +191,15 @@ namespace StansAssets.Foundation.Editor
             {
                 Scopes.Add((string) scope);
             }
+        }
+
+        /// <summary>
+        /// Returns hash code of this object
+        /// </summary>
+        /// <returns></returns>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
 
         /// <summary>

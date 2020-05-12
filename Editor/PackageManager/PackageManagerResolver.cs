@@ -13,7 +13,7 @@ public class CustomPackageManagerResolver : AssetPostprocessor {
     public static readonly ScopeRegistry SCOPE_REGISTRY_GOOGLE = new ScopeRegistry(
         "Game Package Registry by Google",
         "https://unityregistry-pa.googleapis.com",
-        new HashSet<string>()
+        new HashSet<string>
         {
             "com.google"
         }
@@ -27,6 +27,7 @@ public class CustomPackageManagerResolver : AssetPostprocessor {
     /// </summary>
     static CustomPackageManagerResolver()
     {
+        /*
         ManifestModifier modifier = new ManifestModifier();
         bool scopeExists = modifier.CheckIfRegistryExists(SCOPE_REGISTRY_GOOGLE);
         bool dependencyExists = modifier.CheckIfDependencyExists("com.google.firebase.app", "6.14.0");
@@ -34,8 +35,9 @@ public class CustomPackageManagerResolver : AssetPostprocessor {
         if(scopeExists && dependencyExists) return;
         
         modifier.AddScopeRegistry(SCOPE_REGISTRY_GOOGLE);
-        //modifier.AddDependency("com.google.firebase.app","6.14.0");
+        modifier.AddDependency("com.google.firebase.app","6.14.0");
         modifier.ApplyChanges();
+        */
     }
 
     /// <summary>

@@ -234,7 +234,6 @@ namespace MiniJSON {
                 while (parsing) {
 
                     if (json.Peek() == -1) {
-                        parsing = false;
                         break;
                     }
 
@@ -279,6 +278,9 @@ namespace MiniJSON {
                             }
 
                             s.Append((char) Convert.ToInt32(new string(hex), 16));
+                            break;
+                        default:
+                            s.Append(c);
                             break;
                         }
                         break;
@@ -381,6 +383,8 @@ namespace MiniJSON {
                     case '9':
                     case '-':
                         return TOKEN.NUMBER;
+                    default:
+                        break;
                     }
 
                     switch (NextWord) {
@@ -390,6 +394,8 @@ namespace MiniJSON {
                         return TOKEN.TRUE;
                     case "null":
                         return TOKEN.NULL;
+                    default:
+                        break;
                     }
 
                     return TOKEN.NONE;
@@ -408,13 +414,13 @@ namespace MiniJSON {
         public static string Serialize(object obj,
                                        bool humanReadable = false,
                                        int indentSpaces = 2) {
-            return Serializer.Serialize(obj, humanReadable, indentSpaces);
+            return Serializer.MakeSerialization(obj, humanReadable, indentSpaces);
         }
 
         sealed class Serializer {
-            StringBuilder builder;
-            bool humanReadable;
-            int indentSpaces;
+            readonly StringBuilder builder;
+            readonly bool humanReadable;
+            readonly int indentSpaces;
             int indentLevel;
 
             Serializer(bool humanReadable, int indentSpaces) {
@@ -424,7 +430,7 @@ namespace MiniJSON {
                 indentLevel = 0;
             }
 
-            public static string Serialize(object obj, bool humanReadable, int indentSpaces) {
+            public static string MakeSerialization(object obj, bool humanReadable, int indentSpaces) {
                 var instance = new Serializer(humanReadable, indentSpaces);
 
                 instance.SerializeValue(obj);
