@@ -13,7 +13,7 @@ public class CustomPackageManagerResolver : AssetPostprocessor {
     public static readonly ScopeRegistry SCOPE_REGISTRY_GOOGLE = new ScopeRegistry(
         "Game Package Registry by Google",
         "https://unityregistry-pa.googleapis.com",
-        new HashSet<string>()
+        new HashSet<string>
         {
             "com.google"
         }
@@ -25,18 +25,20 @@ public class CustomPackageManagerResolver : AssetPostprocessor {
     /// Creates modifier for manifest.json(set by default), checks for google scope registry and
     /// firebase dependency(commented), adds it if not exists, writes changes
     /// </summary>
-    static CustomPackageManagerResolver()
-    {
-        ManifestModifier modifier = new ManifestModifier();
-        bool scopeExists = modifier.CheckIfRegistryExists(SCOPE_REGISTRY_GOOGLE);
-        bool dependencyExists = modifier.CheckIfDependencyExists("com.google.firebase.app", "6.14.0");
-        
-        if(scopeExists && dependencyExists) return;
-        
-        modifier.AddScopeRegistry(SCOPE_REGISTRY_GOOGLE);
-        //modifier.AddDependency("com.google.firebase.app","6.14.0");
-        modifier.ApplyChanges();
-    }
+    ///static CustomPackageManagerResolver()
+    ///{
+    ///    
+    ///    ManifestModifier modifier = new ManifestModifier();
+    ///    bool scopeExists = modifier.CheckIfRegistryExists(SCOPE_REGISTRY_GOOGLE);
+    ///    bool dependencyExists = modifier.CheckIfDependencyExists("com.google.firebase.app", "6.14.0");
+    ///    
+    ///    if(scopeExists && dependencyExists) return;
+    ///    
+    ///    modifier.AddScopeRegistry(SCOPE_REGISTRY_GOOGLE);
+    ///    modifier.AddDependency("com.google.firebase.app","6.14.0");
+    ///    modifier.ApplyChanges();
+    ///    
+    ///}
 
     /// <summary>
     /// Displays GUI dialog to accept modifications
