@@ -37,38 +37,7 @@ using System.Text;
 
 namespace EDMInternal {
 namespace MiniJSON {
-    // Example usage:
-    //
-    //  using UnityEngine;
-    //  using System.Collections;
-    //  using System.Collections.Generic;
-    //  using MiniJSON;
-    //
-    //  public class MiniJSONTest : MonoBehaviour {
-    //      void Start () {
-    //          var jsonString = "{ \"array\": [1.44,2,3], " +
-    //                          "\"object\": {\"key1\":\"value1\", \"key2\":256}, " +
-    //                          "\"string\": \"The quick brown fox \\\"jumps\\\" over the lazy dog \", " +
-    //                          "\"unicode\": \"\\u3041 Men\u00fa sesi\u00f3n\", " +
-    //                          "\"int\": 65536, " +
-    //                          "\"float\": 3.1415926, " +
-    //                          "\"bool\": true, " +
-    //                          "\"null\": null }";
-    //
-    //          var dict = Json.Deserialize(jsonString) as Dictionary<string,object>;
-    //
-    //          Debug.Log("deserialized: " + dict.GetType());
-    //          Debug.Log("dict['array'][0]: " + ((List<object>) dict["array"])[0]);
-    //          Debug.Log("dict['string']: " + (string) dict["string"]);
-    //          Debug.Log("dict['float']: " + (double) dict["float"]); // floats come out as doubles
-    //          Debug.Log("dict['int']: " + (long) dict["int"]); // ints come out as longs
-    //          Debug.Log("dict['unicode']: " + (string) dict["unicode"]);
-    //
-    //          var str = Json.Serialize(dict);
-    //
-    //          Debug.Log("serialized: " + str);
-    //      }
-    //  }
+    
 
     /// <summary>
     /// This class encodes and decodes JSON strings.
@@ -76,6 +45,39 @@ namespace MiniJSON {
     ///
     /// JSON uses Arrays and Objects. These correspond here to the datatypes IList and IDictionary.
     /// All numbers are parsed to doubles.
+    ///
+    /// Example usage:
+    ///
+    ///  using UnityEngine;
+    ///  using System.Collections;
+    ///  using System.Collections.Generic;
+    ///  using MiniJSON;
+    ///
+    ///  public class MiniJSONTest : MonoBehaviour {
+    ///      void Start () {
+    ///          var jsonString = "{ \"array\": [1.44,2,3], " +
+    ///                          "\"object\": {\"key1\":\"value1\", \"key2\":256}, " +
+    ///                          "\"string\": \"The quick brown fox \\\"jumps\\\" over the lazy dog \", " +
+    ///                          "\"unicode\": \"\\u3041 Men\u00fa sesi\u00f3n\", " +
+    ///                          "\"int\": 65536, " +
+    ///                          "\"float\": 3.1415926, " +
+    ///                          "\"bool\": true, " +
+    ///                          "\"null\": null }";
+    ///
+    ///          var dict = Json.Deserialize(jsonString) as Dictionary<string,object>;
+    ///
+    ///          Debug.Log("deserialized: " + dict.GetType());
+    ///          Debug.Log("dict['array'][0]: " + ((List<object>) dict["array"])[0]);
+    ///          Debug.Log("dict['string']: " + (string) dict["string"]);
+    ///          Debug.Log("dict['float']: " + (double) dict["float"]); // floats come out as doubles
+    ///          Debug.Log("dict['int']: " + (long) dict["int"]); // ints come out as longs
+    ///          Debug.Log("dict['unicode']: " + (string) dict["unicode"]);
+    ///
+    ///          var str = Json.Serialize(dict);
+    ///
+    ///          Debug.Log("serialized: " + str);
+    ///      }
+    ///  }
     /// </summary>
     internal static class Json {
         /// <summary>
@@ -137,7 +139,6 @@ namespace MiniJSON {
                 // ditch opening brace
                 json.Read();
 
-                // {
                 while (true) {
                     switch (NextToken) {
                     case TOKEN.NONE:
@@ -234,7 +235,6 @@ namespace MiniJSON {
                 while (parsing) {
 
                     if (json.Peek() == -1) {
-                        parsing = false;
                         break;
                     }
 
@@ -279,6 +279,9 @@ namespace MiniJSON {
                             }
 
                             s.Append((char) Convert.ToInt32(new string(hex), 16));
+                            break;
+                        default:
+                            s.Append(c);
                             break;
                         }
                         break;
@@ -381,18 +384,19 @@ namespace MiniJSON {
                     case '9':
                     case '-':
                         return TOKEN.NUMBER;
+                    default:
+                        switch (NextWord) {
+                            case "false":
+                                return TOKEN.FALSE;
+                            case "true":
+                                return TOKEN.TRUE;
+                            case "null":
+                                return TOKEN.NULL;
+                            default:
+                                return TOKEN.NONE;
+                        }
+                        break;
                     }
-
-                    switch (NextWord) {
-                    case "false":
-                        return TOKEN.FALSE;
-                    case "true":
-                        return TOKEN.TRUE;
-                    case "null":
-                        return TOKEN.NULL;
-                    }
-
-                    return TOKEN.NONE;
                 }
             }
         }
@@ -408,13 +412,13 @@ namespace MiniJSON {
         public static string Serialize(object obj,
                                        bool humanReadable = false,
                                        int indentSpaces = 2) {
-            return Serializer.Serialize(obj, humanReadable, indentSpaces);
+            return Serializer.MakeSerialization(obj, humanReadable, indentSpaces);
         }
 
         sealed class Serializer {
-            StringBuilder builder;
-            bool humanReadable;
-            int indentSpaces;
+            readonly StringBuilder builder;
+            readonly bool humanReadable;
+            readonly int indentSpaces;
             int indentLevel;
 
             Serializer(bool humanReadable, int indentSpaces) {
@@ -424,7 +428,7 @@ namespace MiniJSON {
                 indentLevel = 0;
             }
 
-            public static string Serialize(object obj, bool humanReadable, int indentSpaces) {
+            public static string MakeSerialization(object obj, bool humanReadable, int indentSpaces) {
                 var instance = new Serializer(humanReadable, indentSpaces);
 
                 instance.SerializeValue(obj);
