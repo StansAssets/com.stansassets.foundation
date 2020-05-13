@@ -24,5 +24,11 @@
           "name": "Stan's Assets",
           "email": "stan@stansassets.com",
           "url": "https://stansassets.com/"
+    },
+    "dependencies": {
+      "com.unity.test-framework": "0.0.4-preview",
+      "com.unity.modules.imgui": "1.0.0",
+      "com.unity.modules.jsonserialize": "1.0.0",
+      "com.unity.modules.imageconversion": "1.0.0"
     }
 }
