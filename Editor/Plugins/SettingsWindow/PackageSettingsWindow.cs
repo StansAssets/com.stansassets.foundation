@@ -34,6 +34,9 @@ namespace StansAssets.Foundation.Editor.Plugins
             // Import UXML
             var uxmlPath = $"{m_WindowUIFilesRootPath}/PackageSettingsWindow.uxml";
             var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(uxmlPath);
+            var ussPath = $"{m_WindowUIFilesRootPath}/PackageSettingsWindow.uss";
+            var stylesheet = AssetDatabase.LoadAssetAtPath<StyleSheet>(ussPath);
+            m_WindowRoot.styleSheets.Add(stylesheet);
             var template = visualTree.CloneTree();
             m_WindowRoot = template[0];
             root.Add(m_WindowRoot);

@@ -1,6 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
     <ui:VisualElement name="window-root" class="window-root">
-        <Style src="PackageSettingsWindow.uss" />
         <uie:Toolbar class="toolbar">
             <uie:ToolbarButton text="Go To Documentation" class="toolbar" />
             <ui:VisualElement class="toolbar__flexible-space" />
