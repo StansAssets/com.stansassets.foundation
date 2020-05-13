@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using UnityEditor;
 
 namespace StansAssets.Foundation.Async
@@ -10,6 +8,8 @@ namespace StansAssets.Foundation.Async
         {
 #if UNITY_EDITOR
             EditorApplication.update += Update;
+#else
+            throw new System.NotSupportedException($"Attempted to run on  {UnityEngine.Application.platform}. Only editor platform is supported");
 #endif
         }
     }
