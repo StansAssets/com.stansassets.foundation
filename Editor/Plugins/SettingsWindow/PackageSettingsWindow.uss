@@ -3,6 +3,8 @@
     font-size: 18px;
     margin-left: 10px;
     flex-grow: 1;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 .description {
@@ -12,6 +14,7 @@
 }
 
 .toolbar {
+    flex-direction: row;
 }
 
 .toolbar__search-field {
