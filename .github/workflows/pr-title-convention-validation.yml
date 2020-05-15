@@ -1,4 +1,4 @@
-name: "Lint PR"
+name: "PR Title Convention Validation"
 on:
   pull_request:
     types:
