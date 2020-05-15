@@ -36,9 +36,9 @@ namespace StansAssets.Foundation.Editor.Plugins
             var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(uxmlPath);
             var ussPath = $"{m_WindowUIFilesRootPath}/PackageSettingsWindow.uss";
             var stylesheet = AssetDatabase.LoadAssetAtPath<StyleSheet>(ussPath);
-            m_WindowRoot.styleSheets.Add(stylesheet);
             var template = visualTree.CloneTree();
             m_WindowRoot = template[0];
+            m_WindowRoot.styleSheets.Add(stylesheet);
             root.Add(m_WindowRoot);
 
             var packageInfo = GetPackageInfo();
