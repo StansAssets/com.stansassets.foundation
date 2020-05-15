@@ -5,7 +5,7 @@ namespace StansAssets.Foundation.Editor
 {
     /// <summary>
     /// Representation of Manifest JSON file.
-    /// Can be used for adding dependencies, scopeRegistries to .json file
+    /// Can be used for adding dependencies, scopeRegistries, etc to .json file
     /// </summary>
     public class Manifest
     {
@@ -14,7 +14,7 @@ namespace StansAssets.Foundation.Editor
         const string k_ScopedRegistriesKey = "scopedRegistries";
 
         /// <summary>
-        /// Path to manifest file
+        /// Path to manifest file.
         /// </summary>
         public string Path { get; }
 
@@ -24,9 +24,9 @@ namespace StansAssets.Foundation.Editor
         Dictionary<string, object> m_RawContent;
 
         /// <summary>
-        /// Initializes a new instance of ManifestModifier class.
+        /// Initializes a new instance of the <see cref="Manifest"/> class.
         /// </summary>
-        /// <param name="pathToFile">Path to manifest file. </param>
+        /// <param name="pathToFile">Path to manifest file.</param>
         public Manifest(string pathToFile = k_ProjectManifestPath)
         {
             Path = pathToFile;
@@ -35,7 +35,7 @@ namespace StansAssets.Foundation.Editor
         }
 
         /// <summary>
-        /// Read Manifest file and deserialize it's content from JSON
+        /// Read the Manifest file and deserialize its content from JSON.
         /// </summary>
         public void Fetch()
         {
@@ -69,29 +69,29 @@ namespace StansAssets.Foundation.Editor
         }
 
         /// <summary>
-        /// Returns dependency by provided name
+        /// Returns dependency by a provided name.
         /// </summary>
-        /// <param name="name">Name to search for dependency</param>
-        /// <returns>Dependency with given name</returns>
+        /// <param name="name">Name of the dependency.</param>
+        /// <returns>Dependency with given name.</returns>
         public Dependency GetDependency(string name)
         {
             return m_Dependencies[name];
         }
 
         /// <summary>
-        /// Returns scope registry by provided url
+        /// Returns scope registry by a provided url.
         /// </summary>
-        /// <param name="url">Url to search for scope registry</param>
-        /// <returns>Scope registry with given url</returns>
+        /// <param name="url">Scope registry url.</param>
+        /// <returns>Scope registry with the given url.</returns>
         public ScopeRegistry GetScopeRegistry(string url)
         {
             return m_ScopeRegistries[url];
         }
 
         /// <summary>
-        /// Method for adding scope registries
+        /// Adds scope registry.
         /// </summary>
-        /// <param name="registry">Entry to add</param>
+        /// <param name="registry">An entry to add.</param>
         public void AddScopeRegistry(ScopeRegistry registry)
         {
             if (!IsRegistryExists(registry.Url))
@@ -101,10 +101,10 @@ namespace StansAssets.Foundation.Editor
         }
 
         /// <summary>
-        /// Method for adding dependencies
+        /// Adds dependency.
         /// </summary>
-        /// <param name="name">Name of dependency</param>
-        /// <param name="version">Version of dependency</param>
+        /// <param name="name">Dependency name.</param>
+        /// <param name="version">Dependency version.</param>
         public void AddDependency(string name, string version)
         {
             if (!IsDependencyExists(name))
@@ -115,19 +115,19 @@ namespace StansAssets.Foundation.Editor
         }
 
         /// <summary>
-        /// Writes changes back to the manifest file
+        /// Writes changes back to the manifest file.
         /// </summary>
         public void ApplyChanges()
         {
-            List<object> registries = new List<object>();
+            var registries = new List<object>();
             foreach (var registry in m_ScopeRegistries.Values)
             {
                 registries.Add(registry.ToDictionary());
             }
             m_RawContent[k_ScopedRegistriesKey] = registries;
 
-            //Remove 'scopedRegistries' key from raw content if we have zero scope registries.
-            //Because we don't need empty 'scopedRegistries' key in the manifest
+            // Remove 'scopedRegistries' key from raw content if we have zero scope registries.
+            // Because we don't need an empty 'scopedRegistries' key in the manifest
             if (registries.Count == 0)
                 m_RawContent.Remove(k_ScopedRegistriesKey);
 
@@ -138,25 +138,25 @@ namespace StansAssets.Foundation.Editor
             }
             m_RawContent[k_DependenciesKey] = dependencies;
 
-            string manifestText = Json.Serialize(m_RawContent,true);
+            string manifestText = Json.Serialize(m_RawContent, true);
             File.WriteAllText(Path,manifestText);
         }
 
         /// <summary>
-        /// Searches for ScopeRegistry with provided Url
+        /// Searches for ScopeRegistry with the provided Url.
         /// </summary>
-        /// <param name="url">ScopeRegistry url to search for</param>
-        /// <returns>True if scoped registry found, false otherwise</returns>
+        /// <param name="url">ScopeRegistry url to search for.</param>
+        /// <returns>`true` if scoped registry found, `false` otherwise.</returns>
         public bool IsRegistryExists(string url)
         {
             return m_ScopeRegistries.ContainsKey(url);
         }
 
         /// <summary>
-        /// Searches for specific dependency by provided name
+        /// Searches for a specific dependency by the provided name.
         /// </summary>
-        /// <param name="name">Dependency name to search for</param>
-        /// <returns>True if found, false otherwise</returns>
+        /// <param name="name">The dependency name to search for.</param>
+        /// <returns>`true` if found, `false` otherwise.</returns>
         public bool IsDependencyExists(string name)
         {
             return m_Dependencies.ContainsKey(name);
