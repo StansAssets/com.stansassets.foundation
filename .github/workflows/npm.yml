@@ -20,7 +20,7 @@ jobs:
         registry-url: https://registry.npmjs.org/
 
     # Command to install the package dependencies
-    - run: yarn install
+    # - run: yarn install
       
     # Publish to npm
     - run: npm publish --access public
