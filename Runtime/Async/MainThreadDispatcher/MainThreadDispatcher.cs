@@ -27,6 +27,8 @@ namespace StansAssets.Foundation.Async
                 s_MainThreadDispatcher = new MainThreadDispatcherEditor();
             else
                 s_MainThreadDispatcher = new MainThreadDispatcherRuntime();
+
+            s_MainThreadDispatcher.Init();
         }
 
         /// <summary>

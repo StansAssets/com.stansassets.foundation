@@ -4,6 +4,7 @@ namespace StansAssets.Foundation.Async
     {
         public override void Init()
         {
+            MonoBehaviourCallback.Instantiate();
             MonoBehaviourCallback.OnUpdate += Update;
         }
     }
