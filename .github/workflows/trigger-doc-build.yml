@@ -22,5 +22,5 @@ jobs:
              -H "Authorization: token ${{ secrets.DOC_MGMT_TOKEN }}" \
              -H "Accept: application/vnd.github.everest-preview+json" \
              -H "Content-Type: application/json" \
-             --data '{ "event_type": "Native-Plugins - push to master" }' \
+             --data '{ "event_type": "com.stansassets.foundation - push to master" }' \
              https://api.github.com/repos/StansAssets/api.stansassets.com/dispatches
