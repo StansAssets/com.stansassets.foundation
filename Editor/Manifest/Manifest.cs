@@ -69,6 +69,30 @@ namespace StansAssets.Foundation.Editor
         }
 
         /// <summary>
+        /// Gets the <see cref="Dependency"/> associated with the specified name.
+        /// </summary>
+        /// <param name="name">The name of the <see cref="Dependency"/> to get.</param>
+        /// <param name="dependency">When this method returns, contains the <see cref="Dependency"/> associated with the specified name,
+        /// if the name is found; otherwise, null. This parameter is passed uninitialized.</param>
+        /// <returns>true if the <see cref="Manifest"/> contains a <see cref="Dependency"/> with the specified name; otherwise, false.</returns>
+        public bool TryGetDependency(string name, out Dependency dependency)
+        {
+            return m_Dependencies.TryGetValue(name, out dependency);
+        }
+
+        /// <summary>
+        /// Gets the <see cref="ScopeRegistry"/> associated with the specified url.
+        /// </summary>
+        /// <param name="url">The url of the <see cref="ScopeRegistry"/> to get.</param>
+        /// <param name="registry">When this method returns, contains the <see cref="ScopeRegistry"/> associated with the specified url,
+        /// if the url is found; otherwise, null. This parameter is passed uninitialized.</param>
+        /// <returns>true if the <see cref="Manifest"/> contains a <see cref="ScopeRegistry"/> with the specified url; otherwise, false.</returns>
+        public bool TryGetScopeRegistry(string url, out ScopeRegistry registry)
+        {
+            return m_ScopeRegistries.TryGetValue(url, out registry);
+        }
+
+        /// <summary>
         /// Returns dependencies of the manifest
         /// </summary>
         /// <returns>Dependencies of the manifest</returns>
