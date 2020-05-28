@@ -69,6 +69,24 @@ namespace StansAssets.Foundation.Editor
         }
 
         /// <summary>
+        /// Returns dependencies of the manifest
+        /// </summary>
+        /// <returns>Dependencies of the manifest</returns>
+        public IEnumerable<Dependency> GetDependencies()
+        {
+            return m_Dependencies.Values;
+        }
+
+        /// <summary>
+        /// Returns scope registries of the manifest
+        /// </summary>
+        /// <returns>Scope registries of the manifest</returns>
+        public IEnumerable<ScopeRegistry> GetScopeRegistries()
+        {
+            return m_ScopeRegistries.Values;
+        }
+
+        /// <summary>
         /// Returns dependency by a provided name.
         /// </summary>
         /// <param name="name">Name of the dependency.</param>
