@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace StansAssets.Foundation.Editor
 {
@@ -16,6 +17,22 @@ namespace StansAssets.Foundation.Editor
         /// The dependency version.
         /// </summary>
         public string Version { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Dependency"/> class with provided properties.
+        /// </summary>
+        /// <param name="fullName"><see cref="Dependency"/> full name which contains name and version (e.g. 'com.company.package@1.0.0').</param>
+        public Dependency(string fullName)
+        {
+            string[] dependencyData = fullName.Split('@');
+            if (dependencyData.Length == 2)
+            {
+                Name = dependencyData[0];
+                Version = dependencyData[1];
+            }
+            else
+                throw new ArgumentException("Dependency fullName has wrong format");
+        }
 
         /// <summary>
         /// Initializes a new instance of the  <see cref="Dependency"/> class with provided properties.

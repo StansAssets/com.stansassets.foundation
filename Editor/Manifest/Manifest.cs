@@ -174,17 +174,26 @@ namespace StansAssets.Foundation.Editor
         }
 
         /// <summary>
-        /// Adds dependency.
+        /// Sets <see cref="Dependency"/> by given full name. If manifest already contains <see cref="Dependency"/> with given name,
+        /// existing <see cref="Dependency"/> will be overwritten.
+        /// </summary>
+        /// <param name="fullName">Dependency full name.</param>
+        public void SetDependency(string fullName)
+        {
+            var dependency = new Dependency(fullName);
+            m_Dependencies[dependency.Name] = dependency;
+        }
+
+        /// <summary>
+        /// Sets <see cref="Dependency"/> by given name. If manifest already contains <see cref="Dependency"/> with given name,
+        /// existing <see cref="Dependency"/> version will be overwritten.
         /// </summary>
         /// <param name="name">Dependency name.</param>
         /// <param name="version">Dependency version.</param>
-        public void AddDependency(string name, string version)
+        public void SetDependency(string name, string version)
         {
-            if (!IsDependencyExists(name))
-            {
-                var dependency = new Dependency(name, version);
-                m_Dependencies.Add(dependency.Name, dependency);
-            }
+            var dependency = new Dependency(name, version);
+            m_Dependencies[dependency.Name] = dependency;
         }
 
         /// <summary>
