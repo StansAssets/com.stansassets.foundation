@@ -93,18 +93,18 @@ namespace StansAssets.Foundation.Editor
         }
 
         /// <summary>
-        /// Returns dependencies of the manifest
+        /// Returns dependencies of the manifest.
         /// </summary>
-        /// <returns>Dependencies of the manifest</returns>
+        /// <returns>Dependencies of the manifest.</returns>
         public IEnumerable<Dependency> GetDependencies()
         {
             return m_Dependencies.Values;
         }
 
         /// <summary>
-        /// Returns scope registries of the manifest
+        /// Returns scope registries of the manifest.
         /// </summary>
-        /// <returns>Scope registries of the manifest</returns>
+        /// <returns>Scope registries of the manifest.</returns>
         public IEnumerable<ScopeRegistry> GetScopeRegistries()
         {
             return m_ScopeRegistries.Values;
@@ -131,15 +131,46 @@ namespace StansAssets.Foundation.Editor
         }
 
         /// <summary>
-        /// Adds scope registry.
+        /// Sets <see cref="ScopeRegistry"/> by given url. If manifest already contains <see cref="ScopeRegistry"/> with given url,
+        /// existing <see cref="ScopeRegistry"/> will be overwritten.
         /// </summary>
-        /// <param name="registry">An entry to add.</param>
-        public void AddScopeRegistry(ScopeRegistry registry)
+        /// <param name="url">Scope registry url.</param>
+        /// <param name="registry"><see cref="ScopeRegistry"/> to set.</param>
+        public void SetScopeRegistry(string url, ScopeRegistry registry)
         {
-            if (!IsRegistryExists(registry.Url))
+            m_ScopeRegistries[url] = registry;
+        }
+
+        /// <summary>
+        /// Adds <see cref="ScopeRegistry"/> with the provided properties. If manifest already contains <see cref="ScopeRegistry"/> with given url,
+        /// provided scopes will be merged with existing <see cref="ScopeRegistry"/> scopes.
+        /// Name of existing <see cref="ScopeRegistry"/> won't be updated.
+        /// </summary>
+        /// <param name="url">Scope registry url.</param>
+        /// <param name="name">Scope registry name.</param>
+        /// <param name="scopes">Scope registry scopes.</param>
+        /// <returns>New <see cref="ScopeRegistry"/> with provided properties or existing with updated scopes, if <see cref="Manifest"/>
+        /// already contains <see cref="ScopeRegistry"/> with given name.</returns>
+        public ScopeRegistry AddScopeRegistry(string url, string name, IEnumerable<string> scopes)
+        {
+            ScopeRegistry registry;
+            if (!IsRegistryExists(url))
             {
-                m_ScopeRegistries.Add(registry.Url, registry);
+                registry = new ScopeRegistry(name, url, scopes);
+                SetScopeRegistry(url, registry);
             }
+            else
+            {
+                registry = GetScopeRegistry(url);
+                foreach (var scope in scopes)
+                {
+                    if (!registry.HasScope(scope))
+                    {
+                        registry.AddScope(scope);
+                    }
+                }
+            }
+            return registry;
         }
 
         /// <summary>
