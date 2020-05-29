@@ -154,7 +154,7 @@ namespace StansAssets.Foundation.Editor
         public ScopeRegistry AddScopeRegistry(string url, string name, IEnumerable<string> scopes)
         {
             ScopeRegistry registry;
-            if (!IsRegistryExists(url))
+            if (!IsScopeRegistryExists(url))
             {
                 registry = new ScopeRegistry(name, url, scopes);
                 SetScopeRegistry(url, registry);
@@ -186,7 +186,7 @@ namespace StansAssets.Foundation.Editor
 
         /// <summary>
         /// Sets <see cref="Dependency"/> by given name. If manifest already contains <see cref="Dependency"/> with given name,
-        /// existing <see cref="Dependency"/> version will be overwritten.
+        /// existing <see cref="Dependency"/> will be overwritten.
         /// </summary>
         /// <param name="name">Dependency name.</param>
         /// <param name="version">Dependency version.</param>
@@ -229,7 +229,7 @@ namespace StansAssets.Foundation.Editor
         /// </summary>
         /// <param name="url">ScopeRegistry url to search for.</param>
         /// <returns>`true` if scoped registry found, `false` otherwise.</returns>
-        public bool IsRegistryExists(string url)
+        public bool IsScopeRegistryExists(string url)
         {
             return m_ScopeRegistries.ContainsKey(url);
         }
