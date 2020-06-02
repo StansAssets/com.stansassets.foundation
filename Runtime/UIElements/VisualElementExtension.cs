@@ -71,7 +71,7 @@ namespace StansAssets.Foundation.UIElements
 
         /// <summary>
         /// Gets the sibling index.
-        /// Use this to return the sibling index of the GameObject.
+        /// Use this to return the sibling index of the VisualElement.
         /// If a VisualElement shares a parent with other VisualElement and are on the same level (i.e. they share the same direct parent),
         /// these VisualElements are known as siblings. The sibling index shows where each VisualElement sits in this sibling hierarchy.
         /// Similar to <see href="https://docs.unity3d.com/ScriptReference/Transform.GetSiblingIndex.html"/>
