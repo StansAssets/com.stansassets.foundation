@@ -8,7 +8,7 @@ namespace Models
     public class Result : IResult
     {
         [SerializeField]
-        protected Error m_Error = null;
+        protected Error m_Error;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Result"/> class.
