@@ -119,10 +119,8 @@ namespace StansAssets.Foundation
                 int y;
                 for (y = 0; y < tex.height; y++)
                 {
-                    //rotImage.SetPixel (x1, y1, Color.clear);
-
-                    x2 += dxX; //rot_x(angle, x1, y1);
-                    y2 += dxY; //rot_y(angle, x1, y1);
+                    x2 += dxX;
+                    y2 += dxY;
                     rotImage.SetPixel((int)Mathf.Floor(x), (int)Mathf.Floor(y), GetPixel(tex, x2, y2));
                 }
 
@@ -244,7 +242,6 @@ namespace StansAssets.Foundation
                         var xYTo = (int)Mathf.Min(Mathf.Ceil(vCenter.y + vPixelSize.y * 0.5f), vSourceSize.y);
 
                         // Loop and accumulate
-                        //  Vector4 oColorTotal = new Vector4();
                         var oColorTemp = new Color();
                         float xGridCount = 0;
                         for (var iy = xYFrom; iy < xYTo; iy++)
