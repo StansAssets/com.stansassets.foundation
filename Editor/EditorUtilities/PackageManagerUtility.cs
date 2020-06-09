@@ -9,7 +9,7 @@ using PackageInfo = UnityEditor.PackageManager.PackageInfo;
 namespace StansAssets.Foundation.Editor
 {
     /// <summary>
-    /// Package Manager Utility methods.
+    /// Package Manager utility methods.
     /// </summary>
     public static class PackageManagerUtility
     {
@@ -46,7 +46,7 @@ namespace StansAssets.Foundation.Editor
         /// </summary>
         /// <param name="packageName">Package name.</param>
         /// <returns>Package root path.</returns>
-        public static string GetPackageRootPath(string packageName) => "Packages/" + packageName;      
+        public static string GetPackageRootPath(string packageName) => "Packages/" + packageName;
         /// <summary>
         /// Remove Package by name.
         /// </summary>
