@@ -6,7 +6,7 @@ using Object = UnityEngine.Object;
 namespace StansAssets.Foundation.Editor
 {
     /// <summary>
-    /// AssetDatabase Utility methods.
+    /// AssetDatabase utility methods.
     /// </summary>
     public static class AssetDatabaseUtility
     {
