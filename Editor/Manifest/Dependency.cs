@@ -18,17 +18,20 @@ namespace StansAssets.Foundation.Editor
         /// </summary>
         public string Version { get; private set; }
 
+        public bool HasSemanticVersion { get; private set; }
+        public Version SemanticVersion { get; private set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Dependency"/> class with provided properties.
         /// </summary>
         /// <param name="fullName"><see cref="Dependency"/> full name which contains name and version (e.g. 'com.company.package@1.0.0').</param>
         public Dependency(string fullName)
         {
-            string[] dependencyData = fullName.Split('@');
-            if (dependencyData.Length == 2)
+            if (TryGetNameAndVersion(fullName, out string name, out string version))
             {
-                Name = dependencyData[0];
-                Version = dependencyData[1];
+                Name = name;
+                Version = version;
+                TryAssignSemanticVersion();
             }
             else
                 throw new ArgumentException("Dependency fullName has wrong format");
@@ -43,6 +46,27 @@ namespace StansAssets.Foundation.Editor
         {
             Name = name;
             Version = version;
+            TryAssignSemanticVersion();
+        }
+
+        internal static bool TryGetNameAndVersion(string fullName, out string name, out string version)
+        {
+            name = version = null;
+            var dependencyData = fullName.Split('@');
+            if (dependencyData.Length == 2)
+            {
+                name = dependencyData[0];
+                version = dependencyData[1];
+                return true;
+            }
+            return false;
+        }
+
+        void TryAssignSemanticVersion()
+        {
+            HasSemanticVersion = StansAssets.Foundation.Editor.Version.TryGetSemanticVersion(Version, out var semanticVersion);
+            if (HasSemanticVersion)
+                SemanticVersion = semanticVersion;
         }
 
         /// <summary>
@@ -52,6 +76,7 @@ namespace StansAssets.Foundation.Editor
         public void SetVersion(string version)
         {
             Version = version;
+            TryAssignSemanticVersion();
         }
 
         /// <summary>

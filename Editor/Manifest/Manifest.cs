@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -171,6 +172,40 @@ namespace StansAssets.Foundation.Editor
                 }
             }
             return registry;
+        }
+
+        public Dependency SetOrUpdateDependency(string fullName)
+        {
+            if (Dependency.TryGetNameAndVersion(fullName, out string name, out string version))
+            {
+                return SetOrUpdateDependency(name, version);
+            }
+
+            throw new ArgumentException("Dependency fullName has wrong format");
+        }
+
+        public Dependency SetOrUpdateDependency(string name, string version)
+        {
+            if (IsDependencyExists(name))
+            {
+                var newDependency = new Dependency(name, version);
+                var existingDependency = GetDependency(name);
+                // We have to be sure that both Dependencies have Semantic Version
+                if (newDependency.HasSemanticVersion && existingDependency.HasSemanticVersion)
+                {
+                    if (newDependency.SemanticVersion > existingDependency.SemanticVersion)
+                    {
+                        // Set new Dependency because it has higher Semantic Version
+                        SetDependency(name, version);
+                    }
+                }
+                else
+                    SetDependency(name, version);
+            }
+            else
+                SetDependency(name, version);
+
+            return GetDependency(name);
         }
 
         /// <summary>
