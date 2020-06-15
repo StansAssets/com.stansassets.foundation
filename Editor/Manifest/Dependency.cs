@@ -64,7 +64,7 @@ namespace StansAssets.Foundation.Editor
 
         void TryAssignSemanticVersion()
         {
-            HasSemanticVersion = StansAssets.Foundation.Editor.SemanticVersion.TryCreateSemanticVersion(Version, out var semanticVersion);
+            HasSemanticVersion = SemanticVersion.TryCreateSemanticVersion(Version, out var semanticVersion);
             if (HasSemanticVersion)
                 SemanticVersion = semanticVersion;
         }
