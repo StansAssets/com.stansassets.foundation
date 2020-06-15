@@ -19,7 +19,7 @@ namespace StansAssets.Foundation.Editor
         public string Version { get; private set; }
 
         public bool HasSemanticVersion { get; private set; }
-        public Version SemanticVersion { get; private set; }
+        public SemanticVersion SemanticVersion { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Dependency"/> class with provided properties.
@@ -64,7 +64,7 @@ namespace StansAssets.Foundation.Editor
 
         void TryAssignSemanticVersion()
         {
-            HasSemanticVersion = StansAssets.Foundation.Editor.Version.TryGetSemanticVersion(Version, out var semanticVersion);
+            HasSemanticVersion = StansAssets.Foundation.Editor.SemanticVersion.TryCreateSemanticVersion(Version, out var semanticVersion);
             if (HasSemanticVersion)
                 SemanticVersion = semanticVersion;
         }

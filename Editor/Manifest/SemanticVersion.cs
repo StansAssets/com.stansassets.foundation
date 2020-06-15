@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace StansAssets.Foundation.Editor
 {
-    public class Version
+    public class SemanticVersion
     {
         // Regular Expression to check a Semantic Version string. With numbered capture groups
         // (so cg1 = major, cg2 = minor, cg3 = patch, cg4 = prerelease and cg5 = buildmetadata)
@@ -25,7 +25,7 @@ namespace StansAssets.Foundation.Editor
 
         string m_StringRepresentation;
 
-        Version(int major, int minor, int patch, string preRelease, string buildMetadata)
+        public SemanticVersion(int major, int minor, int patch, string preRelease, string buildMetadata)
         {
             Major = major;
             Minor = minor;
@@ -38,9 +38,9 @@ namespace StansAssets.Foundation.Editor
             HasBuildMetadata = !string.IsNullOrEmpty(BuildMetadata);
         }
 
-        public static bool TryGetSemanticVersion(string versionString, out Version version)
+        public static bool TryCreateSemanticVersion(string versionString, out SemanticVersion semanticVersion)
         {
-            version = null;
+            semanticVersion = null;
             var match = s_Matcher.Match(versionString);
             if (match.Success)
             {
@@ -50,28 +50,28 @@ namespace StansAssets.Foundation.Editor
                 var preRelease = match.Groups[4].Value;
                 var buildMetadata = match.Groups[5].Value;
 
-                version = new Version(major, minor, patch, preRelease, buildMetadata);
+                semanticVersion = new SemanticVersion(major, minor, patch, preRelease, buildMetadata);
                 return true;
             }
 
             return false;
         }
 
-        public static bool operator >(Version version, Version other)
+        public static bool operator >(SemanticVersion semanticVersion, SemanticVersion other)
         {
-            if (version.Major > other.Major)
+            if (semanticVersion.Major > other.Major)
                 return true;
-            if (version.Minor > other.Minor)
+            if (semanticVersion.Minor > other.Minor)
                 return true;
-            if (version.Patch > other.Patch)
+            if (semanticVersion.Patch > other.Patch)
                 return true;
-            
+
             return false;
         }
 
-        public static bool operator <(Version version, Version other)
+        public static bool operator <(SemanticVersion semanticVersion, SemanticVersion other)
         {
-            return !(version > other);
+            return !(semanticVersion > other);
         }
 
         public override int GetHashCode() {
@@ -89,7 +89,7 @@ namespace StansAssets.Foundation.Editor
 
         public override bool Equals(object obj)
         {
-            if (obj is Version other)
+            if (obj is SemanticVersion other)
             {
                 bool sameVersions = Major == other.Major &&
                     Minor == other.Minor &&
@@ -119,7 +119,7 @@ namespace StansAssets.Foundation.Editor
 
                 if (HasBuildMetadata)
                     builder.Append($"+{BuildMetadata}");
-                
+
                 m_StringRepresentation = builder.ToString();
             }
 
