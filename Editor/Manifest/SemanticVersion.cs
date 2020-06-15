@@ -13,15 +13,15 @@ namespace StansAssets.Foundation.Editor
         // See: https://regex101.com/r/vkijKf/1/
         static readonly Regex s_Matcher = new Regex(@"^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$");
 
-        public readonly int Major;
-        public readonly int Minor;
-        public readonly int Patch;
+        public int Major { get; }
+        public int Minor { get; }
+        public int Patch { get; }
 
-        public readonly bool HasPreRelease;
-        public readonly string PreRelease;
+        public bool HasPreRelease { get; }
+        public string PreRelease { get; }
 
-        public readonly bool HasBuildMetadata;
-        public readonly string BuildMetadata;
+        public bool HasBuildMetadata { get; }
+        public string BuildMetadata { get; }
 
         string m_StringRepresentation;
 
