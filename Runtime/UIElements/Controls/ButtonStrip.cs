@@ -177,7 +177,11 @@ namespace StansAssets.Foundation.UIElements
                 else
                     button.AddToClassList(k_ButtonMidClassName);
 
+#if UNITY_2019_3_OR_NEWER
                 button.clicked += () =>
+#else
+                button.clickable.clicked  += () =>
+#endif
                 {
                     SetValue(choice);
                 };
