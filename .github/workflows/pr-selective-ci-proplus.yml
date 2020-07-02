@@ -1,0 +1,87 @@
+name: Selective CI on Pull Request. Pro/Plus License
+
+on:
+  pull_request:
+    branches:
+    - master
+
+env:
+  PR_TEST_LABEL: test-pr-files-only
+  GITHUB_API_TOKEN: ${{ secrets.GH_API_TOKEN }}
+  PR_FILES: null
+
+  DOCKER_ACTIONS_PROPLUS: |
+    echo "FROM gableroux/unity3d:$UNITY_VERSION" > Dockerfile
+    echo "COPY $DOCKER_ENTRYPOINT /entrypoint.sh" >> Dockerfile
+    echo "COPY $PROJECT_PATH /$PROJECT_PATH" >> Dockerfile
+    echo "RUN chmod +x /entrypoint.sh" >> Dockerfile
+    echo "ENTRYPOINT [\"/entrypoint.sh\"]" >> Dockerfile
+    docker build --tag $IMAGE_TAG ./
+    docker run -i -w /$PROJECT_PATH/ \
+      -e "UNITY_USERNAME=$UNITY_LOGIN" \
+      -e "UNITY_PASSWORD=$UNITY_PASS" \
+      -e "UNITY_SERIAL=$UNITY_KEY" \
+      -e "PROJECT_PATH=$PROJECT_PATH" \
+      -e "TEST_PLATFORM=$TEST_PLATFORM" \
+      -e "PR_FILES=$PR_FILES" \
+      -e "WORKDIR=/$PROJECT_PATH/" \
+      -v "$(pwd):/$PROJECT_PATH/" \
+      $IMAGE_TAG \
+      bash
+
+  GET_PR_FILENAMES: |
+    URL="https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/files"
+    FILES_PATHS=$(curl -u StansAssets:$GITHUB_API_TOKEN -s -X GET -G $URL | jq -r '.[] | .filename')
+    PR_FILES=""
+    for i in ${FILES_PATHS[*]}; do
+      FILE=$(echo $i | rev | cut -d"/" -f1 | rev)
+      if [[ $FILE == *".cs"* ]]
+      then
+        FILE=$(echo $FILE | cut -d"." -f1)
+        PR_FILES+="$FILE;"
+      fi;
+    done
+    PR_FILES=$(echo "${PR_FILES::-1}")
+
+jobs:
+  TestsProPlus:
+    if: contains( github.event.pull_request.labels.*.name, 'test-pr-files-only')
+    name: Tests Pro/Plus
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        projectPath:
+          - TestProject
+        targetPlatform: [editmode, playmode]
+        unityVersion: [2019.4.0f1, 2019.4.1f1]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ matrix.projectPath }}/Library
+          key: Library-${{ matrix.projectPath }}-${{ matrix.unityVersion }}
+          restore-keys: |
+            Library-${{ matrix.projectPath }}-
+            Library-
+      - name: Run Tests
+        env:
+          UNITY_VERSION: ${{ matrix.unityVersion }}
+          UNITY_LOGIN: ${{ secrets.UNITY_LOGIN }}
+          UNITY_PASS: ${{ secrets.UNITY_PASS }}
+          UNITY_KEY: ${{ secrets.UNITY_KEY }}
+          DOCKER_ENTRYPOINT: ./.github/actions/unity/run-tests/entrypoint-proplus.sh
+          PROJECT_PATH: ${{ matrix.projectPath }}
+          TEST_PLATFORM: ${{ matrix.targetPlatform }}
+          IMAGE_TAG: docker_image
+        run: |
+          eval "$GET_PR_FILENAMES"
+          eval "$DOCKER_ACTIONS_PROPLUS"
+      - name: Upload results
+        uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: ${{ matrix.unityVersion }}-${{ matrix.targetPlatform }}-tests-results
+          path: ${{ matrix.targetPlatform }}-results.xml

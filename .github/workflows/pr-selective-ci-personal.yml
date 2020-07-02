@@ -1,0 +1,92 @@
+name: Selective CI on Pull Request. Personal License
+
+on:
+  pull_request:
+    branches:
+    - master
+
+env:
+  PR_TEST_LABEL: test-pr-files-only
+  GITHUB_API_TOKEN: ${{ secrets.GH_API_TOKEN }}
+  PR_FILES: null
+  UNITY_LICENSE_CONTENTS: null
+
+  DOCKER_ACTIONS_PERSONAL: |
+    echo "FROM gableroux/unity3d:$UNITY_VERSION" > Dockerfile
+    echo "COPY $DOCKER_ENTRYPOINT /entrypoint.sh" >> Dockerfile
+    echo "COPY $PROJECT_PATH /$PROJECT_PATH" >> Dockerfile
+    echo "RUN chmod +x /entrypoint.sh" >> Dockerfile
+    echo "ENTRYPOINT [\"/entrypoint.sh\"]" >> Dockerfile
+    docker build --tag $IMAGE_TAG ./
+    docker run -i -w /$PROJECT_PATH/ \
+      -e "UNITY_LICENSE=$UNITY_LICENSE_CONTENTS" \
+      -e "PROJECT_PATH=$PROJECT_PATH" \
+      -e "TEST_PLATFORM=$TEST_PLATFORM" \
+      -e "PR_FILES=$PR_FILES" \
+      -e "WORKDIR=/$PROJECT_PATH/" \
+      -v "$(pwd):/$PROJECT_PATH/" \
+      $IMAGE_TAG \
+      bash    
+
+  GET_PERSONAL_LICENSE_CONTENTS: |
+    if [[ $UNITY_VERSION == "2019.4.0f1" ]]
+    then
+      UNITY_LICENSE_CONTENTS=$UNITY_LICENSE_2019_4_0f1
+    fi;
+
+  GET_PR_FILENAMES: |
+    URL="https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/files"
+    FILES_PATHS=$(curl -u StansAssets:$GITHUB_API_TOKEN -s -X GET -G $URL | jq -r '.[] | .filename')
+    PR_FILES=""
+    for i in ${FILES_PATHS[*]}; do
+      FILE=$(echo $i | rev | cut -d"/" -f1 | rev)
+      if [[ $FILE == *".cs"* ]]
+      then
+        FILE=$(echo $FILE | cut -d"." -f1)
+        PR_FILES+="$FILE;"
+      fi;
+    done
+    PR_FILES=$(echo "${PR_FILES::-1}")
+
+jobs:
+  TestsPersonal:
+    if: contains( github.event.pull_request.labels.*.name, 'test-pr-files-only')
+    name: Tests Personal
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        projectPath:
+          - TestProject
+        targetPlatform: [editmode, playmode]
+        unityVersion:
+          - 2019.4.0f1
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ matrix.projectPath }}/Library
+          key: Library-${{ matrix.projectPath }}-${{ matrix.unityVersion }}
+          restore-keys: |
+            Library-${{ matrix.projectPath }}-
+            Library-
+      - name: Run Tests
+        env:
+          UNITY_LICENSE_2019_4_0f1: ${{ secrets.UNITY_LICENSE_2019_4 }}
+          UNITY_VERSION: ${{ matrix.unityVersion }}
+          DOCKER_ENTRYPOINT: ./.github/actions/unity/run-tests/entrypoint-personal.sh
+          PROJECT_PATH: ${{ matrix.projectPath }}
+          TEST_PLATFORM: ${{ matrix.targetPlatform }}
+          IMAGE_TAG: docker_image
+        run: |
+          eval "$GET_PR_FILENAMES"
+          eval "$GET_PERSONAL_LICENSE_CONTENTS"
+          eval "$DOCKER_ACTIONS_PERSONAL"
+      - name: Upload results
+        uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: ${{ matrix.unityVersion }}-${{ matrix.targetPlatform }}-tests-results
+          path: ${{ matrix.targetPlatform }}-results.xml

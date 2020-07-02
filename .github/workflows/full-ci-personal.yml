@@ -1,0 +1,72 @@
+name: Full CI. Personal License
+
+on:
+  push:
+    branches:
+    - master
+
+env:
+  UNITY_LICENSE_CONTENTS: null
+
+  DOCKER_ACTIONS_PERSONAL: |
+    echo "FROM gableroux/unity3d:$UNITY_VERSION" > Dockerfile
+    echo "COPY $DOCKER_ENTRYPOINT /entrypoint.sh" >> Dockerfile
+    echo "COPY $PROJECT_PATH /$PROJECT_PATH" >> Dockerfile
+    echo "RUN chmod +x /entrypoint.sh" >> Dockerfile
+    echo "ENTRYPOINT [\"/entrypoint.sh\"]" >> Dockerfile
+    docker build --tag $IMAGE_TAG ./
+    docker run -i -w /$PROJECT_PATH/ \
+      -e "UNITY_LICENSE=$UNITY_LICENSE_CONTENTS" \
+      -e "PROJECT_PATH=$PROJECT_PATH" \
+      -e "TEST_PLATFORM=$TEST_PLATFORM" \
+      -e "WORKDIR=/$PROJECT_PATH/" \
+      -v "$(pwd):/$PROJECT_PATH/" \
+      $IMAGE_TAG \
+      bash    
+
+  GET_PERSONAL_LICENSE_CONTENTS: |
+    if [[ $UNITY_VERSION == "2019.4.0f1" ]]
+    then
+      UNITY_LICENSE_CONTENTS=$UNITY_LICENSE_2019_4_0f1
+    fi;
+
+jobs:
+  TestsPersonal:
+    name: Tests Personal
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        projectPath:
+          - TestProject
+        targetPlatform: [editmode, playmode]
+        unityVersion:
+          - 2019.4.0f1
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ matrix.projectPath }}/Library
+          key: Library-${{ matrix.projectPath }}-${{ matrix.unityVersion }}
+          restore-keys: |
+            Library-${{ matrix.unityVersion }}-
+            Library-
+      - name: Run Tests
+        env:
+          UNITY_LICENSE_2019_4_0f1: ${{ secrets.UNITY_LICENSE_2019_4 }}
+          UNITY_VERSION: ${{ matrix.unityVersion }}
+          DOCKER_ENTRYPOINT: ./.github/actions/unity/run-tests/entrypoint-personal.sh
+          PROJECT_PATH: ${{ matrix.projectPath }}
+          TEST_PLATFORM: ${{ matrix.targetPlatform }}
+          IMAGE_TAG: docker_image
+        run: |
+          eval "$GET_PERSONAL_LICENSE_CONTENTS"
+          eval "$DOCKER_ACTIONS_PERSONAL"
+      - name: Upload results
+        uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: ${{ matrix.unityVersion }}-${{ matrix.targetPlatform }}-tests-results
+          path: ${{ matrix.targetPlatform }}-results.xml

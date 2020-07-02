@@ -1,0 +1,50 @@
+name: Request Unity Personal activation file
+
+on:
+  push:
+    branches:
+    - license-request
+
+env:
+  FILE_FOLDER: alf
+  DOCKER_ACTIONS: |
+    echo "FROM gableroux/unity3d:$UNITY_VERSION" > Dockerfile
+    echo "COPY $DOCKER_ENTRYPOINT /entrypoint.sh" >> Dockerfile
+    echo "RUN chmod +x /entrypoint.sh" >> Dockerfile
+    echo "ENTRYPOINT [\"/entrypoint.sh\"]" >> Dockerfile
+    docker build --tag $IMAGE_TAG ./
+    docker run -i -w /$FILE_FOLDER/ \
+      -e "UNITY_USERNAME=$UNITY_LOGIN" \
+      -e "UNITY_PASSWORD=$UNITY_PASS" \
+      -e "UNITY_VERSION=$UNITY_VERSION" \
+      -e "WORKDIR=/$FILE_FOLDER/" \
+      -v "$(pwd):/$FILE_FOLDER/" \
+      $IMAGE_TAG \
+      bash
+
+jobs:
+  RequestPersonalActivation:
+    name: Personal activation file
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        unityVersion:
+          - 2019.4.1f1
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Request activation
+        env:
+          UNITY_LOGIN: ${{ secrets.UNITY_LOGIN }}
+          UNITY_PASS: ${{ secrets.UNITY_PASS }}
+          UNITY_VERSION: ${{ matrix.unityVersion }}
+          DOCKER_ENTRYPOINT: ./.github/actions/unity/personal-license/entrypoint.sh
+          IMAGE_TAG: docker_image
+        run: |
+          eval "$DOCKER_ACTIONS"
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.unityVersion }}-license-request
+          path: ${{ matrix.unityVersion }}.alf
