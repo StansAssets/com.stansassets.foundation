@@ -1,0 +1,117 @@
+name: Draft Release Modifications
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+    types: [closed]
+
+env:
+  GITHUB_USER_EMAIL: noreply@stansassets.com
+  GITHUB_USER_NAME: Stan's Assets Automation
+  GITHUB_API_TOKEN: ${{ secrets.GH_API_TOKEN }}
+  GITHUB_API_CALLER: StansAssets
+  LATEST_RELEASE_TAG: 0.0.0
+  LATEST_RELEASE_DRAFT_STATUS: false
+
+  GET_LATEST_RELEASE_INFO: |
+    URL="https://api.github.com/repos/${{ github.repository }}/releases"
+    LATEST_RELEASE_TAG=$(curl -u $GITHUB_API_CALLER:$GITHUB_API_TOKEN -s GET $URL | jq '.[0]' | jq -r '.tag_name')
+    LATEST_RELEASE_DRAFT_STATUS=$(curl -u $GITHUB_API_CALLER:$GITHUB_API_TOKEN -s GET $URL | jq '.[0]' | jq -r '.draft')
+
+  CHANGE_RELEASE_TAG_BY_ONE: |
+    IFS='.' read -ra TAG_ARRAY <<< "$LATEST_RELEASE_TAG"
+    for ((idx=0; idx<${#TAG_ARRAY[@]}; ++idx)); do
+      if [[ $(($idx+1)) == ${#TAG_ARRAY[@]} ]]
+      then
+        RELEASE_VERSION+="$((${TAG_ARRAY[idx]}+1))"
+      else
+        RELEASE_VERSION+=${TAG_ARRAY[idx]}.
+      fi
+    done
+    LATEST_RELEASE_TAG=$RELEASE_VERSION
+
+  CREATE_NEW_DRAFT_RELEASE: |
+    URL="https://api.github.com/repos/${{ github.repository }}/releases"
+    API_JSON=$(echo "{\"tag_name\": \"$LATEST_RELEASE_TAG\",
+      \"target_commitish\": \"master\",
+      \"name\": \"$LATEST_RELEASE_TAG\",
+      \"body\": \"\",
+      \"draft\": true,
+      \"prerelease\": false}")
+    curl -u $GITHUB_API_CALLER:$GITHUB_API_TOKEN -s -d "$API_JSON" -X POST $URL
+  
+  MODIFY_PACKAGE_JSON: |
+    git config --global user.email "${GITHUB_USER_EMAIL}"
+    git config --global user.name "${GITHUB_USER_NAME}"
+    jq ".version=\"$LATEST_RELEASE_TAG\"" package.json > "tmp" && mv "tmp" package.json
+    git add -A
+    git status
+    git commit -m "Version Changed"
+    git push origin HEAD:master
+
+  ADD_PULL_REQUEST_TITLE_CONTENTS: |
+    URL="https://api.github.com/repos/${{ github.repository }}/releases"
+    LATEST_RELEASE_BODY=$(curl -u $GITHUB_API_CALLER:$GITHUB_API_TOKEN -s GET $URL | jq '.[0]' | jq -r '.body' | sed -E ':a;N;$!ba;s/\r{0,1}\n/\\n/g')
+    LATEST_RELEASE_ID=$(curl -u $GITHUB_API_CALLER:$GITHUB_API_TOKEN -s GET $URL | jq '.[0]' | jq -r '.id')
+    ADDED_DELIMITER="### Added"
+    FIXED_DELIMITER="### Fixed"
+    if [[ "${{ github.event.pull_request.title }}" == *"feat:"* ]]; then
+      if [[ $LATEST_RELEASE_BODY == *$ADDED_DELIMITER* ]]; then
+        if [[ $LATEST_RELEASE_BODY == *$FIXED_DELIMITER* ]]; then
+          FIRST_PART="${LATEST_RELEASE_BODY%"$FIXED_DELIMITER"*}"
+          LAST_PART="${LATEST_RELEASE_BODY#*"$FIXED_DELIMITER"}"
+          BODY_CONTENTS="${FIRST_PART}* ${{ github.event.pull_request.title }}\n${FIXED_DELIMITER}${LAST_PART}"
+        else
+          BODY_CONTENTS="${LATEST_RELEASE_BODY}\n* ${{ github.event.pull_request.title }}"
+        fi
+      else
+        BODY_CONTENTS="${ADDED_DELIMITER}\n* ${{ github.event.pull_request.title }}\n${LATEST_RELEASE_BODY}"
+      fi
+    elif [[ "${{ github.event.pull_request.title }}" == *"fix:"* ]]; then
+      if [[ $LATEST_RELEASE_BODY == *$FIXED_DELIMITER* ]]; then
+        BODY_CONTENTS="${LATEST_RELEASE_BODY}\n* ${{ github.event.pull_request.title }}"
+      else
+        BODY_CONTENTS="${LATEST_RELEASE_BODY}\n${FIXED_DELIMITER}\n* ${{ github.event.pull_request.title }}"
+      fi
+    fi
+    URL="https://api.github.com/repos/${{ github.repository }}/releases/${LATEST_RELEASE_ID}"
+    API_JSON=$(echo "{\"tag_name\": \"$LATEST_RELEASE_TAG\",
+      \"target_commitish\": \"master\",
+      \"name\": \"$LATEST_RELEASE_TAG\",
+      \"body\": \"$BODY_CONTENTS\",
+      \"draft\": true,
+      \"prerelease\": false}")
+    curl -u $GITHUB_API_CALLER:$GITHUB_API_TOKEN -s -d "$API_JSON" -X POST $URL
+
+jobs:
+  PushModifications:
+    name: Modifications on Push
+    if: ( github.event_name == 'push' )
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Get latest release info. Create and modify if needed
+      run: |
+        eval "$GET_LATEST_RELEASE_INFO"
+        if [[ $LATEST_RELEASE_DRAFT_STATUS == false ]]; then
+          eval "$CHANGE_RELEASE_TAG_BY_ONE"
+          eval "$CREATE_NEW_DRAFT_RELEASE"
+          eval "$MODIFY_PACKAGE_JSON"
+        fi
+  PullRequestModifications:
+    name: Modifications on Pull Request
+    if: ( github.event_name == 'pull_request' )
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Add Pull Request title contents to release
+      run: |
+        eval "$GET_LATEST_RELEASE_INFO"
+        if [[ $LATEST_RELEASE_DRAFT_STATUS == false ]]; then
+          eval "$CHANGE_RELEASE_TAG_BY_ONE"
+          eval "$CREATE_NEW_DRAFT_RELEASE"
+          eval "$MODIFY_PACKAGE_JSON"
+        fi
+        eval "$ADD_PULL_REQUEST_TITLE_CONTENTS"
