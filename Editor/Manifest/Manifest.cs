@@ -174,6 +174,14 @@ namespace StansAssets.Foundation.Editor
             return registry;
         }
 
+        /// <summary>
+        /// Sets <see cref="Dependency"/> by given full name. If manifest already contains <see cref="Dependency"/> with given name, its'
+        /// <see cref="SemanticVersion"/>s will be taken into account. <see cref="Dependency"/> with higher <see cref="SemanticVersion"/>
+        /// will be placed into the <see cref="Manifest"/>.
+        /// </summary>
+        /// <param name="fullName">Dependency full name.</param>
+        /// <returns>New or existing <see cref="Dependency"/> with given name.</returns>
+        /// <exception cref="ArgumentException">Thrown when dependency fullName has wrong format</exception>
         public Dependency SetOrUpdateDependency(string fullName)
         {
             if (Dependency.TryGetNameAndVersion(fullName, out string name, out string version))
@@ -184,6 +192,14 @@ namespace StansAssets.Foundation.Editor
             throw new ArgumentException("Dependency fullName has wrong format");
         }
 
+        /// <summary>
+        /// Sets <see cref="Dependency"/> by given name. If manifest already contains <see cref="Dependency"/> with given name, its'
+        /// <see cref="SemanticVersion"/>s will be taken into account. <see cref="Dependency"/> with higher <see cref="SemanticVersion"/>
+        /// will be placed into the <see cref="Manifest"/>.
+        /// </summary>
+        /// <param name="name">Dependency name.</param>
+        /// <param name="version">Dependency name.</param>
+        /// <returns>New or existing <see cref="Dependency"/> with given name.</returns>
         public Dependency SetOrUpdateDependency(string name, string version)
         {
             if (IsDependencyExists(name))

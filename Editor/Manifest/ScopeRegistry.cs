@@ -45,8 +45,7 @@ namespace StansAssets.Foundation.Editor
         /// <summary>
         /// Initializes a new instance of <see cref="ScopeRegistry"/> class with the provided data.
         /// </summary>
-        /// <param name="dictionary">Data to fill this object. Must contain <see cref="k_KeyName">name</see>,
-        /// <see cref="k_KeyUrl">url</see> and <see cref="k_KeyScopes">scopes</see>.</param>
+        /// <param name="dictionary">Data to fill this object. Must contain name, url and scopes.</param>
         public ScopeRegistry(Dictionary<string, object> dictionary)
         {
             Name = (string) dictionary[k_KeyName];

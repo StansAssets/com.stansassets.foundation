@@ -9,16 +9,23 @@ namespace StansAssets.Foundation.Editor
     public class Dependency
     {
         /// <summary>
-        /// The dependency name.
+        /// The <see cref="Dependency"/> name.
         /// </summary>
         public string Name { get; }
 
         /// <summary>
-        /// The dependency version.
+        /// The <see cref="Dependency"/> version.
         /// </summary>
         public string Version { get; private set; }
 
+        /// <summary>
+        /// True if the <see cref="Dependency"/> has <see cref="SemanticVersion"/>; otherwise, false.
+        /// </summary>
         public bool HasSemanticVersion { get; private set; }
+
+        /// <summary>
+        /// The <see cref="Dependency"/> semantic version.
+        /// </summary>
         public SemanticVersion SemanticVersion { get; private set; }
 
         /// <summary>
