@@ -19,7 +19,7 @@ namespace StansAssets.Foundation.Editor
         public string Version { get; private set; }
 
         /// <summary>
-        /// True if the <see cref="Dependency"/> has <see cref="SemanticVersion"/>; otherwise, false.
+        /// `true` if the <see cref="Dependency"/> has <see cref="SemanticVersion"/>; otherwise, `false`.
         /// </summary>
         public bool HasSemanticVersion { get; private set; }
 
