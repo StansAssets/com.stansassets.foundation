@@ -74,7 +74,7 @@ namespace StansAssets.Foundation.Editor
         /// </summary>
         /// <param name="name">The name of the <see cref="Dependency"/> to get.</param>
         /// <param name="dependency">When this method returns, contains the <see cref="Dependency"/> associated with the specified name,
-        /// if the name is found; otherwise, null. This parameter is passed uninitialized.</param>
+        /// if the name is found; otherwise, `null`. This parameter is passed uninitialized.</param>
         /// <returns>true if the <see cref="Manifest"/> contains a <see cref="Dependency"/> with the specified name; otherwise, false.</returns>
         public bool TryGetDependency(string name, out Dependency dependency)
         {
