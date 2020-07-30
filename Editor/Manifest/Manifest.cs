@@ -86,7 +86,7 @@ namespace StansAssets.Foundation.Editor
         /// </summary>
         /// <param name="url">The url of the <see cref="ScopeRegistry"/> to get.</param>
         /// <param name="registry">When this method returns, contains the <see cref="ScopeRegistry"/> associated with the specified url,
-        /// if the url is found; otherwise, null. This parameter is passed uninitialized.</param>
+        /// if the url is found; otherwise, `null`. This parameter is passed uninitialized.</param>
         /// <returns>true if the <see cref="Manifest"/> contains a <see cref="ScopeRegistry"/> with the specified url; otherwise, false.</returns>
         public bool TryGetScopeRegistry(string url, out ScopeRegistry registry)
         {
