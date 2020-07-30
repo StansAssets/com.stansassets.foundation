@@ -25,7 +25,9 @@ namespace StansAssets.Foundation.Editor
         /// <summary>
         /// Registry scopes.
         /// </summary>
-        public HashSet<string> Scopes { get; }
+        public IEnumerable<string> Scopes => m_Scopes;
+
+        readonly HashSet<string> m_Scopes;
 
         /// <summary>
         /// Initializes a new instance of <see cref="ScopeRegistry"/> class with the provided properties.
@@ -33,27 +35,26 @@ namespace StansAssets.Foundation.Editor
         /// <param name="name">Name of new scope registry.</param>
         /// <param name="url">Url of new scope registry.</param>
         /// <param name="scopes">Scopes of new scope registry.</param>
-        public ScopeRegistry(string name, string url, HashSet<string> scopes)
+        public ScopeRegistry(string name, string url, IEnumerable<string> scopes)
         {
             Name = name;
             Url = url;
-            Scopes = scopes;
+            m_Scopes = new HashSet<string>(scopes);
         }
 
         /// <summary>
         /// Initializes a new instance of <see cref="ScopeRegistry"/> class with the provided data.
         /// </summary>
-        /// <param name="dictionary">Data to fill this object. Must contain <see cref="k_KeyName">name</see>,
-        /// <see cref="k_KeyUrl">url</see> and <see cref="k_KeyScopes">scopes</see>.</param>
+        /// <param name="dictionary">Data to fill this object. Must contain name, url and scopes.</param>
         public ScopeRegistry(Dictionary<string, object> dictionary)
         {
             Name = (string) dictionary[k_KeyName];
             Url = (string) dictionary[k_KeyUrl];
             var scopes = (List<object>) dictionary[k_KeyScopes];
-            Scopes = new HashSet<string>();
+            m_Scopes = new HashSet<string>();
             foreach (var scope in scopes)
             {
-                Scopes.Add((string) scope);
+                m_Scopes.Add((string) scope);
             }
         }
 
@@ -64,7 +65,7 @@ namespace StansAssets.Foundation.Editor
         /// <returns>'true' if this ScopeRegistry contains scope, `false` otherwise.</returns>
         public bool HasScope(string scope)
         {
-            return Scopes.Contains(scope);
+            return m_Scopes.Contains(scope);
         }
 
         /// <summary>
@@ -74,7 +75,7 @@ namespace StansAssets.Foundation.Editor
         public void AddScope(string scope)
         {
             if (!HasScope(scope))
-                Scopes.Add(scope);
+                m_Scopes.Add(scope);
         }
 
         /// <summary>
@@ -84,8 +85,8 @@ namespace StansAssets.Foundation.Editor
         public override int GetHashCode() {
             int hash = 0;
             if (!string.IsNullOrEmpty(Url)) hash ^= Url.GetHashCode();
-             if (Scopes != null) {
-                foreach (var scope in Scopes) {
+             if (m_Scopes != null) {
+                foreach (var scope in m_Scopes) {
                     hash ^= scope.GetHashCode();
                 }
             }
@@ -101,8 +102,8 @@ namespace StansAssets.Foundation.Editor
         {
             return obj is ScopeRegistry other &&
                    Url == other.Url &&
-                   Scopes != null && other.Scopes != null &&
-                   new HashSet<string>(Scopes).SetEquals(other.Scopes);
+                   m_Scopes != null && other.Scopes != null &&
+                   m_Scopes.SetEquals(other.Scopes);
         }
 
         /// <summary>
@@ -114,7 +115,7 @@ namespace StansAssets.Foundation.Editor
             Dictionary<string,object> result = new Dictionary<string, object>();
             result.Add(k_KeyName,Name);
             result.Add(k_KeyUrl,Url);
-            result.Add(k_KeyScopes,Scopes.ToList());
+            result.Add(k_KeyScopes,m_Scopes.ToList());
             return result;
         }
     }
