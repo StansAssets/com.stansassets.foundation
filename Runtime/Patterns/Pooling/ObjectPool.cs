@@ -150,15 +150,16 @@ namespace StansAssets.Foundation.Patterns
             m_ActionOnGet?.Invoke(element);
             return element;
         }
-		
-		/// <summary>
-        /// Find an object in the pool.
+
+        /// <summary>
+        /// Try to get an object in the pool.
         /// </summary>
         /// <param name="pred">Search predicate.</param>
-        /// <returns>An existing object from the pool.</returns>
-        public T Find(Predicate<T> pred)
+        /// <param name="result">An existing object from the pool or <c>null</c> if the object is not found.</param>
+        /// <returns><c>true</c> if an appropriate object is found, <c>false</c> otherwise.</returns>
+        public bool TryGet(Predicate<T> pred, out T result)
         {
-            T result = null;
+            result = null;
             List<T> inappropriateElements = CollectionPool<List<T>, T>.Get();
             while (m_PoolStack.TryPop(out var element))
             {
@@ -179,9 +180,12 @@ namespace StansAssets.Foundation.Patterns
             CollectionPool<List<T>, T>.Release(inappropriateElements);
 
             if (result != null)
+            { 
                 m_ActionOnGet?.Invoke(result);
+                return true;
+            }
 
-            return result;
+            return false;
         }
 
         /// <summary>
