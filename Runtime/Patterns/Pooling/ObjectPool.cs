@@ -152,6 +152,43 @@ namespace StansAssets.Foundation.Patterns
         }
 
         /// <summary>
+        /// Try to get an object in the pool.
+        /// </summary>
+        /// <param name="pred">Search predicate.</param>
+        /// <param name="result">An existing object from the pool or <c>null</c> if the object is not found.</param>
+        /// <returns><c>true</c> if an appropriate object is found, <c>false</c> otherwise.</returns>
+        public bool TryGet(Predicate<T> pred, out T result)
+        {
+            result = null;
+            List<T> inappropriateElements = CollectionPool<List<T>, T>.Get();
+            while (m_PoolStack.TryPop(out var element))
+            {
+                if (pred(element))
+                { 
+                    result = element;
+                    break;
+                }
+                else
+                {
+                    inappropriateElements.Add(element);
+                }
+            }
+
+            foreach (T element in inappropriateElements)
+                m_PoolStack.Push(element);
+
+            CollectionPool<List<T>, T>.Release(inappropriateElements);
+
+            if (result != null)
+            { 
+                m_ActionOnGet?.Invoke(result);
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Get a new <see cref="PooledObject"/> which can be used to return the instance back to the pool when the PooledObject is disposed.
         /// </summary>
         /// <param name="v">Output new typed object.</param>
