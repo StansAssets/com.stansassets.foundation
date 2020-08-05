@@ -150,6 +150,39 @@ namespace StansAssets.Foundation.Patterns
             m_ActionOnGet?.Invoke(element);
             return element;
         }
+		
+		/// <summary>
+        /// Find an object in the pool.
+        /// </summary>
+        /// <param name="pred">Search predicate.</param>
+        /// <returns>An existing object from the pool.</returns>
+        public T Find(Predicate<T> pred)
+        {
+            T result = null;
+            List<T> inappropriateElements = CollectionPool<List<T>, T>.Get();
+            while (m_PoolStack.TryPop(out var element))
+            {
+                if (pred(element))
+                { 
+                    result = element;
+                    break;
+                }
+                else
+                {
+                    inappropriateElements.Add(element);
+                }
+            }
+
+            foreach (T element in inappropriateElements)
+                m_PoolStack.Push(element);
+
+            CollectionPool<List<T>, T>.Release(inappropriateElements);
+
+            if (result != null)
+                m_ActionOnGet?.Invoke(result);
+
+            return result;
+        }
 
         /// <summary>
         /// Get a new <see cref="PooledObject"/> which can be used to return the instance back to the pool when the PooledObject is disposed.
