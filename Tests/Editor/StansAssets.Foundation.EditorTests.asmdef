@@ -1,9 +1,9 @@
 {
-    "name": "StansAssets.Foundation.EditorTests",
+    "name": "Tests",
     "references": [
-        "StansAssets.Foundation",
         "UnityEngine.TestRunner",
-        "UnityEditor.TestRunner"
+        "UnityEditor.TestRunner",
+        "StansAssets.Foundation"
     ],
     "includePlatforms": [
         "Editor"
@@ -15,7 +15,9 @@
         "nunit.framework.dll"
     ],
     "autoReferenced": false,
-    "defineConstraints": [],
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
     "versionDefines": [],
     "noEngineReferences": false
 }
