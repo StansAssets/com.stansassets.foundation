@@ -24,8 +24,5 @@
           "name": "Stan's Assets",
           "email": "stan@stansassets.com",
           "url": "https://stansassets.com/"
-    },
-    "dependencies": {
-      "com.unity.test-framework": "0.0.4-preview"
     }
 }
