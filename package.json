@@ -1,7 +1,7 @@
 {
   "name": "com.stansassets.foundation",
   "displayName": "Stans Assets - Foundation",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "unity": "2018.4",
   "description": "Foundation package is a collection of utility methods, design patterns, and extensions for Unity.",
   "keywords": [
