@@ -1,5 +1,6 @@
 #if UNITY_2019_1_OR_NEWER
 using UnityEditor;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace StansAssets.Foundation.Editor
@@ -21,9 +22,15 @@ namespace StansAssets.Foundation.Editor
         /// <param name="path">The VisualTreeAsset path without extension. </param>
         public static void CloneTreeAndApplyStyle(VisualElement target, string path)
         {
-            var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>($"{path}.uxml");
+            var uxmlPath = $"{path}.uxml";
+            var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(uxmlPath);
+            if (visualTree == null)
+            {
+                Debug.LogError($"Failed to load VisualTreeAsset at path: {uxmlPath}");
+                return;
+            }
+            
             visualTree.CloneTree(target);
-
             ApplyStyle(target, path);
         }
 
@@ -48,6 +55,11 @@ namespace StansAssets.Foundation.Editor
 
             if(skitStylesheet != null)
                 target.styleSheets.Add(skitStylesheet);
+        }
+
+        internal static void ApplyStyleForInternalControl(VisualElement target, string name)
+        {
+            ApplyStyle(target, $"{FoundationPackage.UIToolkitControlsPath}/{name}/{name}");
         }
     }
 }

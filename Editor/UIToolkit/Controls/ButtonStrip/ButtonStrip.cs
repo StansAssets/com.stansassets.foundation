@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
+using StansAssets.Foundation.Editor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -77,7 +78,7 @@ namespace StansAssets.Foundation.UIElements
         public ButtonStrip(IEnumerable<string> choices)
         {
             AddToClassList(UssClassName);
-            styleSheets.Add( Resources.Load<StyleSheet>("ButtonStrip"));
+            UIToolkitEditorUtility.ApplyStyleForInternalControl(this, nameof(ButtonStrip));
 
             var collection = choices.ToList();
             m_Choices.AddRange(collection);

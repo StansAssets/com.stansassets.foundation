@@ -1,5 +1,6 @@
 ﻿#if UNITY_2019_1_OR_NEWER
 using JetBrains.Annotations;
+using StansAssets.Foundation.Editor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -33,9 +34,8 @@ namespace StansAssets.Foundation.UIElements
         /// </summary>
         public LoadingSpinner()
         {
-            styleSheets.Add( Resources.Load<StyleSheet>("LoadingSpinner"));
             AddToClassList(UssClassName);
-
+            UIToolkitEditorUtility.ApplyStyleForInternalControl(this, nameof(LoadingSpinner));
             m_IsActive = false;
 
             // add child elements to set up centered spinner rotation

@@ -1,0 +1,3 @@
+.stansassets-hyperlink-block__header > Label {
+    color: rgb(130, 130, 130);
+}

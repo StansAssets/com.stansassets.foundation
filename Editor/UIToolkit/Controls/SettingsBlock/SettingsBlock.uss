@@ -1,0 +1,17 @@
+.stansassets-settings-block {
+    padding-left: 10px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    margin-bottom: 5px;
+}
+
+.stansassets-settings-block__header {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 13;
+    -unity-font-style: bold;
+}
+
+.stansassets-settings-block__content {
+    margin-left: 10px;
+}

@@ -16,6 +16,7 @@ namespace StansAssets.Foundation.Editor
         /// Foundation package root path.
         /// </summary>
         public static readonly string RootPath = PackageManagerUtility.GetPackageRootPath(Name);
+        
 
 #if UNITY_2019_1_OR_NEWER
         /// <summary>
@@ -23,5 +24,8 @@ namespace StansAssets.Foundation.Editor
         /// </summary>
         public static PackageInfo GetPackageInfo() => PackageManagerUtility.GetPackageInfo(Name);
 #endif
+        
+        internal static readonly string UIToolkitPath = $"{RootPath}/Editor/UIToolkit";
+        internal static readonly string UIToolkitControlsPath = $"{UIToolkitPath}/Controls";
     }
 }
