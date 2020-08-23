@@ -1,4 +1,5 @@
 #if UNITY_2019_1_OR_NEWER
+using System;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -57,6 +58,12 @@ namespace StansAssets.Foundation.Editor
                 target.styleSheets.Add(skitStylesheet);
         }
 
+        internal static void ApplyStyleForInternalControl<T>(T target) where T : VisualElement
+        {
+            var name = typeof(T).Name;
+            ApplyStyleForInternalControl(target, name);
+        }
+        
         internal static void ApplyStyleForInternalControl(VisualElement target, string name)
         {
             ApplyStyle(target, $"{FoundationPackage.UIToolkitControlsPath}/{name}/{name}");

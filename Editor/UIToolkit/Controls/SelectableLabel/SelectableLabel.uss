@@ -1,0 +1,14 @@
+.stansassets-selectable-label {
+    margin-top: 1px;
+}
+
+.stansassets-selectable-label > .unity-base-text-field {
+    margin: 0;
+}
+
+.stansassets-selectable-label__input {
+    border-width: 0;
+    border-radius: 0;
+    padding: 0;
+    background-color: initial;
+}
