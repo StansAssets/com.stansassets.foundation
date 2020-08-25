@@ -8,7 +8,7 @@
 .stansassets-settings-block__header {
     margin-top: 5px;
     margin-bottom: 5px;
-    font-size: 13;
+    font-size: 13px;
     -unity-font-style: bold;
 }
 
