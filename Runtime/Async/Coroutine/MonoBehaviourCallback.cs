@@ -26,6 +26,24 @@ namespace StansAssets.Foundation.Async
         public static event Action OnLateUpdate;
 
         /// <summary>
+        /// In the editor this is called when the user stops playmode.
+        /// Learn more: [MonoBehaviour.OnApplicationQuit](https://docs.unity3d.com/ScriptReference/MonoBehaviour.OnApplicationQuit.html)
+        /// </summary>
+        public static event Action ApplicationOnQuit;
+
+        /// <summary>
+        /// Sent to all GameObjects when the application pauses.
+        /// Learn more: [MonoBehaviour.OnApplicationPause](https://docs.unity3d.com/ScriptReference/MonoBehaviour.OnApplicationPause.html)
+        /// </summary>
+        public static event Action<bool> ApplicationOnPause;
+
+        /// <summary>
+        /// Sent to all GameObjects when the player gets or loses focus.
+        /// Learn more: [MonoBehaviour.OnApplicationFocus](https://docs.unity3d.com/ScriptReference/MonoBehaviour.OnApplicationFocus.html)
+        /// </summary>
+        public static event Action<bool> ApplicationOnFocus;
+
+        /// <summary>
         /// Frame-rate independent MonoBehaviour.FixedUpdate message for physics calculations.
         /// Learn more: [MonoBehaviour.FixedUpdate](https://docs.unity3d.com/ScriptReference/MonoBehaviour.FixedUpdate.html)
         /// </summary>
@@ -34,5 +52,13 @@ namespace StansAssets.Foundation.Async
         void Update() => OnUpdate?.Invoke();
         void LateUpdate() => OnLateUpdate?.Invoke();
         void FixedUpdate() => OnFixedUpdate?.Invoke();
+        void OnApplicationPause(bool pauseStatus) => ApplicationOnPause?.Invoke(pauseStatus);
+        void OnApplicationFocus(bool hasFocus) => ApplicationOnFocus?.Invoke(hasFocus);
+
+        protected override void OnApplicationQuit()
+        {
+            base.OnApplicationQuit();
+            ApplicationOnQuit?.Invoke();
+        }
     }
 }
