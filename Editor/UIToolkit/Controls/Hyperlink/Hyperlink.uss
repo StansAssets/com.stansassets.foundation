@@ -1,17 +1,17 @@
-.stansassets-settings-block {
-    padding-left: 10px;
-    padding-bottom: 5px;
-    padding-top: 5px;
-    margin-bottom: 5px;
+.stansassets-hyperlink-block,
+.stansassets-hyperlink-block__header,
+.stansassets-hyperlink-block__content {
+    background-color: initial;
+    border-width: 0;
+    margin: 0;
+    width: auto;
+    flex-shrink: 0;
+    flex-direction: row;
 }
 
-.stansassets-settings-block__header {
-    margin-top: 5px;
-    margin-bottom: 5px;
-    font-size: 13;
-    -unity-font-style: bold;
-}
-
-.stansassets-settings-block__content {
-    margin-left: 10px;
+.stansassets-hyperlink-block:hover Label,
+.stansassets-hyperlink-block:hover VisualElement {
+    -unity-background-image-tint-color: cornflowerblue;
+    color: cornflowerblue;
+    cursor: link;
 }
