@@ -17,7 +17,8 @@ namespace StansAssets.Foundation
             var type = typeof(TSource);
             if (s_Converters.ContainsKey(type))
             {
-                throw new Exception($"TypeConverter<{typeof(TSource)}, {typeof(TDestination)}> has already been registered");
+                throw new ArgumentException($"TypeConverter<{typeof(TSource)}, {typeof(TDestination)}> has already been registered", 
+                    nameof(converter));
             }
 
             s_Converters[typeof(TSource)] = converter;
@@ -62,7 +63,7 @@ namespace StansAssets.Foundation
         /// </summary>
         /// <param name="value"></param>
         /// <param name="result"></param>
-        /// <returns></returns>
+        /// <returns>Returns `true` if conversion is succeeded.</returns>
         public static bool TryConvert(object value, out TDestination result)
         {
             var type = value.GetType();
@@ -70,7 +71,7 @@ namespace StansAssets.Foundation
 
             if (null == converter)
             {
-                result = default(TDestination);
+                result = default;
                 return false;
             }
 
@@ -84,7 +85,7 @@ namespace StansAssets.Foundation
         /// @NOTE This method will resolve base classes before interfaces
         /// </summary>
         /// <param name="type"></param>
-        /// <returns></returns>
+        /// <returns>Type converter for a provided class.</returns>
         static ITypeConverter<TDestination> GetTypeConverter(Type type)
         {
             var t = type;
@@ -112,7 +113,9 @@ namespace StansAssets.Foundation
     }
 
     /// <summary>
-    /// TypeConversion API
+    /// Global TypeConversion API.
+    /// @Warning only use it on application level. Do not use it in the package or plugin.
+    /// For package & plugins usage see <see cref="TypeConversionInstance"/>.
     /// </summary>
     public static class TypeConversion
     {
@@ -170,13 +173,13 @@ namespace StansAssets.Foundation
         /// 
         /// @NOTE Fastest conversion method
         /// </summary>
-        /// <param name="value"></param>
-        /// <typeparam name="TSource"></typeparam>
-        /// <typeparam name="TValue"></typeparam>
-        /// <returns></returns>
-        public static TValue Convert<TSource, TValue>(TSource value)
+        /// <param name="value">Value to convert to.</param>
+        /// <typeparam name="TSource">Source type.</typeparam>
+        /// <typeparam name="TDestination">Conversion Destination type.</typeparam>
+        /// <returns>Converted value.</returns>
+        public static TDestination Convert<TSource, TDestination>(TSource value)
         {
-            return TypeConversion<TSource, TValue>.Convert(value);
+            return TypeConversion<TSource, TDestination>.Convert(value);
         }
 
         /// <summary>
@@ -212,9 +215,9 @@ namespace StansAssets.Foundation
         public static TDestination Convert<TDestination>(object source)
         {
             // Try a straightforward cast, this is always the best case scenario
-            if (source is TDestination)
+            if (source is TDestination destination)
             {
-                return (TDestination) source;
+                return destination;
             }
 
             if (typeof(TDestination).IsValueType)
@@ -227,12 +230,11 @@ namespace StansAssets.Foundation
             }
             else if (IsNull(source))
             {
-                return default(TDestination);
+                return default;
             }
 
             // Try to forward to a user defined implementation for conversion
-            TDestination result;
-            if (TypeConversion<TDestination>.TryConvert(source, out result))
+            if (TypeConversion<TDestination>.TryConvert(source, out var result))
             {
                 return result;
             }
@@ -242,8 +244,7 @@ namespace StansAssets.Foundation
             // Special handling of enum types
             if (typeof(TDestination).IsEnum)
             {
-                var s = source as string;
-                if (s != null)
+                if (source is string s)
                 {
                     return (TDestination) Enum.Parse(typeof(TDestination), s, true);
                 }
@@ -309,8 +310,9 @@ namespace StansAssets.Foundation
             // Special handling of enum types
             if (type.IsEnum)
             {
-                var s = source as string;
-                return s != null ? Enum.Parse(type, s) : System.Convert.ChangeType(source, Enum.GetUnderlyingType(type));
+                return source is string s 
+                    ? Enum.Parse(type, s) 
+                    : System.Convert.ChangeType(source, Enum.GetUnderlyingType(type));
             }
 
             if (source is IConvertible)

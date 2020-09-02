@@ -15,6 +15,11 @@ namespace StansAssets.Foundation
         {
             return m_Conversion((TSource) value);
         }
+
+        public TDestination Convert(TSource value)
+        {
+            return m_Conversion(value);
+        }
     }
     
     static class TypeConversion<TSource, TDestination>
