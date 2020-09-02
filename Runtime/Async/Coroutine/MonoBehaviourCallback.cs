@@ -24,19 +24,19 @@ namespace StansAssets.Foundation.Async
         /// Learn more: [MonoBehaviour.LateUpdate](https://docs.unity3d.com/ScriptReference/MonoBehaviour.LateUpdate.html)
         /// </summary>
         public static event Action OnLateUpdate;
-
+        
         /// <summary>
         /// In the editor this is called when the user stops playmode.
         /// Learn more: [MonoBehaviour.OnApplicationQuit](https://docs.unity3d.com/ScriptReference/MonoBehaviour.OnApplicationQuit.html)
         /// </summary>
         public static event Action ApplicationOnQuit;
-
+        
         /// <summary>
         /// Sent to all GameObjects when the application pauses.
         /// Learn more: [MonoBehaviour.OnApplicationPause](https://docs.unity3d.com/ScriptReference/MonoBehaviour.OnApplicationPause.html)
         /// </summary>
         public static event Action<bool> ApplicationOnPause;
-
+        
         /// <summary>
         /// Sent to all GameObjects when the player gets or loses focus.
         /// Learn more: [MonoBehaviour.OnApplicationFocus](https://docs.unity3d.com/ScriptReference/MonoBehaviour.OnApplicationFocus.html)
