@@ -46,6 +46,33 @@ namespace StansAssets.Foundation
             }
             dict[typeof(TDestination)] = converter;
         }
+
+        /// <summary>
+        /// Methods is used to check of convertor is registered for a specified types pare.
+        /// </summary>
+        /// <typeparam name="TSource">Source type.</typeparam>
+        /// <typeparam name="TDestination">Conversion Destination type.</typeparam>
+        /// <returns>Returns `true` if convertor is registered, `false` otherwise.</returns>
+        public bool HasConvertor<TSource, TDestination>()
+        {
+            return HasConvertor(typeof(TSource), typeof(TDestination));
+        }
+
+        /// <summary>
+        /// Methods is used to check of convertor is registered for a specified types pare.
+        /// </summary>
+        /// <param name="source">Source type.</param>
+        /// <param name="destination">Conversion Destination type.</param>
+        /// <returns>Returns `true` if convertor is registered, `false` otherwise.</returns>
+        public bool HasConvertor(Type source, Type destination)
+        {
+            if (m_ConvertersDictionary.TryGetValue(source, out var typeConvertors))
+            {
+                return typeConvertors.ContainsKey(destination);
+            }
+
+            return false;
+        }
         
         /// <summary>
         /// Converts given the value to the destination type
