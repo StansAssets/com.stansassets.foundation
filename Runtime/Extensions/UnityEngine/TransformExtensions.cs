@@ -12,7 +12,7 @@ namespace StansAssets.Foundation.Extensions
         /// </summary>
         /// <param name="transform">Transform component.</param>
         /// <param name="lossyScale">New lossyScale value.</param>
-        public static void SetLossyScaleScale(this Transform transform, Vector3 lossyScale)
+        public static void SetLossyScale(this Transform transform, Vector3 lossyScale)
         {
             transform.localScale = Vector3.one;
             var currentLossyScale = transform.lossyScale;

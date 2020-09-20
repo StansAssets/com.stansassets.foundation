@@ -31,5 +31,16 @@ namespace StansAssets.Foundation.Extensions
             texture.LoadImage(decodedFromBase64);
             return texture;
         }
+        
+        /// <summary>
+        /// Create new sprite instance for the texture.
+        /// </summary>
+        /// <param name="texture">A texture to created sprite from.</param>
+        /// <returns>New sprite instance.</returns>
+        public static Sprite CreateSprite(this Texture2D texture)
+        {
+            return Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+        }
+
     }
 }
