@@ -18,11 +18,11 @@ namespace StansAssets.Foundation.OperatingSystem
             {
                 case RuntimePlatform.WindowsEditor:
                 case RuntimePlatform.WindowsPlayer:
-                    OpenAtPathMacOs(path);
+                    OpenAtPathWindows(path);
                     break;
                 case RuntimePlatform.OSXEditor:
                 case RuntimePlatform.OSXPlayer:
-                    OpenAtPathWindows(path);
+                    OpenAtPathMacOs(path);
                     break;
                 default:
                     throw new PlatformNotSupportedException($"{Application.platform} is not supported.");
