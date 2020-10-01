@@ -1,6 +1,5 @@
 using System;
-using System.Collections.Generic;
-using UnityEngine.Assertions;
+using System.Collections.Concurrent;
 
 namespace StansAssets.Foundation.Patterns
 {
@@ -8,9 +7,9 @@ namespace StansAssets.Foundation.Patterns
     /// <remarks>
     /// An implementation of the <see cref="IServiceLocator"/> pattern.
     /// </remarks>
-    public class ServiceLocator : IServiceLocator
+    public sealed class ServiceLocator : IServiceLocator
     {
-        readonly Dictionary<string, object> m_Services = new Dictionary<string, object>();
+        readonly ConcurrentDictionary<Type, object> m_Services = new ConcurrentDictionary<Type, object>();
 
         /// <inheritdoc cref="IServiceLocator.Get" />
         public T Get<T>() => (T)Get(typeof(T));
@@ -18,14 +17,12 @@ namespace StansAssets.Foundation.Patterns
         /// <inheritdoc cref="IServiceLocator.Get{T}" />
         public object Get(Type type)
         {
-            var key = type.FullName;
-            Assert.IsNotNull(key);
-            if (!m_Services.ContainsKey(key))
+            if (!m_Services.ContainsKey(type))
             {
                 throw new InvalidOperationException($"Service was never registered for {type.FullName} type.");
             }
 
-            return m_Services[key];
+            return m_Services[type];
         }
 
         /// <inheritdoc cref="IServiceLocator.IsRegistered{T}" />
@@ -34,9 +31,7 @@ namespace StansAssets.Foundation.Patterns
         /// <inheritdoc cref="IServiceLocator.IsRegistered" />
         public bool IsRegistered(Type type)
         {
-            var key = type.FullName;
-            Assert.IsNotNull(key);
-            return m_Services.ContainsKey(key);
+            return m_Services.ContainsKey(type);
         }
 
         /// <inheritdoc cref="IServiceLocator.Register{T}" />
@@ -45,14 +40,12 @@ namespace StansAssets.Foundation.Patterns
         /// <inheritdoc cref="IServiceLocator.Register" />
         public void Register(Type type, object service)
         {
-            var key = type.FullName;
-            Assert.IsNotNull(key);
-            if (m_Services.ContainsKey(key))
+            if (m_Services.ContainsKey(type))
             {
                 throw new InvalidOperationException($"Service is already registered for {type.FullName} type.");
             }
 
-            m_Services.Add(key, service);
+            m_Services.TryAdd(type, service);
         }
 
         /// <inheritdoc cref="IServiceLocator.Unregister{T}" />
@@ -61,14 +54,12 @@ namespace StansAssets.Foundation.Patterns
         /// <inheritdoc cref="IServiceLocator.Unregister" />
         public void Unregister(Type type)
         {
-            var key = type.FullName;
-            Assert.IsNotNull(key);
-            if (!m_Services.ContainsKey(key))
+            if (!m_Services.ContainsKey(type))
             {
                 throw new InvalidOperationException($"Service was never registered for {type.FullName} type.");
             }
 
-            m_Services.Remove(key);
+            m_Services.TryRemove(type, out var _);
         }
 
         /// <inheritdoc cref="IServiceLocator.Clear" />
