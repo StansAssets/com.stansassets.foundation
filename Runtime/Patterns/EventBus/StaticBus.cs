@@ -2,7 +2,7 @@ using System;
 
 namespace StansAssets.Foundation.Patterns
 {
-    public class StaticBus<T> where T : IEvent
+    public static class StaticBus<T> where T : IEvent
     {
         static Action<T> s_Action = delegate { };
 
