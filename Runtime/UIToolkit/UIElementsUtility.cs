@@ -1,4 +1,4 @@
-#if UNITY_2019_4_OR_NEWER || UNITY_2020_2_OR_NEWER
+#if UNITY_2019_4_OR_NEWER
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.UIElements;
