@@ -18,7 +18,7 @@ namespace StansAssets.Foundation.Editor
         /// </summary>
         public const string ManifestPath = "Packages/manifest.json";
 
-#if UNITY_2019_4_OR_NEWER || UNITY_2020_2_OR_NEWER
+#if UNITY_2019_4_OR_NEWER
         /// <summary>
         /// Returns PackageInfo if package is installed in the project, <c>null</c> otherwise.
         /// </summary>
