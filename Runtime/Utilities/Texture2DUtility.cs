@@ -7,7 +7,7 @@ namespace StansAssets.Foundation
     /// <summary>
     /// Texture2D Utility methods.
     /// </summary>
-    public class Texture2DUtility
+    public static class Texture2DUtility
     {
         /// <summary>
         /// Texture scale mode options.
