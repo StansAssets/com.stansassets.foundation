@@ -2,19 +2,31 @@
 
 namespace StansAssets.Foundation.Patterns
 {
-    public class EventBus : IReadOnlyEventBus
+    /// <summary>
+    /// Basic implementation of the <see cref="IEventBus"/>.
+    /// </summary>
+    public class EventBus : IEventBus
     {
+        /// <inheritdoc>
+        ///     <cref>IEventBus.Subscribe</cref>
+        /// </inheritdoc>
         public void Subscribe<T>(Action<T> listener) where T : IEvent
         {
             EventBusDispatcher<T>.Subscribe(this, listener);
         }
 
-        public void UnSubscribe<T>(Action<T> listener) where T : IEvent
+        /// <inheritdoc>
+        ///     <cref>IEventBus.Unsubscribe</cref>
+        /// </inheritdoc>
+        public void Unsubscribe<T>(Action<T> listener) where T : IEvent
         {
             EventBusDispatcher<T>.UnSubscribe(this, listener);
         }
 
-        public void Dispatch<T>(T @event) where T : IEvent
+        /// <inheritdoc>
+        ///     <cref>IEventBus.Post</cref>
+        /// </inheritdoc>
+        public void Post<T>(T @event) where T : IEvent
         {
             EventBusDispatcher<T>.Dispatch(this, @event);
         }
