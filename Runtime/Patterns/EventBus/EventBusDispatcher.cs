@@ -17,7 +17,7 @@ namespace StansAssets.Foundation.Patterns
             s_Actions[bus] += listener;
         }
 
-        public static void UnSubscribe(EventBus bus, Action<T> listener)
+        public static void Unsubscribe(EventBus bus, Action<T> listener)
         {
             if (s_Actions.ContainsKey(bus))
             {

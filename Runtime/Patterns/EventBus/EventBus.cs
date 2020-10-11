@@ -5,7 +5,7 @@ namespace StansAssets.Foundation.Patterns
     /// <summary>
     /// Basic implementation of the <see cref="IEventBus"/>.
     /// </summary>
-    public class EventBus : IEventBus
+    public sealed class EventBus : IEventBus
     {
         /// <inheritdoc>
         ///     <cref>IEventBus.Subscribe</cref>
@@ -20,7 +20,7 @@ namespace StansAssets.Foundation.Patterns
         /// </inheritdoc>
         public void Unsubscribe<T>(Action<T> listener) where T : IEvent
         {
-            EventBusDispatcher<T>.UnSubscribe(this, listener);
+            EventBusDispatcher<T>.Unsubscribe(this, listener);
         }
 
         /// <inheritdoc>
