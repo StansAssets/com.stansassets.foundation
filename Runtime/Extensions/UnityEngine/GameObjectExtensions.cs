@@ -23,7 +23,7 @@ namespace StansAssets.Foundation.Extensions
         /// Gets the local Identifier In File, for the given GameObject
         /// Return 0 in case Game Object wasn't yet saved
         /// </summary>
-        /// <param name="go">GameObject tou want to check</param>
+        /// <param name="go">GameObject you want to check</param>
         public static int GetLocalIdentifierInFile(GameObject go)
         {
 #if UNITY_EDITOR
