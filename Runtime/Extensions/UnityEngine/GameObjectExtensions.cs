@@ -1,3 +1,4 @@
+using System.Reflection;
 using UnityEngine;
 
 namespace StansAssets.Foundation.Extensions
@@ -16,6 +17,24 @@ namespace StansAssets.Foundation.Extensions
         {
             foreach (var trans in gameObject.GetComponentsInChildren<Transform>(true)) 
                 trans.gameObject.layer = layerNumber;
+        }
+        
+        /// <summary>
+        /// Gets the local Identifier In File, for the given GameObject
+        /// Return 0 in case Game Object wasn't yet saved
+        /// </summary>
+        /// <param name="go">GameObject you want to check</param>
+        public static int GetLocalIdentifierInFile(GameObject go)
+        {
+#if UNITY_EDITOR
+            var inspectorModeInfo = typeof(UnityEditor.SerializedObject).GetProperty("inspectorMode", BindingFlags.NonPublic | BindingFlags.Instance);
+            var serializedObject = new UnityEditor.SerializedObject(go);
+            inspectorModeInfo.SetValue(serializedObject, UnityEditor.InspectorMode.Debug, null);
+            var localIdProp = serializedObject.FindProperty("m_LocalIdentfierInFile"); //note the misspelling!
+            return localIdProp.intValue;
+#else
+            return 0;
+#endif
         }
         
         /// <summary>
