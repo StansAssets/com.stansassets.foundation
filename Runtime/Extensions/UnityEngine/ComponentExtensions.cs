@@ -6,7 +6,7 @@ namespace StansAssets.Foundation.Extensions
     /// <summary>
     /// Unity `Component` extension methods.
     /// </summary>
-    public class ComponentExtensions
+    public static class ComponentExtensions
     {
         /// <summary>
         /// Gets the local Identifier In File, for the given Component
