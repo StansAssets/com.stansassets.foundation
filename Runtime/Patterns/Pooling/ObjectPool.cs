@@ -21,12 +21,17 @@ namespace StansAssets.Foundation.Patterns
         /// }
         /// </code>
         /// </summary>
-        public struct PooledObject : IDisposable, IEquatable<PooledObject>
+        public readonly struct PooledObject : IDisposable, IEquatable<PooledObject>
         {
             readonly T m_ToReturn;
             readonly ObjectPool<T> m_Pool;
 
-            internal PooledObject(T value, ObjectPool<T> pool)
+            /// <summary>
+            /// Creates `IDisposable` wrapper around poolable object.
+            /// </summary>
+            /// <param name="value"></param>
+            /// <param name="pool"></param>
+            public PooledObject(T value, ObjectPool<T> pool)
             {
                 m_ToReturn = value;
                 m_Pool = pool;
