@@ -65,3 +65,8 @@ Yoy can also install this package via Git URL. To load a package from a Git URL:
   * The latest available release version is [![Last Release](https://img.shields.io/github/v/release/stansassets/com.stansassets.foundation)](https://github.com/StansAssets/com.stansassets.foundation/releases/latest)
 
 For more information about what protocols Unity supports, see [Git URLs](https://docs.unity3d.com/Manual/upm-git.html).
+
+## About Us
+We are committed to developing high quality and engaging entertainment software. Our mission has been to bring a reliable and high-quality Unity Development service to companies and individuals around the globe. 
+At Stan's Assets, we make Plugins, SDKs, Games, VR & AR Applications. Do not hesitate do get in touch, whether you have a question, want to build something, or just to say hi :) [Let's Talk!](mailto:stan@stansassets.com)
+
