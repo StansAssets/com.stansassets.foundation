@@ -15,6 +15,10 @@ Foundation Library is a free open source product that contains lots of useful AP
 * [Editor Utilities.](https://api.stansassets.com/foundation/StansAssets.Foundation.Editor.html)The collection of utility methods for the Unity Editor.
 * [Extensions.](https://api.stansassets.com/foundation/StansAssets.Foundation.Extensions.html) Extension methods for default C# and Unity Objects.
 * [Patterns.](https://api.stansassets.com/foundation/StansAssets.Foundation.Patterns.html) Implementation of well-known design patterns like Singleton, Factory, Pool, etc.
+   * [Event Bus](https://github.com/StansAssets/com.stansassets.foundation/wiki/Event-Bus)
+   * [Singleton](https://github.com/StansAssets/com.stansassets.foundation/wiki/Singleton)
+   * [Objects Pool](https://github.com/StansAssets/com.stansassets.foundation/wiki/Pooling-Pattern)
+   * [Service Locator](https://github.com/StansAssets/com.stansassets.foundation/wiki/Service-Locator)
 * [UI Toolkit.](https://api.stansassets.com/foundation/StansAssets.Foundation.UIElements.html) Helper methods, extensions, utilities for the new Unity [UI Toolkit framework](https://docs.unity3d.com/Manual/UIElements.html).
 
 
