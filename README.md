@@ -8,7 +8,7 @@ Foundation Library is a free open source product that contains lots of useful AP
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/a22ff0164da04d089f68d8209dbe6c10)](https://app.codacy.com/gh/StansAssets/com.stansassets.foundation?utm_source=github.com&utm_medium=referral&utm_content=StansAssets/com.stansassets.foundation&utm_campaign=Badge_Grade_Dashboard)
 
 
-[API Reference](https://api.stansassets.com/foundation/StansAssets.Foundation.html) | [Wiki](https://github.com/StansAssets/com.stansassets.foundation/wiki) | [Unity Forum](https://forum.unity.com/threads/free-stans-assets-foundation-library.975999/)
+[API Reference](https://api.stansassets.com/foundation/StansAssets.Foundation.html) | [Wiki](https://github.com/StansAssets/com.stansassets.foundation/wiki) | [Unity Forum](https://forum.unity.com/threads/free-stans-assets-foundation-library.975999/) | [Asset Store](https://assetstore.unity.com/packages/tools/utilities/foundation-library-179726)
 
 #### Quick links to explore the library:
 * [Utilities.](https://api.stansassets.com/foundation/StansAssets.Foundation.html) The collection of various utility methods.
