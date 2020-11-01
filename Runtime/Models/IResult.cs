@@ -1,4 +1,4 @@
-namespace Models
+namespace StansAssets.Foundation.Models
 {
     /// <summary>
     /// Result model.

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Models
+namespace StansAssets.Foundation.Models
 {
     /// <inheritdoc />
     [Serializable]
