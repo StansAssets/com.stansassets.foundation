@@ -12,6 +12,7 @@
 .stansassets-hyperlink-block:hover Label,
 .stansassets-hyperlink-block:hover VisualElement {
     -unity-background-image-tint-color: cornflowerblue;
+    border-color: cornflowerblue;
     color: cornflowerblue;
     cursor: link;
 }
