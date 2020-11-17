@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using StansAssets.Foundation.Editor;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -35,7 +36,8 @@ namespace StansAssets.Foundation.UIElements
         const string k_ButtonMidClassName = k_ButtonClassName + "--mid";
         const string k_ButtonRightClassName = k_ButtonClassName + "--right";
         const string k_ButtonIconClassName = UssClassName + "__button-icon";
-        const string k_ButtonActiveClassName = k_ButtonClassName + "--active";
+        const string k_ButtonActiveClassNameDark = k_ButtonClassName + "--active-dark";
+        const string k_ButtonActiveClassNameLight = k_ButtonClassName + "--active-light";
 
         readonly List<string> m_Choices = new List<string>();
         readonly List<string> m_Labels = new List<string>();
@@ -209,10 +211,11 @@ namespace StansAssets.Foundation.UIElements
         {
             foreach (var btn in m_Buttons)
             {
-                btn.RemoveFromClassList(k_ButtonActiveClassName);
+                btn.RemoveFromClassList(k_ButtonActiveClassNameDark);
+                btn.RemoveFromClassList(k_ButtonActiveClassNameLight);
             }
 
-            button.AddToClassList(k_ButtonActiveClassName);
+            button.AddToClassList(EditorGUIUtility.isProSkin ? k_ButtonActiveClassNameDark : k_ButtonActiveClassNameLight);
         }
     }
 }

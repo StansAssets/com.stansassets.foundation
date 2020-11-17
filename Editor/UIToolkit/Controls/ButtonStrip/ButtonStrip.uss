@@ -10,8 +10,12 @@
     padding-top: 2px;
 }
 
-.stansassets-button-strip__button--active {
+.stansassets-button-strip__button--active-dark {
     color: aqua;
+}
+
+.stansassets-button-strip__button--active-light {
+    color: #006f6f;
 }
 
 .stansassets-button-strip__button--left {
