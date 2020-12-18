@@ -1,5 +1,4 @@
 #if UNITY_2019_4_OR_NEWER
-using System;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -30,7 +29,7 @@ namespace StansAssets.Foundation.Editor
                 Debug.LogError($"Failed to load VisualTreeAsset at path: {uxmlPath}");
                 return;
             }
-            
+
             visualTree.CloneTree(target);
             ApplyStyle(target, path);
         }
@@ -63,7 +62,7 @@ namespace StansAssets.Foundation.Editor
             var name = typeof(T).Name;
             ApplyStyleForInternalControl(target, name);
         }
-        
+
         internal static void ApplyStyleForInternalControl(VisualElement target, string name)
         {
             ApplyStyle(target, $"{FoundationPackage.UIToolkitControlsPath}/{name}/{name}");
