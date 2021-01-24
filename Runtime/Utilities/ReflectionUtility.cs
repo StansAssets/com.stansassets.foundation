@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
@@ -34,7 +35,33 @@ namespace StansAssets.Foundation
                 .SelectMany(assembly => assembly.GetTypes())
                 .FirstOrDefault(type => type.FullName == null || type.FullName.Equals(typeFullName));
         }
-        
+
+        /// <summary>
+        /// Find all types that implement `T`.
+        /// </summary>
+        /// <typeparam name="T">Base type.</typeparam>
+        /// <returns>Returns all types that are implement provided base type.</returns>
+        public static IEnumerable<Type> FindImplementationsOf<T>()
+        {
+            var baseType = typeof(T);
+            return FindImplementationsOf(baseType);
+        }
+
+
+        /// <summary>
+        /// Find all types that implement `baseType`.
+        /// </summary>
+        /// <param name="baseType">Base type.</param>
+        /// <returns>Returns all types that are implement provided base type.</returns>
+        public static IEnumerable<Type> FindImplementationsOf(Type baseType)
+        {
+            var implementations = AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(assembly => assembly.GetTypes())
+                .Where(type => baseType.IsAssignableFrom(type) && !type.IsInterface && !type.IsAbstract);
+
+            return implementations;
+        }
+
         /// <summary>
         /// Get property value from an object by it's name.
         /// </summary>
@@ -46,7 +73,7 @@ namespace StansAssets.Foundation
         {
             return src.GetType().GetProperty(propName, bindingAttr).GetValue(src, null);
         }
-        
+
         /// <summary>
         /// Get property value from an object by it's name.
         /// </summary>
