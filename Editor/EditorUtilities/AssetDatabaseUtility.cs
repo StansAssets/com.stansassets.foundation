@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using UnityEditor;
+using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace StansAssets.Foundation.Editor
@@ -23,8 +24,19 @@ namespace StansAssets.Foundation.Editor
 
             var serializedObject = new SerializedObject(unityObject);
             inspectorModeInfo.SetValue(serializedObject, InspectorMode.Debug, null);
-            var localIdProp = serializedObject.FindProperty("m_LocalIdentfierInFile");   //note the misspelling!
+            var localIdProp = serializedObject.FindProperty("m_LocalIdentfierInFile"); //note the misspelling!
             return localIdProp.intValue;
+        }
+
+        /// <summary>
+        /// Returns the absolute path name for the asset.
+        /// </summary>
+        /// <param name="asset">A reference to the asset.</param>
+        /// <returns>The asset path name, or null, or an empty string if the asset does not exist.</returns>
+        public static string GetAssetAbsolutePath(Object asset)
+        {
+            var absoluteFilePath = Application.dataPath.Substring(0, Application.dataPath.Length - 7);
+            return $"{absoluteFilePath}/{AssetDatabase.GetAssetPath(asset)}";
         }
     }
 }
