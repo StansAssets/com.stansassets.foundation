@@ -155,7 +155,7 @@ namespace StansAssets.Foundation.Editor
         public ScopeRegistry AddScopeRegistry(string url, string name, IEnumerable<string> scopes)
         {
             ScopeRegistry registry;
-            if (!IsScopeRegistryExists(url))
+            if (!IsScopeRegistryPresent(url))
             {
                 registry = new ScopeRegistry(name, url, scopes);
                 SetScopeRegistry(url, registry);
@@ -202,7 +202,7 @@ namespace StansAssets.Foundation.Editor
         /// <returns>New or existing <see cref="Dependency"/> with given name.</returns>
         public Dependency SetOrUpdateDependency(string name, string version)
         {
-            if (IsDependencyExists(name))
+            if (IsDependencyPresent(name))
             {
                 var newDependency = new Dependency(name, version);
                 var existingDependency = GetDependency(name);
@@ -280,7 +280,7 @@ namespace StansAssets.Foundation.Editor
         /// </summary>
         /// <param name="url">ScopeRegistry url to search for.</param>
         /// <returns>`true` if scoped registry found, `false` otherwise.</returns>
-        public bool IsScopeRegistryExists(string url)
+        public bool IsScopeRegistryPresent(string url)
         {
             return m_ScopeRegistries.ContainsKey(url);
         }
@@ -290,7 +290,7 @@ namespace StansAssets.Foundation.Editor
         /// </summary>
         /// <param name="name">The dependency name to search for.</param>
         /// <returns>`true` if found, `false` otherwise.</returns>
-        public bool IsDependencyExists(string name)
+        public bool IsDependencyPresent(string name)
         {
             return m_Dependencies.ContainsKey(name);
         }

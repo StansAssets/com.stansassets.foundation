@@ -8,11 +8,11 @@
         /// <summary>
         /// Location path for Runtime Resources folder (i.e. resources from this folder will be included in the build)
         /// </summary>
-        public const string RuntimeResourcesFolder = "Assets/Settings/Runtime/Resources";
+        public const string RuntimeResourcesFolderPath = "Assets/Settings/Runtime/Resources";
 
         /// <summary>
         /// Location path for Editor-Only Resources folder
         /// </summary>
-        public const string EditorResourcesFolder = "Assets/Settings/Editor/Resources";
+        public const string EditorResourcesFolderPath = "Assets/Settings/Editor/Resources";
     }
 }

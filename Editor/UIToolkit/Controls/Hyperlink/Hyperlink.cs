@@ -13,12 +13,12 @@ namespace StansAssets.Foundation.UIElements
 
         public new class UxmlTraits : BindableElement.UxmlTraits
         {
-            readonly UxmlStringAttributeDescription m_Link = new UxmlStringAttributeDescription { name = "link" };
+            readonly UxmlStringAttributeDescription m_Url = new UxmlStringAttributeDescription { name = "url" };
 
             public override void Init(VisualElement ve, IUxmlAttributes bag, CreationContext cc)
             {
                 base.Init(ve, bag, cc);
-                ((Hyperlink)ve).Link = m_Link.GetValueFromBag(bag, cc);
+                ((Hyperlink)ve).Url = m_Url.GetValueFromBag(bag, cc);
             }
         }
 
@@ -26,15 +26,15 @@ namespace StansAssets.Foundation.UIElements
         public const string HeaderUssClassName = USSClassName + "__header";
         public const string ContentUssClassName = USSClassName + "__content";
 
-        string m_Link;
+        string m_Url;
         readonly VisualElement m_Container;
 
         public override VisualElement contentContainer => m_Container;
 
-        public string Link
+        public string Url
         {
-            get => m_Link;
-            set => m_Link = value;
+            get => m_Url;
+            set => m_Url = value;
         }
 
         public Hyperlink()
@@ -45,7 +45,7 @@ namespace StansAssets.Foundation.UIElements
             {
                 name = "header",
             };
-            button.clicked += () => { Application.OpenURL(m_Link); };
+            button.clicked += () => { Application.OpenURL(m_Url); };
             button.AddToClassList(HeaderUssClassName);
             
             m_Container = new VisualElement()

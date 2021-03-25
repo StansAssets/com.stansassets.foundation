@@ -38,7 +38,7 @@ namespace StansAssets.Foundation.Editor
             {
                 Name = name;
                 Version = version;
-                TryAssignSemanticVersion();
+                AssignSemanticVersion();
             }
             else
                 throw new ArgumentException("Dependency fullName has wrong format");
@@ -53,7 +53,7 @@ namespace StansAssets.Foundation.Editor
         {
             Name = name;
             Version = version;
-            TryAssignSemanticVersion();
+            AssignSemanticVersion();
         }
 
         internal static bool TryGetNameAndVersion(string fullName, out string name, out string version)
@@ -69,7 +69,7 @@ namespace StansAssets.Foundation.Editor
             return false;
         }
 
-        void TryAssignSemanticVersion()
+        void AssignSemanticVersion()
         {
             HasSemanticVersion = SemanticVersion.TryCreateSemanticVersion(Version, out var semanticVersion);
             if (HasSemanticVersion)
@@ -83,7 +83,7 @@ namespace StansAssets.Foundation.Editor
         public void SetVersion(string version)
         {
             Version = version;
-            TryAssignSemanticVersion();
+            AssignSemanticVersion();
         }
 
         /// <summary>

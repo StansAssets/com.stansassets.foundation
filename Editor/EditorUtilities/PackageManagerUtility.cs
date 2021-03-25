@@ -33,7 +33,7 @@ namespace StansAssets.Foundation.Editor
         /// Sync method to return all the packages installed in the project.
         /// </summary>
         /// <returns>Returns all the packages installed in the project.</returns>
-        public static List<PackageInfo> GetAllProjectPackages()
+        public static List<PackageInfo> GetAllPackagesInProject()
         {
             return AssetDatabase.FindAssets("package")
                 .Select(AssetDatabase.GUIDToAssetPath)
