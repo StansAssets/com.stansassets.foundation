@@ -12,13 +12,14 @@ namespace StansAssets.Foundation.Extensions
         /// A component is returned only if it is found on an active GameObject.
         /// </summary>
         /// <param name="scene">Scene to operate with.</param>
+        /// <param name="includeInactive">Should Components on inactive GameObjects be included in the found set?</param>
         /// <typeparam name="T">Type of the component.</typeparam>
         /// <returns>A component of the matching type, if found.</returns>
-        public static T GetComponentInChildren<T>(this Scene scene) where T : class
+        public static T GetComponentInChildren<T>(this Scene scene, bool includeInactive = false) where T : class
         {
             foreach (var gameObject in scene.GetRootGameObjects())
             {
-                var component = gameObject.GetComponentInChildren<T>();
+                var component = gameObject.GetComponentInChildren<T>(includeInactive);
                 if (component != null)
                 {
                     return component;
