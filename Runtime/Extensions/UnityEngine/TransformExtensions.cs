@@ -23,13 +23,25 @@ namespace StansAssets.Foundation.Extensions
         /// Reset <see cref="Transform"/> component position, scale and rotation.
         /// </summary>
         /// <param name="transform">Transform component.</param>
-        public static void Reset(this Transform transform)
+        /// <param name="relativeTo">Space enum the Reset method relative to.
+        /// Space.Local resets local space values.
+        /// Space.World (default value) resets absolute world space values.</param>
+        public static void Reset(this Transform transform, Space relativeTo = Space.World)
         {
-            transform.localScale = Vector3.one;
-            transform.localPosition = Vector3.zero;
-            transform.localRotation = Quaternion.identity;
+            switch (relativeTo) {
+                case Space.Self:
+                    transform.localScale = Vector3.one;
+                    transform.localPosition = Vector3.zero;
+                    transform.localRotation = Quaternion.identity;
+                    break;
+                case Space.World:
+                    transform.lossyScale = Vector3.one;
+                    transform.position = Vector3.zero;
+                    transform.rotation = Quaternion.identity;
+                    break;
+            }
         }
-
+        
         /// <summary>
         /// Removes all transform children.
         /// </summary>
