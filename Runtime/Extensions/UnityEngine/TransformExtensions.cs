@@ -24,9 +24,10 @@ namespace StansAssets.Foundation.Extensions
         /// </summary>
         /// <param name="transform">Transform component.</param>
         /// <param name="relativeTo">Space enum the Reset method relative to.
-        /// Space.Local resets local space values.
-        /// Space.World (default value) resets absolute world space values.</param>
-        public static void Reset(this Transform transform, Space relativeTo = Space.World)
+        /// Space.Self (default value) resets local space values.
+        /// Space.World resets absolute world space values.
+        /// Using World space may cause visual deformations, which depends on a parent's scale</param>
+        public static void Reset(this Transform transform, Space relativeTo = Space.Self)
         {
             switch (relativeTo) {
                 case Space.Self:
@@ -35,9 +36,8 @@ namespace StansAssets.Foundation.Extensions
                     transform.localRotation = Quaternion.identity;
                     break;
                 case Space.World:
-                    transform.lossyScale = Vector3.one;
-                    transform.position = Vector3.zero;
-                    transform.rotation = Quaternion.identity;
+                    transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
+                    transform.SetLossyScale(Vector3.one);
                     break;
             }
         }
