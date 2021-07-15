@@ -41,7 +41,7 @@ namespace StansAssets.Foundation.Extensions
                     break;
             }
         }
-        
+
         /// <summary>
         /// Removes all transform children.
         /// </summary>
