@@ -40,7 +40,7 @@ namespace StansAssets.Foundation.Extensions
                     transform.SetLossyScale(Vector3.one);
                     break;
                 default:
-                    throw new ArgumentException("Parameter 'relativeTo' contains unknown value. 'Space.Self' and 'Space.World' are accepted", nameof(original));
+                    throw new ArgumentException("Parameter 'relativeTo' contains unknown value. 'Space.Self' and 'Space.World' are accepted", nameof(relativeTo));
             }
         }
 
