@@ -39,6 +39,8 @@ namespace StansAssets.Foundation.Extensions
                     transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
                     transform.SetLossyScale(Vector3.one);
                     break;
+                default:
+                    throw new ArgumentException("Parameter 'relativeTo' contains unknown value. 'Space.Self' and 'Space.World' are accepted", nameof(original));
             }
         }
 
