@@ -23,11 +23,25 @@ namespace StansAssets.Foundation.Extensions
         /// Reset <see cref="Transform"/> component position, scale and rotation.
         /// </summary>
         /// <param name="transform">Transform component.</param>
-        public static void Reset(this Transform transform)
+        /// <param name="relativeTo">Space enum the Reset method relative to.
+        /// Space.Self (default value) resets local space values.
+        /// Space.World resets absolute world space values.
+        /// Using World space may cause visual deformations, which depends on a parent's scale</param>
+        public static void Reset(this Transform transform, Space relativeTo = Space.Self)
         {
-            transform.localScale = Vector3.one;
-            transform.localPosition = Vector3.zero;
-            transform.localRotation = Quaternion.identity;
+            switch (relativeTo) {
+                case Space.Self:
+                    transform.localScale = Vector3.one;
+                    transform.localPosition = Vector3.zero;
+                    transform.localRotation = Quaternion.identity;
+                    break;
+                case Space.World:
+                    transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
+                    transform.SetLossyScale(Vector3.one);
+                    break;
+                default:
+                    throw new System.ArgumentException($"Parameter '{nameof(relativeTo)}' contains unknown value. '{nameof(Space.Self)}' and '{nameof(Space.World)}' are accepted", nameof(relativeTo));
+            }
         }
 
         /// <summary>
