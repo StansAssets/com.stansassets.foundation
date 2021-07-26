@@ -51,11 +51,11 @@ namespace StansAssets.Foundation.Extensions
         }
 
         /// <summary>
-        /// Smoothes a Vector3 that represents euler angles.
+        /// Smooths a Vector3 that represents euler angles.
         /// </summary>
         /// <param name="current">The current Vector3 value.</param>
         /// <param name="target">The target Vector3 value.</param>
-        /// <param name="velocity">A refernce Vector3 used internally.</param>
+        /// <param name="velocity">A reference Vector3 used internally.</param>
         /// <param name="smoothTime">The time to smooth, in seconds.</param>
         /// <returns>The smoothed Vector3 value.</returns>
         public static Vector3 SmoothDampEuler(this in Vector3 current, Vector3 target, ref Vector3 velocity, float smoothTime)

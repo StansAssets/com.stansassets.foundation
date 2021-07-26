@@ -41,7 +41,7 @@ namespace StansAssets.Foundation
     /// This class encodes and decodes JSON strings.
     /// Spec. details, see http://www.json.org/
     ///
-    /// JSON uses Arrays and Objects. These corOnerespond here to the datatypes IList and IDictionary.
+    /// JSON uses Arrays and Objects. These correspond here to the datatypes IList and IDictionary.
     /// All numbers are parsed to doubles.
     /// </summary>
     public static class Json {
