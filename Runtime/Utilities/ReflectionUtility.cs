@@ -10,6 +10,8 @@ namespace StansAssets.Foundation
     /// </summary>
     public static class ReflectionUtility
     {
+        static readonly string[] s_BuiltInAssemblyPrefixes = { "Mono.", "Unity.", "UnityEngine", "UnityEditor", "System", "mscorlib" };
+
         /// <summary>
         /// Methods will iterate all the project Assemblies.
         /// If typeFullName will match new object instance of that type will be created
@@ -41,10 +43,10 @@ namespace StansAssets.Foundation
         /// </summary>
         /// <typeparam name="T">Base type.</typeparam>
         /// <returns>Returns all types that are implement provided base type.</returns>
-        public static IEnumerable<Type> FindImplementationsOf<T>()
+        public static IEnumerable<Type> FindImplementationsOf<T>(bool ignoreBuiltIn = false)
         {
             var baseType = typeof(T);
-            return FindImplementationsOf(baseType);
+            return FindImplementationsOf(baseType, ignoreBuiltIn);
         }
 
 
@@ -53,13 +55,22 @@ namespace StansAssets.Foundation
         /// </summary>
         /// <param name="baseType">Base type.</param>
         /// <returns>Returns all types that are implement provided base type.</returns>
-        public static IEnumerable<Type> FindImplementationsOf(Type baseType)
+        public static IEnumerable<Type> FindImplementationsOf(Type baseType, bool ignoreBuiltIn = false)
         {
-            var implementations = AppDomain.CurrentDomain.GetAssemblies()
+            IEnumerable<Assembly> assemblies = AppDomain.CurrentDomain.GetAssemblies();
+                
+            if(ignoreBuiltIn)
+            {
+                assemblies = assemblies.Where(assembly => 
+                {
+                    var assemblyName = assembly.GetName().Name;
+                    return !s_BuiltInAssemblyPrefixes.Any(prefix => assemblyName.StartsWith(prefix));
+                });
+            }
+
+            return assemblies
                 .SelectMany(assembly => assembly.GetTypes())
                 .Where(type => baseType.IsAssignableFrom(type) && !type.IsInterface && !type.IsAbstract);
-
-            return implementations;
         }
 
         /// <summary>
@@ -84,6 +95,11 @@ namespace StansAssets.Foundation
         public static void SetPropertyValue<T>(object src, string propName, T propValue, BindingFlags bindingAttr = BindingFlags.Instance | BindingFlags.Public)
         {
             src.GetType().GetProperty(propName, bindingAttr).SetValue(src, propValue);
+        }
+
+        public static bool HasDefaultConstructor(Type type)
+        {
+            return type.GetConstructors().Any(constructor => !constructor.GetParameters().Any());
         }
     }
 }
