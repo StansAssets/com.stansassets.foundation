@@ -82,5 +82,42 @@ namespace StansAssets.Foundation.Extensions
             }
             return part;
         }
+
+        /// <summary>
+        /// Searches for a child with the provided name across the whole game objects hierarchy.
+        /// </summary>
+        /// <param name="transform">Transform component.</param>
+        /// <param name="childName">Child name.</param>
+        /// <returns>Child <see cref="Transform"/> component instance.</returns>
+        public static Transform FindChildRecursively(this Transform transform, string childName) {
+            foreach (Transform child in transform) {
+                if (child.name == childName) {
+                    return child;
+                }
+
+                var found = FindChildRecursively(child, childName);
+                if (found != null) {
+                    return found;
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Sets the <see cref="GameObject"/>'s Static flag.
+        /// </summary>
+        /// <param name="transform">Transform component.</param>
+        /// <param name="includeChildren">If true, the Static flag will be set to it's children as well.</param>
+        public static void SetStatic(this Transform transform, bool includeChildren = false) {
+            transform.gameObject.isStatic = true;
+
+            if (includeChildren) {
+                var transforms = transform.GetComponentsInChildren<Transform>(true);
+                foreach (var t in transforms) {
+                    t.gameObject.isStatic = true;
+                }
+            }
+        }
     }
 }
