@@ -44,6 +44,16 @@ namespace StansAssets.Foundation.Async
         }
 
         /// <summary>
+        /// Stops the coroutine.
+        /// An equivalent for [MonoBehaviour.StopCoroutine](https://docs.unity3d.com/ScriptReference/MonoBehaviour.StopCoroutine.html)
+        /// </summary>
+        /// <param name="routine">The <see cref="Coroutine"/> to stop the manually created <see cref="Coroutine"/></param>
+        public static void Stop(Coroutine routine)
+        {
+            GlobalCoroutine.Instance.StopCoroutine(routine);
+        }
+
+        /// <summary>
         /// Waits until the end of the frame after Unity has rendered every Camera and GUI, just before displaying the frame on screen.
         /// Learn more at [WaitForEndOfFrame](https://docs.unity3d.com/ScriptReference/WaitForEndOfFrame.html)
         /// </summary>
