@@ -1,5 +1,6 @@
 using System;
 using UnityEditor;
+using UnityEngine;
 using UnityEngine.Networking;
 
 namespace StansAssets.Foundation.Editor
@@ -9,9 +10,28 @@ namespace StansAssets.Foundation.Editor
     /// </summary>
     public class EditorWebRequest
     {
+        public enum HandlerType
+        {
+            Download,
+            Upload,
+        }
+
+        private string HandlerProgress {
+            get {
+                switch (m_HandlerType)
+                {
+                    default:
+                        return $"Downloaded: {Convert.ToInt32(UnityRequest.downloadedBytes)} bytes";
+                    case HandlerType.Upload:
+                        return $"Uploaded: {Convert.ToInt32(UnityRequest.uploadedBytes)} bytes";
+                }
+            }
+        }
+        
         Action<UnityWebRequest> m_OnComplete = null;
 
         bool m_ShowProgress = false;
+        HandlerType m_HandlerType;
         string m_ProgressDialogTitle = string.Empty;
 
         /// <summary>
@@ -40,9 +60,10 @@ namespace StansAssets.Foundation.Editor
         /// Request will display editor progress dialog with the given title.
         /// </summary>
         /// <param name="title">Editor progress dialog title.</param>
-        public void AddEditorProgressDialog(string title)
+        public void AddEditorProgressDialog(string title, HandlerType handlerType = HandlerType.Download)
         {
             m_ShowProgress = true;
+            m_HandlerType = handlerType;
             m_ProgressDialogTitle = title;
         }
 
@@ -67,12 +88,24 @@ namespace StansAssets.Foundation.Editor
         /// </summary>
         public string DataAsText => UnityRequest.downloadHandler.text;
 
+        private float m_LastUpdate;
+        
         void OnEditorUpdate()
         {
             if (m_ShowProgress)
             {
-                var progress = $"Download Progress: {Convert.ToInt32(UnityRequest.downloadProgress * 100f)}%";
-                EditorUtility.DisplayProgressBar(m_ProgressDialogTitle, progress, UnityRequest.downloadProgress);
+                if (!Application.isBatchMode)
+                {
+                    if (Time.realtimeSinceStartup > m_LastUpdate + 1)
+                    {
+                        Debug.Log(HandlerProgress);
+                        m_LastUpdate = Time.realtimeSinceStartup;
+                    }
+                }
+                else
+                {
+                    EditorUtility.DisplayProgressBar(m_ProgressDialogTitle, HandlerProgress, UnityRequest.downloadProgress);
+                }
             }
 
             if (UnityRequest.isDone)
