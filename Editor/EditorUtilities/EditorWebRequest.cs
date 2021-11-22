@@ -15,9 +15,9 @@ namespace StansAssets.Foundation.Editor
         /// </summary>
         public enum HandlerType
         {
-            ///<summary>Used to download data</summary>
+            ///<summary>Used to download data.</summary>
             Download,
-            ///<summary>Used to upload data</summary>
+            ///<summary>Used to upload data.</summary>
             Upload,
         }
 
@@ -65,6 +65,7 @@ namespace StansAssets.Foundation.Editor
         /// Request will display editor progress dialog with the given title.
         /// </summary>
         /// <param name="title">Editor progress dialog title.</param>
+        /// <param name="handlerType">UnityWebRequest handler type.</param>
         public void AddEditorProgressDialog(string title, HandlerType handlerType = HandlerType.Download)
         {
             m_ShowProgress = true;
