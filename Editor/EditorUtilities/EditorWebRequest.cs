@@ -10,9 +10,14 @@ namespace StansAssets.Foundation.Editor
     /// </summary>
     public class EditorWebRequest
     {
+        /// <summary>
+        /// UnityWebRequest handler type.
+        /// </summary>
         public enum HandlerType
         {
+            ///<summary>Used to download data</summary>
             Download,
+            ///<summary>Used to upload data</summary>
             Upload,
         }
 
