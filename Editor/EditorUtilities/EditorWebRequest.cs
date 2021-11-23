@@ -100,7 +100,7 @@ namespace StansAssets.Foundation.Editor
         {
             if (m_ShowProgress)
             {
-                if (!Application.isBatchMode)
+                if (Application.isBatchMode)
                 {
                     if (Time.realtimeSinceStartup > m_LastUpdate + 1)
                     {
