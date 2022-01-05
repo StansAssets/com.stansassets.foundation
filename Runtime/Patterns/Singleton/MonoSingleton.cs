@@ -29,7 +29,7 @@ namespace StansAssets.Foundation.Patterns
         {
             get
             {
-                if (s_ApplicationIsQuitting)
+                if (s_ApplicationIsQuitting || s_IsDestroyed)
                 {
                     Debug.LogError(
                         $"{typeof(T)} [MonoSingleton] is already destroyed. " +
