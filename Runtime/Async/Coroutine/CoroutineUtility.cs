@@ -42,6 +42,10 @@ namespace StansAssets.Foundation.Async
         {
             GlobalCoroutine.Instance.StopCoroutine(routine);
         }
+      // public static void StopCoroutine(Coroutine routine)
+      // {
+      //     GlobalCoroutine.Instance.StopCoroutine(routine);
+      // }
 
         /// <summary>
         /// Stops the coroutine.
