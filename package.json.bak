@@ -1,0 +1,28 @@
+{
+  "name": "com.stansassets.foundation",
+  "displayName": "Stans Assets - Foundation",
+  "version": "1.0.25",
+  "unity": "2018.4",
+  "description": "Foundation package is a collection of utility methods, design patterns, and extensions for Unity.",
+  "keywords": [
+         "pattern",
+         "utility",
+         "unity",
+         "stansassets"
+     ],
+  "homepage": "https://api.stansassets.com/",
+  "bugs": {
+     "url": "https://github.com/StansAssets/com.stansassets.foundation/issues",
+     "email" : "support@stansassets.com"
+   },
+  "repository": {
+      "type": "git",
+      "url": "ssh://git@github.com:StansAssets/com.stansassets.foundation.git"
+  },
+  "license": "MIT",
+  "author": {
+          "name": "Stan's Assets",
+          "email": "stan@stansassets.com",
+          "url": "https://stansassets.com/"
+    }
+}
