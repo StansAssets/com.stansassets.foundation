@@ -112,7 +112,7 @@ namespace StansAssets.Foundation
         }
 
         /// <summary>
-        /// Find all method custom attributes of the type <c>T</c>.
+        /// Find all methods with custom attribute of type <c>T</c>.
         /// </summary>
         /// <param name="methodBindingFlags">Method binding Attributes. ` BindingFlags.Instance | BindingFlags.Public` by default.</param>
         /// <param name="inherit"><c>true</c> to search in the member's inheritance chain to find the attributes</param>
