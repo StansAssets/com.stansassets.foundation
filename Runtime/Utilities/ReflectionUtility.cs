@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using StansAssets.Foundation.Extensions;
 
 namespace StansAssets.Foundation
 {
@@ -22,7 +23,9 @@ namespace StansAssets.Foundation
         public static object CreateInstance(string typeFullName)
         {
             var type = FindType(typeFullName);
-            return type != null ? Activator.CreateInstance(type) : null;
+            return type != null && type.CanCreateInstanceUsingDefaultConstructor()
+                ? Activator.CreateInstance(type)
+                : null;
         }
 
         /// <summary>
@@ -49,24 +52,35 @@ namespace StansAssets.Foundation
             return FindImplementationsOf(baseType, ignoreBuiltIn);
         }
 
+        /// <summary>
+        /// Return all project assemblies with option to filter the Unity built-in assemblies
+        /// </summary>
+        /// <param name="ignoreBuiltIn">Ignores Unity built-in assembles</param>
+        /// <returns>Returns all assemblies that match filter criteria</returns>
+        public static IEnumerable<Assembly> GetAssemblies(bool ignoreBuiltIn = false)
+        {
+            IEnumerable<Assembly> assemblies = AppDomain.CurrentDomain.GetAssemblies();
+
+            if (ignoreBuiltIn)
+            {
+                assemblies = assemblies.Where(assembly => {
+                    var assemblyName = assembly.GetName().Name;
+                    return !s_BuiltInAssemblyPrefixes.Any(prefix => assemblyName.StartsWith(prefix));
+                });
+            }
+
+            return assemblies;
+        }
 
         /// <summary>
         /// Find all types that implement `baseType`.
         /// </summary>
         /// <param name="baseType">Base type.</param>
+        /// <param name="ignoreBuiltIn">Ignores Unity built-in assembles</param>
         /// <returns>Returns all types that are implement provided base type.</returns>
         public static IEnumerable<Type> FindImplementationsOf(Type baseType, bool ignoreBuiltIn = false)
         {
-            IEnumerable<Assembly> assemblies = AppDomain.CurrentDomain.GetAssemblies();
-                
-            if(ignoreBuiltIn)
-            {
-                assemblies = assemblies.Where(assembly => 
-                {
-                    var assemblyName = assembly.GetName().Name;
-                    return !s_BuiltInAssemblyPrefixes.Any(prefix => assemblyName.StartsWith(prefix));
-                });
-            }
+            var assemblies = GetAssemblies(ignoreBuiltIn);
 
             return assemblies
                 .SelectMany(assembly => assembly.GetTypes())
@@ -82,7 +96,7 @@ namespace StansAssets.Foundation
         /// <returns>Property value.</returns>
         public static object GetPropertyValue(object src, string propName, BindingFlags bindingAttr = BindingFlags.Instance | BindingFlags.Public)
         {
-            return src.GetType().GetProperty(propName, bindingAttr).GetValue(src, null);
+            return src.GetType().GetProperty(propName, bindingAttr)?.GetValue(src, null);
         }
 
         /// <summary>
@@ -94,12 +108,25 @@ namespace StansAssets.Foundation
         /// <param name="bindingAttr">Property binding Attributes. ` BindingFlags.Instance | BindingFlags.Public` by default.</param>
         public static void SetPropertyValue<T>(object src, string propName, T propValue, BindingFlags bindingAttr = BindingFlags.Instance | BindingFlags.Public)
         {
-            src.GetType().GetProperty(propName, bindingAttr).SetValue(src, propValue);
+            src.GetType().GetProperty(propName, bindingAttr)?.SetValue(src, propValue);
         }
 
-        public static bool HasDefaultConstructor(Type type)
+        /// <summary>
+        /// Find all method custom attributes of the type <c>T</c>.
+        /// </summary>
+        /// <param name="methodBindingFlags">Method binding Attributes. ` BindingFlags.Instance | BindingFlags.Public` by default.</param>
+        /// <param name="inherit"><c>true</c> to search in the member's inheritance chain to find the attributes</param>
+        /// <param name="ignoreBuiltIn"><c>true</c> to ignores the Unity built-in assemblies</param>
+        /// <typeparam name="T">Type of the custom attribute to search</typeparam>
+        /// <returns></returns>
+        public static IEnumerable<MethodInfo> FindMethodsWithCustomAttributes<T>(BindingFlags methodBindingFlags = BindingFlags.Instance | BindingFlags.Public, bool inherit = true, bool ignoreBuiltIn = false)
         {
-            return type.GetConstructors().Any(constructor => !constructor.GetParameters().Any());
+            var assemblies = GetAssemblies(ignoreBuiltIn);
+
+            return assemblies
+                .SelectMany(assembly => assembly.GetTypes())
+                .SelectMany(type => type.GetMethods(methodBindingFlags))
+                .Where(methodInfo => methodInfo.GetCustomAttributes(typeof(T), inherit).Length > 0);
         }
     }
 }
