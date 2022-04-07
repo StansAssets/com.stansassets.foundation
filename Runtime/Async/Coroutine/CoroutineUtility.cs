@@ -5,7 +5,7 @@ using UnityEngine;
 namespace StansAssets.Foundation.Async
 {
     /// <summary>
-    /// Coroutine helper methods and <see cref="MonoBehaviour"/> callbacks.
+    /// Coroutine helper methods and <see cref="MonoBehaviour"/> callbacks. Automation test.
     /// </summary>
     public static class CoroutineUtility
     {
