@@ -10,8 +10,8 @@ namespace StansAssets.Foundation.Async
         public abstract void Init();
 
         public void Enqueue(Action action) => s_ExecutionQueue.Enqueue(action);
-
-        protected void Update()
+        //TODO: Implement generic update methid like generic implementation : MainThreadDispatcher<T> where T : IDispatcherUpdate
+        protected virtual void Update()
         {
             if(s_ExecutionQueue.TryDequeue(out var action))
                 action.Invoke();
