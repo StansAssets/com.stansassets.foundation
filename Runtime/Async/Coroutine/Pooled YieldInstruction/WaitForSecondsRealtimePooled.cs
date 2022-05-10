@@ -1,16 +1,15 @@
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace StansAssets.Foundation.Async
 {
-    public sealed class WaitForSecondsRealtimePooled : PooledYieldInstruction 
+    public sealed class WaitForSecondsRealtimePooled : PooledYieldInstruction
     {
-        private float m_waitUntilTime = -1f;
-        private float m_waitTime;
-        
-        public override bool keepWaiting 
+        float m_waitTime;
+        float m_waitUntilTime = -1f;
+
+        public override bool keepWaiting
         {
-            get 
+            get
             {
                 if (m_waitUntilTime < 0.0f)
                     m_waitUntilTime = Time.realtimeSinceStartup + m_waitTime;
@@ -24,10 +23,11 @@ namespace StansAssets.Foundation.Async
         public override void Reset()
         {
             m_waitUntilTime = -1f;
-            YieldPool.BackToPool(this);;
+            YieldPool.BackToPool(this);
+            ;
         }
 
-        public WaitForSecondsRealtimePooled Wait(float time) 
+        public WaitForSecondsRealtimePooled Wait(float time)
         {
             m_waitTime = time;
             return this;

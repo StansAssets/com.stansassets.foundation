@@ -1,17 +1,18 @@
-using System.Runtime.CompilerServices;
 using System;
 
-namespace StansAssets.Foundation.Async {
+namespace StansAssets.Foundation.Async
+{
     public sealed class WaitUntilPooled : PooledYieldInstruction
     {
-        private Func<bool> m_predicate;
-        private bool m_waiting;
-        public override bool keepWaiting 
+        Func<bool> m_predicate;
+        bool m_waiting;
+
+        public override bool keepWaiting
         {
-            get 
+            get
             {
                 m_waiting = !m_predicate();
-                if(!m_waiting)
+                if (!m_waiting)
                     YieldPool.BackToPool(this);
                 return m_waiting;
             }
