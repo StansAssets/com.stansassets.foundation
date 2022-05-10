@@ -7,11 +7,11 @@ namespace StansAssets.Foundation.Async
 {
     public static class YieldPool 
     {
-        private static Dictionary<Type, DefaultPool<PooledYieldInstruction>> m_instructions;
+        private static Dictionary<Type, ObjectPool<PooledYieldInstruction>> m_instructions;
         private const int k_defaultPoolSize = 10;
         static YieldPool() 
         {
-            m_instructions = new Dictionary<Type, DefaultPool<PooledYieldInstruction>>();
+            m_instructions = new Dictionary<Type, ObjectPool<PooledYieldInstruction>>();
             Add<WaitForSecondsPooled>();
             Add<WaitUntilPooled>();
             Add<WaitWhilePooled>();
@@ -20,7 +20,7 @@ namespace StansAssets.Foundation.Async
 
         private static void Add<T>() where T: PooledYieldInstruction, new() 
         {
-            m_instructions.Add(typeof(T), new DefaultPool<PooledYieldInstruction>());
+            m_instructions.Add(typeof(T), new ObjectPool<PooledYieldInstruction>(() => new T(), null));
             for (var i = 0; i < k_defaultPoolSize; i++)
             {
                 m_instructions[typeof(T)].Release(new T());

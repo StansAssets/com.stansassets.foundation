@@ -19,7 +19,7 @@ namespace StansAssets.Foundation.Async {
 
         public WaitUntilPooled Wait(Func<bool> predicate)
         {
-            this.m_predicate = predicate;
+            m_predicate = predicate;
             m_waiting = false;
             return this;
         }

@@ -20,7 +20,7 @@ namespace StansAssets.Foundation.Async
 
         public WaitWhilePooled Wait(Func<bool> predicate)
         {
-            this.m_predicate = predicate;
+            m_predicate = predicate;
             m_waiting = false;
             return this;
         }
