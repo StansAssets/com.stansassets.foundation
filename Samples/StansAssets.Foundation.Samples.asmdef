@@ -1,0 +1,16 @@
+{
+    "name": "StansAssets.Foundation.Samples",
+    "rootNamespace": "",
+    "references": [
+        "StansAssets.Foundation"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
