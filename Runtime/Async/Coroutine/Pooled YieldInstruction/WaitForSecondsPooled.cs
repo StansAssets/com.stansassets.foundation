@@ -1,3 +1,4 @@
+#if UNITY_2020_1_OR_NEWER
 using UnityEngine;
 
 namespace StansAssets.Foundation.Async
@@ -34,3 +35,4 @@ namespace StansAssets.Foundation.Async
         }
     }
 }
+#endif
