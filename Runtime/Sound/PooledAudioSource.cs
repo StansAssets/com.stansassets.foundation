@@ -26,6 +26,10 @@ namespace StansAssets.Foundation.Audio
             m_AudioSource.playOnAwake = false;
         }
 
+        /// <summary>
+        /// Method will play audo clip once, and as soon as audio clip is played
+        /// the 'Release' method will be called.
+        /// </summary>
         public void PlayOneShot(AudioClip clip)
         {
             m_GameObject.name = clip.name;
