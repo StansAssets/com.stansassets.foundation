@@ -53,6 +53,12 @@ namespace StansAssets.Foundation.Audio
             });
         }
 
+
+        /// <summary>
+        /// Will take avaliable pooled audio source to play clip once.
+        /// The pooled audio source will be released after clip is played.
+        /// </summary>
+        /// <param name="clip">The audio clip to play.</param>
         public void PlayOneShot(AudioClip clip)
         {
             m_Pool.Get().PlayOneShot(clip);

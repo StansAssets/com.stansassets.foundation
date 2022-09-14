@@ -30,6 +30,7 @@ namespace StansAssets.Foundation.Audio
         /// Method will play audo clip once, and as soon as audio clip is played
         /// the 'Release' method will be called.
         /// </summary>
+        /// <param name="clip">The audio clip to play.</param>
         public void PlayOneShot(AudioClip clip)
         {
             m_GameObject.name = clip.name;
