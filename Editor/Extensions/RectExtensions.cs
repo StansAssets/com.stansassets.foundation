@@ -150,7 +150,10 @@ namespace StansAssets.Foundation.Editor.Extensions
         /// <returns>New Rect instance.</returns>
         public static Rect RightOf(this Rect @this, Rect other)
         {
-            return new Rect(other.x + other.width, @this.y, @this.width, @this.height);
+            var rect = new Rect(@this);
+            rect.center = new Vector2(rect.center.x, other.center.y);
+            rect.x = other.x + other.width;
+            return rect;
         }
 
         /// <summary>
@@ -161,7 +164,10 @@ namespace StansAssets.Foundation.Editor.Extensions
         /// <returns>New Rect instance.</returns>
         public static Rect LeftOf(this Rect @this, Rect other)
         {
-            return new Rect(other.x - other.width, @this.y, @this.width, @this.height);
+            var rect = new Rect(@this);
+            rect.center = new Vector2(rect.center.x, other.center.y);
+            rect.x = other.x - rect.width;
+            return rect;
         }
 
         /// <summary>
@@ -172,7 +178,10 @@ namespace StansAssets.Foundation.Editor.Extensions
         /// <returns>New Rect instance.</returns>
         public static Rect Above(this Rect @this, Rect other)
         {
-            return new Rect(@this.x, other.y - other.height, @this.width, @this.height);
+            var rect = new Rect(@this);
+            rect.center = new Vector2(other.center.x, rect.center.y);
+            rect.y = other.y - rect.height;
+            return rect;
         }
         
         /// <summary>
@@ -183,7 +192,10 @@ namespace StansAssets.Foundation.Editor.Extensions
         /// <returns>New Rect instance.</returns>
         public static Rect Below(this Rect @this, Rect other)
         {
-            return new Rect(@this.x, other.y + other.height, @this.width, @this.height);
+            var rect = new Rect(@this);
+            rect.center = new Vector2(other.center.x, rect.center.y);
+            rect.y = other.y + other.height;
+            return rect;
         }
     }
 }
