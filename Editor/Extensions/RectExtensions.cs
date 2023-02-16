@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace StansAssets.Foundation.Extensions
+namespace StansAssets.Foundation.Editor.Extensions
 {
     /// <summary>
     /// Unity `Rect` extension methods.
@@ -118,11 +118,12 @@ namespace StansAssets.Foundation.Extensions
         /// <returns>New Rect instance.</returns>
         public static Rect Pad(this Rect @this, float left, float top, float right, float bottom)
         {
-            @this.xMin = left;
-            @this.yMin = top;
-            @this.xMax = right;
-            @this.yMax = bottom;
-            return new Rect(@this);
+            var width = @this.width - (left + right);
+            var height = @this.height - (top + bottom);
+            var x = @this.x + (left + right) / 2;
+            var y = @this.y + (top + bottom) / 2;
+            
+            return new Rect(x, y, width, height);
         }
 
         /// <summary>
@@ -133,7 +134,12 @@ namespace StansAssets.Foundation.Extensions
         /// <returns>New Rect instance.</returns>
         public static Rect PadSides(this Rect @this, float padding)
         {
-            return new Rect(padding, padding, @this.width - padding * 2f, @this.height - padding * 2f);
+            var width = @this.width - padding * 2f;
+            var height = @this.height - padding * 2f;
+            var x = @this.x + padding;
+            var y = @this.y + padding;
+
+            return new Rect(x, y, width, height);
         }
 
         /// <summary>
@@ -166,7 +172,7 @@ namespace StansAssets.Foundation.Extensions
         /// <returns>New Rect instance.</returns>
         public static Rect Above(this Rect @this, Rect other)
         {
-            return new Rect(@this.x, other.y + other.height, @this.width, @this.height);
+            return new Rect(@this.x, other.y - other.height, @this.width, @this.height);
         }
         
         /// <summary>
@@ -177,7 +183,7 @@ namespace StansAssets.Foundation.Extensions
         /// <returns>New Rect instance.</returns>
         public static Rect Below(this Rect @this, Rect other)
         {
-            return new Rect(@this.x, other.y - other.height, @this.width, @this.height);
+            return new Rect(@this.x, other.y + other.height, @this.width, @this.height);
         }
     }
 }

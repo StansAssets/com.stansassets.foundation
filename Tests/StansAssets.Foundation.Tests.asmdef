@@ -2,7 +2,8 @@
     "name": "StansAssets.Foundation.Tests",
     "rootNamespace": "",
     "references": [
-        "StansAssets.Foundation"
+        "StansAssets.Foundation",
+        "StansAssets.Foundation.Editor"
     ],
     "includePlatforms": [
         "Editor"
