@@ -118,12 +118,9 @@ namespace StansAssets.Foundation.Editor.Extensions
         /// <returns>New Rect instance.</returns>
         public static Rect Pad(this Rect @this, float left, float top, float right, float bottom)
         {
-            var width = @this.width - (left + right);
-            var height = @this.height - (top + bottom);
-            var x = @this.x + (left + right) / 2;
-            var y = @this.y + (top + bottom) / 2;
-            
-            return new Rect(x, y, width, height);
+            return new Rect(@this.x + left, @this.y + top,
+                @this.width - (left / 2f + right / 2f) * 2f,
+                @this.height - (top / 2f + bottom / 2f) * 2f);
         }
 
         /// <summary>
@@ -134,12 +131,8 @@ namespace StansAssets.Foundation.Editor.Extensions
         /// <returns>New Rect instance.</returns>
         public static Rect PadSides(this Rect @this, float padding)
         {
-            var width = @this.width - padding * 2f;
-            var height = @this.height - padding * 2f;
-            var x = @this.x + padding;
-            var y = @this.y + padding;
-
-            return new Rect(x, y, width, height);
+            return new Rect(@this.x + padding, @this.y + padding, 
+                @this.width - padding * 2f, @this.height - padding * 2f);
         }
 
         /// <summary>
@@ -150,10 +143,7 @@ namespace StansAssets.Foundation.Editor.Extensions
         /// <returns>New Rect instance.</returns>
         public static Rect RightOf(this Rect @this, Rect other)
         {
-            var rect = new Rect(@this);
-            rect.center = new Vector2(rect.center.x, other.center.y);
-            rect.x = other.x + other.width;
-            return rect;
+            return new Rect(other.x + other.width, @this.y, @this.width, @this.height);
         }
 
         /// <summary>
@@ -164,10 +154,7 @@ namespace StansAssets.Foundation.Editor.Extensions
         /// <returns>New Rect instance.</returns>
         public static Rect LeftOf(this Rect @this, Rect other)
         {
-            var rect = new Rect(@this);
-            rect.center = new Vector2(rect.center.x, other.center.y);
-            rect.x = other.x - rect.width;
-            return rect;
+            return new Rect(other.x - @this.width, @this.y, @this.width, @this.height);
         }
 
         /// <summary>
@@ -178,10 +165,7 @@ namespace StansAssets.Foundation.Editor.Extensions
         /// <returns>New Rect instance.</returns>
         public static Rect Above(this Rect @this, Rect other)
         {
-            var rect = new Rect(@this);
-            rect.center = new Vector2(other.center.x, rect.center.y);
-            rect.y = other.y - rect.height;
-            return rect;
+            return new Rect(@this.x, other.y - @this.height, @this.width, @this.height);
         }
         
         /// <summary>
@@ -192,10 +176,7 @@ namespace StansAssets.Foundation.Editor.Extensions
         /// <returns>New Rect instance.</returns>
         public static Rect Below(this Rect @this, Rect other)
         {
-            var rect = new Rect(@this);
-            rect.center = new Vector2(other.center.x, rect.center.y);
-            rect.y = other.y + other.height;
-            return rect;
+            return new Rect(@this.x, other.y + other.height, @this.width, @this.height);
         }
     }
 }
