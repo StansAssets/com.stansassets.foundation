@@ -12,17 +12,19 @@ namespace StansAssets.Foundation.Tests.Extensions
         {
             // Arrange.
             var targetRect = new Rect(45f, 10f, 20f, 10f);
-            var expectedWidth = 20f;
+            var width = 20f;
             var height = targetRect.height;
-            var center = new Vector2(targetRect.x + expectedWidth / 2, targetRect.center.y);
+            var x = targetRect.x;
+            var y = targetRect.y;
 
             // Act.
-            var result = targetRect.WithWidth(expectedWidth);
+            var result = targetRect.WithWidth(width);
 
             // Assert.
-            Assert.AreEqual(expectedWidth, result.width, "Width is incorrect");
+            Assert.AreEqual(width, result.width, "Width is incorrect");
             Assert.AreEqual(height, result.height, "Height is incorrect");
-            Assert.AreEqual(center, result.center, "Center is incorrect");
+            Assert.AreEqual(x, result.x, "X position is incorrect");
+            Assert.AreEqual(y, result.y, "Y position is incorrect");
         }
 
         [Test]
@@ -30,17 +32,19 @@ namespace StansAssets.Foundation.Tests.Extensions
         {
             // Arrange.
             var targetRect = new Rect(45f, 10f, 20f, 10f);
-            var expectedHeight = 20.3f;
+            var height = 20.3f;
             var width = targetRect.width;
-            var center = new Vector2(targetRect.center.x, targetRect.y + expectedHeight / 2);
+            var x = targetRect.x;
+            var y = targetRect.y;
 
             // Act.
-            var result = targetRect.WithHeight(expectedHeight);
+            var result = targetRect.WithHeight(height);
 
             // Assert.
-            Assert.AreEqual(expectedHeight, result.height, "Height is incorrect");
+            Assert.AreEqual(height, result.height, "Height is incorrect");
             Assert.AreEqual(width, result.width, "Width is incorrect");
-            Assert.AreEqual(center, result.center, "Center is incorrect");
+            Assert.AreEqual(x, result.x, "X position is incorrect");
+            Assert.AreEqual(y, result.y, "Y position is incorrect");
         }
 
         [Test]
@@ -49,14 +53,16 @@ namespace StansAssets.Foundation.Tests.Extensions
             // Arrange.
             var targetRect = new Rect(45f, 10f, 20f, 10f);
             var expectedSize = new Vector2(15f, 20f);
-            var center = new Vector2(targetRect.x + expectedSize.x / 2, targetRect.y + expectedSize.y / 2);
+            var x = targetRect.x;
+            var y = targetRect.y;
 
             // Act.
             var result = targetRect.WithSize(expectedSize);
 
             // Assert.
             Assert.AreEqual(expectedSize, result.size, "Size is incorrect");
-            Assert.AreEqual(center, result.center, "Center is incorrect");
+            Assert.AreEqual(x, result.x, "X position is incorrect");
+            Assert.AreEqual(y, result.y, "Y position is incorrect");
         }
 
         [Test]
@@ -66,16 +72,16 @@ namespace StansAssets.Foundation.Tests.Extensions
             var targetRect = new Rect(45f, 10f, 20f, 10f);
             var offset = 14f;
             var expectedXPosition = targetRect.x + offset;
-            var yPosition = targetRect.y;
-            var center = new Vector2(expectedXPosition + targetRect.width / 2, yPosition + targetRect.height / 2);
+            var y = targetRect.y;
+            var size = targetRect.size;
 
             // Act.
             var result = targetRect.ShiftHorizontally(offset);
 
             // Assert.
             Assert.AreEqual(expectedXPosition, result.x, "X position is incorrect");
-            Assert.AreEqual(yPosition, result.y, "Y position is incorrect");
-            Assert.AreEqual(center, result.center, "Center is incorrect");
+            Assert.AreEqual(y, result.y, "Y position is incorrect");
+            Assert.AreEqual(size, result.size, "Size is incorrect");
         }
 
         [Test]
@@ -85,16 +91,16 @@ namespace StansAssets.Foundation.Tests.Extensions
             var targetRect = new Rect(45f, 10f, 20f, 10f);
             var offset = 17.5f;
             var expectedYPosition = targetRect.y + offset;
-            var xPosition = targetRect.x;
-            var center = new Vector2(xPosition + targetRect.width / 2, expectedYPosition + targetRect.height / 2);
+            var x = targetRect.x;
+            var size = targetRect.size;
 
             // Act.
             var result = targetRect.ShiftVertically(offset);
 
             // Assert.
             Assert.AreEqual(expectedYPosition, result.y, "Y position is incorrect");
-            Assert.AreEqual(xPosition, result.x, "X position is incorrect");
-            Assert.AreEqual(center, result.center, "Center is incorrect");
+            Assert.AreEqual(x, result.x, "X position is incorrect");
+            Assert.AreEqual(size, result.size, "Size is incorrect");
         }
 
         [Test]
@@ -105,7 +111,8 @@ namespace StansAssets.Foundation.Tests.Extensions
             var width = 34.2f;
             var expectedWidth = targetRect.width + width;
             var height = targetRect.height;
-            var center = new Vector2(targetRect.x + expectedWidth / 2, targetRect.y + height / 2);
+            var x = targetRect.x;
+            var y = targetRect.y;
 
             // Act.
             var result = targetRect.AddWidth(width);
@@ -113,7 +120,8 @@ namespace StansAssets.Foundation.Tests.Extensions
             // Assert.
             Assert.AreEqual(expectedWidth, result.width, "Width is incorrect");
             Assert.AreEqual(height, result.height, "Height is incorrect");
-            Assert.AreEqual(center, result.center, "Center is incorrect");
+            Assert.AreEqual(x, result.x, "X position is incorrect");
+            Assert.AreEqual(y, result.y, "Y position is incorrect");
         }
 
         [Test]
@@ -124,7 +132,8 @@ namespace StansAssets.Foundation.Tests.Extensions
             var height = 31f;
             var expectedHeight = targetRect.height + height;
             var width = targetRect.width;
-            var center = new Vector2(targetRect.x + width / 2, targetRect.y + expectedHeight / 2);
+            var x = targetRect.x;
+            var y = targetRect.y;
 
             // Act.
             var result = targetRect.AddHeight(height);
@@ -132,7 +141,8 @@ namespace StansAssets.Foundation.Tests.Extensions
             // Assert.
             Assert.AreEqual(expectedHeight, result.height, "Height is incorrect");
             Assert.AreEqual(width, result.width, "Width is incorrect");
-            Assert.AreEqual(center, result.center, "Center is incorrect");
+            Assert.AreEqual(x, result.x, "X position is incorrect");
+            Assert.AreEqual(y, result.y, "Y position is incorrect");
         }
 
         [Test]
@@ -142,14 +152,16 @@ namespace StansAssets.Foundation.Tests.Extensions
             var targetRect = new Rect(45f, 10f, 20f, 10f);
             var size = new Vector2(12f, 5f);
             var expectedSize = new Vector2(targetRect.size.x + size.x, targetRect.size.y + size.y);
-            var center = new Vector2(targetRect.x + expectedSize.x / 2, targetRect.y + expectedSize.y / 2);
+            var x = targetRect.x;
+            var y = targetRect.y;
 
             // Act.
             var result = targetRect.AddSize(size);
 
             // Assert.
             Assert.AreEqual(expectedSize, result.size, "Size is incorrect");
-            Assert.AreEqual(center, result.center, "Center is incorrect");
+            Assert.AreEqual(x, result.x, "X position is incorrect");
+            Assert.AreEqual(y, result.y, "Y position is incorrect");
         }
 
         [Test]
@@ -162,7 +174,7 @@ namespace StansAssets.Foundation.Tests.Extensions
 
             var expectedXPosition = targetRect.x + xOffset;
             var expectedYPosition = targetRect.y + yOffset;
-            var center = new Vector2(expectedXPosition + targetRect.width / 2, expectedYPosition + targetRect.height / 2);
+            var size = targetRect.size;
 
             // Act.
             var result= targetRect.Translate(xOffset, yOffset);
@@ -170,7 +182,7 @@ namespace StansAssets.Foundation.Tests.Extensions
             // Assert.
             Assert.AreEqual(expectedXPosition, result.x, "X position is incorrect");
             Assert.AreEqual(expectedYPosition, result.y, "Y position is incorrect");
-            Assert.AreEqual(center, result.center, "Center is incorrect");
+            Assert.AreEqual(size, result.size, "Size is incorrect");
         }
 
         [Test]
@@ -183,7 +195,7 @@ namespace StansAssets.Foundation.Tests.Extensions
             var result = targetRect.Pad(0.0f, 0.0f, 0.0f, 0.0f);
 
             // Assert.
-            Assert.AreEqual(targetRect, result, "Rect are not equal to expected result");
+            Assert.AreEqual(targetRect, result, "Incorrect expected result");
         }
 
         [Test]
@@ -199,7 +211,7 @@ namespace StansAssets.Foundation.Tests.Extensions
             var result = targetRect.Pad(1f, 1f, 1f, 3f);
 
             // Assert.
-            Assert.AreEqual(expectedRect, result, "Rect are not equal to expected result");
+            Assert.AreEqual(expectedRect, result, "Incorrect expected result");
         }
 
         [Test]
@@ -215,7 +227,7 @@ namespace StansAssets.Foundation.Tests.Extensions
             var result = targetRect.Pad(-1f, 1f, 1f, -3f);
 
             // Assert.
-            Assert.AreEqual(expectedRect, result, "Rect are not equal to expected result");
+            Assert.AreEqual(expectedRect, result, "Incorrect expected result");
         }
 
         [Test]
@@ -231,7 +243,7 @@ namespace StansAssets.Foundation.Tests.Extensions
             var result = targetRect.Pad(-1f, -1f, -1f, -2f);
 
             // Assert.
-            Assert.AreEqual(expectedRect, result, "Rect are not equal to expected result");
+            Assert.AreEqual(expectedRect, result, "Incorrect expected result");
         }
 
         [Test]
@@ -245,7 +257,7 @@ namespace StansAssets.Foundation.Tests.Extensions
             var result = targetRect.PadSides(padding);
 
             // Assert.
-            Assert.AreEqual(targetRect, result, "Rect are not equal to expected result");
+            Assert.AreEqual(targetRect, result, "Incorrect expected result");
         }
 
         [Test]
@@ -262,7 +274,7 @@ namespace StansAssets.Foundation.Tests.Extensions
             var result = targetRect.PadSides(padding);
 
             // Assert.
-            Assert.AreEqual(expectedRect, result, "Rect are not equal to expected result");
+            Assert.AreEqual(expectedRect, result, "Incorrect expected result");
         }
 
         [Test]
@@ -279,7 +291,7 @@ namespace StansAssets.Foundation.Tests.Extensions
             var result = targetRect.PadSides(negativePadding);
 
             // Assert.
-            Assert.AreEqual(expectedRect, result, "Rect are not equal to expected result");
+            Assert.AreEqual(expectedRect, result, "Incorrect expected result");
         }
 
         [Test]
@@ -324,7 +336,8 @@ namespace StansAssets.Foundation.Tests.Extensions
             var otherRect = new Rect(0f, 5f, 20f, 20f);
             var width = targetRect.width;
             var height = targetRect.height;
-            var center = new Vector2(targetRect.center.x, otherRect.y - height + height / 2);
+            var x = targetRect.x;
+            var y = otherRect.y - targetRect.height;
 
             // Act.
             var result = targetRect.Above(otherRect);
@@ -332,7 +345,8 @@ namespace StansAssets.Foundation.Tests.Extensions
             // Assert.
             Assert.AreEqual(height, result.height, "Height is incorrect");
             Assert.AreEqual(width, result.width, "Width is incorrect");
-            Assert.AreEqual(center, result.center, "Center is incorrect");
+            Assert.AreEqual(x, result.x, "X position is incorrect");
+            Assert.AreEqual(y, result.y, "Y position is incorrect");
         }
 
         [Test]
@@ -343,7 +357,8 @@ namespace StansAssets.Foundation.Tests.Extensions
             var otherRect = new Rect(10f, 5f, 20f, 20f);
             var width = targetRect.width;
             var height = targetRect.height;
-            var center = new Vector2(targetRect.center.x, otherRect.y + otherRect.height + height / 2);
+            var x = targetRect.x;
+            var y = otherRect.y + otherRect.height;
 
             // Act.
             var result = targetRect.Below(otherRect);
@@ -351,7 +366,8 @@ namespace StansAssets.Foundation.Tests.Extensions
             // Assert.
             Assert.AreEqual(height, result.height, "Height is incorrect");
             Assert.AreEqual(width, result.width, "Width is incorrect");
-            Assert.AreEqual(center, result.center, "Center is incorrect");
+            Assert.AreEqual(x, result.x, "X position is incorrect");
+            Assert.AreEqual(y, result.y, "Y position is incorrect");
         }
     }
 }
