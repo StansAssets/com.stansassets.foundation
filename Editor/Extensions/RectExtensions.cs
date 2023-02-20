@@ -118,9 +118,9 @@ namespace StansAssets.Foundation.Editor.Extensions
         /// <returns>New Rect instance.</returns>
         public static Rect Pad(this Rect @this, float left, float top, float right, float bottom)
         {
-            return new Rect(@this.x + left, @this.y + top,
-                @this.width - (left / 2f + right / 2f) * 2f,
-                @this.height - (top / 2f + bottom / 2f) * 2f);
+            return new Rect(@this.x + left, @this.y + top, 
+                @this.width - left - right, 
+                @this.height - top - bottom);
         }
 
         /// <summary>
@@ -132,7 +132,8 @@ namespace StansAssets.Foundation.Editor.Extensions
         public static Rect PadSides(this Rect @this, float padding)
         {
             return new Rect(@this.x + padding, @this.y + padding, 
-                @this.width - padding * 2f, @this.height - padding * 2f);
+                @this.width - padding * 2f, 
+                @this.height - padding * 2f);
         }
 
         /// <summary>

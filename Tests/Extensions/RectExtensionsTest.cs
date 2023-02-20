@@ -1,385 +1,357 @@
 using NUnit.Framework;
 using StansAssets.Foundation.Editor.Extensions;
 using UnityEngine;
+using Assert = UnityEngine.Assertions.Assert;
 
 namespace StansAssets.Foundation.Tests.Extensions
 {
     public class RectExtensionsTest
     {
-        const double k_Delta = 0.001;
-
-        Rect m_Rect;
-
         [Test]
         public void WithWidthTest()
         {
             // Arrange.
-            m_Rect = new Rect(45, 10, 20, 10);
-            var expectedValue = 20f;
-            var height = m_Rect.height;
-            var xPosition = m_Rect.x;
-            var yPosition = m_Rect.y;
-            var center = new Vector2(xPosition + expectedValue / 2, m_Rect.center.y);
+            var targetRect = new Rect(45f, 10f, 20f, 10f);
+            var expectedWidth = 20f;
+            var height = targetRect.height;
+            var center = new Vector2(targetRect.x + expectedWidth / 2, targetRect.center.y);
 
             // Act.
-            m_Rect = m_Rect.WithWidth(expectedValue);
+            var result = targetRect.WithWidth(expectedWidth);
 
             // Assert.
-            Assert.AreEqual(expected: expectedValue, actual: m_Rect.width, delta: k_Delta);
-            Assert.AreEqual(expected: height, actual: m_Rect.height, delta: k_Delta);
-            Assert.AreEqual(expected: xPosition, actual: m_Rect.x, delta: k_Delta);
-            Assert.AreEqual(expected: yPosition, actual: m_Rect.y, delta: k_Delta);
-            Assert.AreEqual(expected: center, actual: m_Rect.center);
+            Assert.AreEqual(expectedWidth, result.width, "Width is incorrect");
+            Assert.AreEqual(height, result.height, "Height is incorrect");
+            Assert.AreEqual(center, result.center, "Center is incorrect");
         }
 
         [Test]
         public void WithHeightTest()
         {
             // Arrange.
-            m_Rect = new Rect(45, 10, 20, 10);
-            var expectedValue = 20.3f;
-            var width = m_Rect.width;
-            var xPosition = m_Rect.x;
-            var yPosition = m_Rect.y;
-            var center = new Vector2(m_Rect.center.x, yPosition + expectedValue / 2);
+            var targetRect = new Rect(45f, 10f, 20f, 10f);
+            var expectedHeight = 20.3f;
+            var width = targetRect.width;
+            var center = new Vector2(targetRect.center.x, targetRect.y + expectedHeight / 2);
 
             // Act.
-            m_Rect = m_Rect.WithHeight(expectedValue);
+            var result = targetRect.WithHeight(expectedHeight);
 
             // Assert.
-            Assert.AreEqual(expected: expectedValue, actual: m_Rect.height, k_Delta);
-            Assert.AreEqual(expected: width, actual: m_Rect.width, delta: k_Delta);
-            Assert.AreEqual(expected: xPosition, actual: m_Rect.x, delta: k_Delta);
-            Assert.AreEqual(expected: yPosition, actual: m_Rect.y, delta: k_Delta);
-            Assert.AreEqual(expected: center, actual: m_Rect.center);
+            Assert.AreEqual(expectedHeight, result.height, "Height is incorrect");
+            Assert.AreEqual(width, result.width, "Width is incorrect");
+            Assert.AreEqual(center, result.center, "Center is incorrect");
         }
 
         [Test]
         public void WithSizeTest()
         {
             // Arrange.
-            m_Rect = new Rect(45, 10, 20, 10);
-            var expectedSize = new Vector2(15f,20f);
-            var center = new Vector2(m_Rect.x + expectedSize.x / 2, m_Rect.y + expectedSize.y / 2);
+            var targetRect = new Rect(45f, 10f, 20f, 10f);
+            var expectedSize = new Vector2(15f, 20f);
+            var center = new Vector2(targetRect.x + expectedSize.x / 2, targetRect.y + expectedSize.y / 2);
 
             // Act.
-            m_Rect = m_Rect.WithSize(expectedSize);
+            var result = targetRect.WithSize(expectedSize);
 
             // Assert.
-            Assert.AreEqual(expected: expectedSize, actual: m_Rect.size);
-            Assert.AreEqual(expected: center, actual: m_Rect.center);
+            Assert.AreEqual(expectedSize, result.size, "Size is incorrect");
+            Assert.AreEqual(center, result.center, "Center is incorrect");
         }
 
         [Test]
         public void ShiftHorizontallyTest()
         {
             // Arrange.
-            m_Rect = new Rect(45, 10, 20, 10);
+            var targetRect = new Rect(45f, 10f, 20f, 10f);
             var offset = 14f;
-            var expectedXPosition = m_Rect.x + offset;
-            var yPosition = m_Rect.y;
-            var width = m_Rect.width;
-            var height = m_Rect.height;
-            var center = new Vector2(expectedXPosition + width / 2, yPosition + height / 2);
+            var expectedXPosition = targetRect.x + offset;
+            var yPosition = targetRect.y;
+            var center = new Vector2(expectedXPosition + targetRect.width / 2, yPosition + targetRect.height / 2);
 
             // Act.
-            m_Rect = m_Rect.ShiftHorizontally(offset);
+            var result = targetRect.ShiftHorizontally(offset);
 
             // Assert.
-            Assert.AreEqual(expected: expectedXPosition, actual: m_Rect.x, delta: k_Delta);
-            Assert.AreEqual(expected: yPosition, actual: m_Rect.y, delta: k_Delta);
-            Assert.AreEqual(expected: width, actual: m_Rect.width, delta: k_Delta);
-            Assert.AreEqual(expected: height, actual: m_Rect.height, delta: k_Delta);
-            Assert.AreEqual(expected: center, actual: m_Rect.center);
+            Assert.AreEqual(expectedXPosition, result.x, "X position is incorrect");
+            Assert.AreEqual(yPosition, result.y, "Y position is incorrect");
+            Assert.AreEqual(center, result.center, "Center is incorrect");
         }
 
         [Test]
         public void ShiftVerticallyTest()
         {
             // Arrange.
-            m_Rect = new Rect(45, 10, 20, 10);
+            var targetRect = new Rect(45f, 10f, 20f, 10f);
             var offset = 17.5f;
-            var expectedYPosition = m_Rect.y + offset;
-            var xPosition = m_Rect.x;
-            var width = m_Rect.width;
-            var height = m_Rect.height;
-            var center = new Vector2(xPosition + width / 2, expectedYPosition + height / 2);
+            var expectedYPosition = targetRect.y + offset;
+            var xPosition = targetRect.x;
+            var center = new Vector2(xPosition + targetRect.width / 2, expectedYPosition + targetRect.height / 2);
 
             // Act.
-            m_Rect = m_Rect.ShiftVertically(offset);
+            var result = targetRect.ShiftVertically(offset);
 
             // Assert.
-            Assert.AreEqual(expected: expectedYPosition, actual: m_Rect.y, delta: k_Delta);
-            Assert.AreEqual(expected: xPosition, actual: m_Rect.x, delta: k_Delta);
-            Assert.AreEqual(expected: width, actual: m_Rect.width, delta: k_Delta);
-            Assert.AreEqual(expected: height, actual: m_Rect.height, delta: k_Delta);
-            Assert.AreEqual(expected: center, actual: m_Rect.center);
+            Assert.AreEqual(expectedYPosition, result.y, "Y position is incorrect");
+            Assert.AreEqual(xPosition, result.x, "X position is incorrect");
+            Assert.AreEqual(center, result.center, "Center is incorrect");
         }
 
         [Test]
         public void AddWidthTest()
         {
             // Arrange.
-            m_Rect = new Rect(45, 10, 20, 10);
+            var targetRect = new Rect(45f, 10f, 20f, 10f);
             var width = 34.2f;
-            var expectedWidth = m_Rect.width + width;
-            var height = m_Rect.height;
-            var xPosition = m_Rect.x;
-            var yPosition = m_Rect.y;
-            var center = new Vector2(xPosition + expectedWidth / 2, yPosition + height / 2);
+            var expectedWidth = targetRect.width + width;
+            var height = targetRect.height;
+            var center = new Vector2(targetRect.x + expectedWidth / 2, targetRect.y + height / 2);
 
             // Act.
-            m_Rect = m_Rect.AddWidth(width);
+            var result = targetRect.AddWidth(width);
 
             // Assert.
-            Assert.AreEqual(expected: expectedWidth, actual: m_Rect.width, delta: k_Delta);
-            Assert.AreEqual(expected: height, actual: m_Rect.height, delta: k_Delta);
-            Assert.AreEqual(expected: xPosition, actual: m_Rect.x, delta: k_Delta);
-            Assert.AreEqual(expected: yPosition, actual: m_Rect.y, delta: k_Delta);
-            Assert.AreEqual(expected: center, actual: m_Rect.center);
+            Assert.AreEqual(expectedWidth, result.width, "Width is incorrect");
+            Assert.AreEqual(height, result.height, "Height is incorrect");
+            Assert.AreEqual(center, result.center, "Center is incorrect");
         }
 
         [Test]
         public void AddHeightTest()
         {
             // Arrange.
-            m_Rect = new Rect(45, 10, 20, 10);
+            var targetRect = new Rect(45f, 10f, 20f, 10f);
             var height = 31f;
-            var expectedHeight = m_Rect.height + height;
-            var width = m_Rect.width;
-            var xPosition = m_Rect.x;
-            var yPosition = m_Rect.y;
-            var center = new Vector2(xPosition + width / 2, yPosition + expectedHeight / 2);
+            var expectedHeight = targetRect.height + height;
+            var width = targetRect.width;
+            var center = new Vector2(targetRect.x + width / 2, targetRect.y + expectedHeight / 2);
 
             // Act.
-            m_Rect = m_Rect.AddHeight(height);
+            var result = targetRect.AddHeight(height);
 
             // Assert.
-            Assert.AreEqual(expected: expectedHeight, actual: m_Rect.height, delta: k_Delta);
-            Assert.AreEqual(expected: width, actual: m_Rect.width, delta: k_Delta);
-            Assert.AreEqual(expected: xPosition, actual: m_Rect.x, delta: k_Delta);
-            Assert.AreEqual(expected: yPosition, actual: m_Rect.y, delta: k_Delta);
-            Assert.AreEqual(expected: center, actual: m_Rect.center);
+            Assert.AreEqual(expectedHeight, result.height, "Height is incorrect");
+            Assert.AreEqual(width, result.width, "Width is incorrect");
+            Assert.AreEqual(center, result.center, "Center is incorrect");
         }
 
         [Test]
         public void AddSizeTest()
         {
             // Arrange.
-            m_Rect = new Rect(45, 10, 20, 10);
+            var targetRect = new Rect(45f, 10f, 20f, 10f);
             var size = new Vector2(12f, 5f);
-            var expectedSize = new Vector2(m_Rect.size.x + size.x, m_Rect.size.y + size.y);
-            var xPosition = m_Rect.x;
-            var yPosition = m_Rect.y;
-            var center = new Vector2(xPosition + expectedSize.x / 2, yPosition + expectedSize.y / 2);
+            var expectedSize = new Vector2(targetRect.size.x + size.x, targetRect.size.y + size.y);
+            var center = new Vector2(targetRect.x + expectedSize.x / 2, targetRect.y + expectedSize.y / 2);
 
             // Act.
-            m_Rect = m_Rect.AddSize(size);
+            var result = targetRect.AddSize(size);
 
             // Assert.
-            Assert.AreEqual(expected: expectedSize, actual: m_Rect.size);
-            Assert.AreEqual(expected: xPosition, actual: m_Rect.x, delta: k_Delta);
-            Assert.AreEqual(expected: yPosition, actual: m_Rect.y, delta: k_Delta);
-            Assert.AreEqual(expected: center, actual: m_Rect.center);
+            Assert.AreEqual(expectedSize, result.size, "Size is incorrect");
+            Assert.AreEqual(center, result.center, "Center is incorrect");
         }
 
         [Test]
-        public void RectExtensionsTranslateTest()
+        public void TranslateTest()
         {
             // Arrange.
-            m_Rect = new Rect(45, 10, 20, 10);
+            var targetRect = new Rect(45f, 10f, 20f, 10f);
+            var xOffset = 5f;
+            var yOffset = 7f;
 
-            var x = 12f;
-            var y = -25f;
-
-            var expectedXPosition = m_Rect.x + x;
-            var expectedYPosition = m_Rect.y + y;
-            var width = m_Rect.width;
-            var height = m_Rect.height;
-            var center = new Vector2(expectedXPosition + width / 2, expectedYPosition + height / 2);
+            var expectedXPosition = targetRect.x + xOffset;
+            var expectedYPosition = targetRect.y + yOffset;
+            var center = new Vector2(expectedXPosition + targetRect.width / 2, expectedYPosition + targetRect.height / 2);
 
             // Act.
-            m_Rect = m_Rect.Translate(x, y);
+            var result= targetRect.Translate(xOffset, yOffset);
 
             // Assert.
-            Assert.AreEqual(expected: expectedXPosition, actual: m_Rect.x, delta: k_Delta);
-            Assert.AreEqual(expected: expectedYPosition, actual: m_Rect.y, delta: k_Delta);
-            Assert.AreEqual(expected: height, actual: m_Rect.height, delta: k_Delta);
-            Assert.AreEqual(expected: width, actual: m_Rect.width, delta: k_Delta);
-            Assert.AreEqual(expected: center, actual: m_Rect.center);
+            Assert.AreEqual(expectedXPosition, result.x, "X position is incorrect");
+            Assert.AreEqual(expectedYPosition, result.y, "Y position is incorrect");
+            Assert.AreEqual(center, result.center, "Center is incorrect");
         }
 
         [Test]
-        public void PadWhenAllPaddingsValueIsPositiveTest()
+        public void PadWithZeroPaddingTest()
         {
             // Arrange.
-            m_Rect = new Rect(45, 10, 20, 10);
-
-            var leftPadding = 10f;
-            var topPadding = 45.2f;
-            var rightPadding = 33f;
-            var bottomPadding = 8.5f;
+            var targetRect = new Rect(100.0f, 100.0f, 100.0f, 50.0f);
 
             // Act.
-            var result = m_Rect.Pad(leftPadding, topPadding, rightPadding, bottomPadding);
+            var result = targetRect.Pad(0.0f, 0.0f, 0.0f, 0.0f);
 
             // Assert.
-            Assert.AreNotEqual(expected: result, actual: m_Rect);
+            Assert.AreEqual(targetRect, result, "Rect are not equal to expected result");
         }
 
         [Test]
-        public void PadWhenAllPaddingsValueIsZeroTest()
+        public void PadWithPositivePaddingTest()
         {
             // Arrange.
-            m_Rect = new Rect(100.0f, 100.0f, 100.0f, 50.0f);
+            // For a visual representation of this test-case on a single-unit grid, please refer to the screenshot
+            // https://drive.google.com/file/d/1HYq1Q-oXD4pc89tm4Yqjass9XfE4b_vH/view?usp=sharing
+            var targetRect = new Rect(2f, 1f, 4f, 6f);
+            var expectedRect = new Rect(3f, 2f, 2f, 2f);
 
             // Act.
-            var result = m_Rect.Pad(0.0f, 0.0f, 0.0f, 0.0f);
+            var result = targetRect.Pad(1f, 1f, 1f, 3f);
 
             // Assert.
-            Assert.AreEqual(expected: result, actual: m_Rect);
-            Assert.AreEqual(expected: result.center, actual: m_Rect.center);
-        }
-        
-        [Test]
-        public void PadWhenSomePaddingsValueIsNegativeTest()
-        {
-            // Arrange.
-            m_Rect = new Rect(100.0f, 100.0f, 100.0f, 50.0f);
-
-            var leftPadding = 10f;
-            var topPadding = -45.2f;
-            var rightPadding = -33f;
-            var bottomPadding = 8.5f;
-
-            // Act.
-            var result = m_Rect.Pad(leftPadding, topPadding, rightPadding, bottomPadding);
-
-            // Assert.
-            Assert.AreNotEqual(expected: result, actual: m_Rect);
+            Assert.AreEqual(expectedRect, result, "Rect are not equal to expected result");
         }
 
         [Test]
-        public void PadSidesWhenPaddingIsPositiveTest()
+        public void PadWithNegativePaddingTest()
         {
             // Arrange.
-            m_Rect = new Rect(45, 10, 20, 10);
-            var padding = 15.2f;
+            // For a visual representation of this test-case on a single-unit grid, please refer to the screenshot
+            // https://drive.google.com/file/d/1RYSfgcdF290W5JglGcha1dg0swcA1Leo/view?usp=sharing
+            var targetRect = new Rect(2f, 1f, 4f, 3f);
+            var expectedRect = new Rect(1f, 2f, 4f, 5f);
 
             // Act.
-            var result = m_Rect.PadSides(padding);
+            var result = targetRect.Pad(-1f, 1f, 1f, -3f);
 
             // Assert.
-            Assert.AreNotEqual(expected: result, actual: m_Rect);
+            Assert.AreEqual(expectedRect, result, "Rect are not equal to expected result");
         }
 
         [Test]
-        public void PadSidesWhenPaddingIsZeroTest()
+        public void PadWithAllNegativePaddingTest()
         {
             // Arrange.
-            m_Rect = new Rect(45, 10, 20, 10);
+            // For a visual representation of this test-case on a single-unit grid, please refer to the screenshot
+            // https://drive.google.com/file/d/1aW1EwfOS1_vANm1ZdvxcX0HXN9gYVvxf/view?usp=sharing
+            var targetRect = new Rect(2f, 2f, 3f, 4f);
+            var expectedRect = new Rect(1f, 1f, 5f, 7f);
+
+            // Act.
+            var result = targetRect.Pad(-1f, -1f, -1f, -2f);
+
+            // Assert.
+            Assert.AreEqual(expectedRect, result, "Rect are not equal to expected result");
+        }
+
+        [Test]
+        public void PadSidesWithZeroPaddingTest()
+        {
+            // Arrange.
+            var targetRect = new Rect(45f, 10f, 20f, 10f);
             var padding = 0.0f;
 
             // Act.
-            var result = m_Rect.PadSides(padding);
+            var result = targetRect.PadSides(padding);
 
             // Assert.
-            Assert.AreEqual(expected: result, actual: m_Rect);
-            Assert.AreEqual(expected: result.center, actual: m_Rect.center);
+            Assert.AreEqual(targetRect, result, "Rect are not equal to expected result");
         }
 
         [Test]
-        public void PadSidesWhenPaddingIsNegativeTest()
+        public void PadSidesWithPositivePaddingTest()
         {
             // Arrange.
-            m_Rect = new Rect(45, 10, 20, 10);
-            var padding = -15.2f;
-          
+            // For a visual representation of this test-case on a single-unit grid, please refer to the screenshot
+            // https://drive.google.com/file/d/1Ok2bJL4WrqVlq6cL0188dXUzLY0yJZrE/view?usp=sharing
+            var targetRect = new Rect(1f, 2f, 5f, 6f);
+            var padding = 1f;
+            var expectedRect = new Rect(2f, 3f, 3f, 4f);
+
             // Act.
-            var result = m_Rect.PadSides(padding);
+            var result = targetRect.PadSides(padding);
 
             // Assert.
-            Assert.AreNotEqual(expected: result, actual: m_Rect); 
+            Assert.AreEqual(expectedRect, result, "Rect are not equal to expected result");
+        }
+
+        [Test]
+        public void PadSidesWithNegativePaddingTest()
+        {
+            // Arrange.
+            // For a visual representation of this test-case on a single-unit grid, please refer to the screenshot
+            // https://drive.google.com/file/d/1S3QxXQQ-uzLuGl0Ny3aaKLukI-MuTkGk/view?usp=sharing
+            var targetRect = new Rect(2f, 2f, 3f, 4f);
+            var negativePadding = -1f;
+            var expectedRect = new Rect(1f, 1f, 5f, 6f);
+
+            // Act.
+            var result = targetRect.PadSides(negativePadding);
+
+            // Assert.
+            Assert.AreEqual(expectedRect, result, "Rect are not equal to expected result");
         }
 
         [Test]
         public void RightOfTest()
         {
             // Arrange.
-            m_Rect = new Rect(45, 10, 20, 10);
+            var targetRect = new Rect(45f, 10f, 20f, 10f);
             var otherRect = new Rect(10f, 5f, 10f, 10f);
-            var width = m_Rect.width;
-            var height = m_Rect.height;
-            var center = new Vector2((otherRect.x + otherRect.width) + width / 2, m_Rect.center.y);
 
             // Act.
-            var result = m_Rect.RightOf(otherRect);
+            var result = targetRect.RightOf(otherRect);
 
             // Assert.
-            Assert.AreNotEqual(expected: result, actual: m_Rect);
-            Assert.AreEqual(expected: center, actual: result.center);
-            Assert.AreEqual(expected: height, actual: m_Rect.height, delta: k_Delta);
-            Assert.AreEqual(expected: width, actual: m_Rect.width, delta: k_Delta);
+            Assert.AreEqual(otherRect.width + otherRect.x, result.x, "X position is incorrect");
+            Assert.AreEqual(targetRect.y, result.y, "Y position is incorrect");
+            Assert.AreEqual(targetRect.width, result.width, "Width is incorrect");
+            Assert.AreEqual(targetRect.height, result.height, "Height is incorrect");
         }
 
         [Test]
         public void LeftOfTest()
         {
             // Arrange.
-            m_Rect = new Rect(45, 10, 20, 10);
+            var targetRect = new Rect(45f, 10f, 20f, 10f);
             var otherRect = new Rect(5f, 10f, 10f, 10f);
-            var width = m_Rect.width;
-            var height = m_Rect.height;
-            var center = new Vector2((otherRect.x - width) + width / 2, m_Rect.center.y);
 
             // Act.
-            var result = m_Rect.LeftOf(otherRect);
+            var result = targetRect.LeftOf(otherRect);
 
             // Assert.
-            Assert.AreNotEqual(expected: result, actual: m_Rect);
-            Assert.AreEqual(expected: center, actual: result.center);
-            Assert.AreEqual(expected: height, actual: m_Rect.height, delta: k_Delta);
-            Assert.AreEqual(expected: width, actual: m_Rect.width, delta: k_Delta);
+            Assert.AreEqual(otherRect.x - targetRect.width, result.x, "X position is incorrect");
+            Assert.AreEqual(targetRect.y, result.y, "Y position is incorrect");
+            Assert.AreEqual(targetRect.width, result.width, "Width is incorrect");
+            Assert.AreEqual(targetRect.height, result.height, "Height is incorrect");
         }
 
         [Test]
         public void AboveTest()
         {
             // Arrange.
-            m_Rect = new Rect(45, 10, 20, 10);
+            var targetRect = new Rect(45f, 10f, 20f, 10f);
             var otherRect = new Rect(0f, 5f, 20f, 20f);
-            var width = m_Rect.width;
-            var height = m_Rect.height;
-            var center = new Vector2(m_Rect.center.x, otherRect.y - height + height / 2);
+            var width = targetRect.width;
+            var height = targetRect.height;
+            var center = new Vector2(targetRect.center.x, otherRect.y - height + height / 2);
 
             // Act.
-            var result = m_Rect.Above(otherRect);
+            var result = targetRect.Above(otherRect);
 
             // Assert.
-            Assert.AreNotEqual(expected: result, actual: m_Rect);
-            Assert.AreEqual(expected: center, actual: result.center);
-            Assert.AreEqual(expected: height, actual: m_Rect.height, delta: k_Delta);
-            Assert.AreEqual(expected: width, actual: m_Rect.width, delta: k_Delta);
+            Assert.AreEqual(height, result.height, "Height is incorrect");
+            Assert.AreEqual(width, result.width, "Width is incorrect");
+            Assert.AreEqual(center, result.center, "Center is incorrect");
         }
 
         [Test]
         public void BelowTest()
         {
             // Arrange.
-            m_Rect = new Rect(45, 10, 20, 10);
+            var targetRect = new Rect(45f, 10f, 20f, 10f);
             var otherRect = new Rect(10f, 5f, 20f, 20f);
-            var width = m_Rect.width;
-            var height = m_Rect.height;
-            var center = new Vector2(m_Rect.center.x, otherRect.y + otherRect.height + height / 2);
+            var width = targetRect.width;
+            var height = targetRect.height;
+            var center = new Vector2(targetRect.center.x, otherRect.y + otherRect.height + height / 2);
 
             // Act.
-            var result = m_Rect.Below(otherRect);
+            var result = targetRect.Below(otherRect);
 
             // Assert.
-            Assert.AreNotEqual(expected: result, actual: m_Rect);
-            Assert.AreEqual(expected: center, actual: result.center);
-            Assert.AreEqual(expected: height, actual: m_Rect.height, delta: k_Delta);
-            Assert.AreEqual(expected: width, actual: m_Rect.width, delta: k_Delta);
+            Assert.AreEqual(height, result.height, "Height is incorrect");
+            Assert.AreEqual(width, result.width, "Width is incorrect");
+            Assert.AreEqual(center, result.center, "Center is incorrect");
         }
     }
 }
