@@ -2,7 +2,7 @@ using NUnit.Framework;
 
 namespace StansAssets.Foundation.Patterns.EditorTests
 {
-    public class EventBusTests
+    class EventBusTests
     {
         public class SamplePooledEvent : IEvent
         {

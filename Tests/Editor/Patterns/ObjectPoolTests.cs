@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace StansAssets.Foundation.Patterns.EditorTests
 {
-    public class TestClassObject
+    class TestClassObject
     {
         public int IntValue { get; } = 1;
         public string StringValue  { get; } = string.Empty;
@@ -12,7 +12,7 @@ namespace StansAssets.Foundation.Patterns.EditorTests
 
     [TestFixture(typeof(TestClassObject))]
     [TestFixture(typeof(Mesh))]
-    public class ObjectPoolTests<T> where T : class, new()
+    class ObjectPoolTests<T> where T : class, new()
     {
         [Test]
         public void NullCreateFactoryThrowsException()

@@ -5,7 +5,7 @@ using Assert = UnityEngine.Assertions.Assert;
 
 namespace StansAssets.Foundation.Tests.Extensions
 {
-    public class RectExtensionsTest
+    class RectExtensionsTest
     {
         [Test]
         public void WithWidthTest()

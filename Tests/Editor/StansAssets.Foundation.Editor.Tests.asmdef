@@ -1,6 +1,5 @@
 {
-    "name": "StansAssets.Foundation.Tests",
-    "rootNamespace": "",
+    "name": "StansAssets.Foundation.Editor.Tests",
     "references": [
         "StansAssets.Foundation",
         "StansAssets.Foundation.Editor"
