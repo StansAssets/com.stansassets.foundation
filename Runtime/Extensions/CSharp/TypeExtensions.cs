@@ -8,11 +8,11 @@ namespace StansAssets.Foundation.Extensions
     public static class TypeExtensions
     {
         /// <summary>
-        /// Performs a check if <c>Type</c> can be instanced using default constructor 
+        /// Searches for a <i>public parameterless instance</i> constructor.
         /// </summary>
-        /// <param name="type">A <c>Type</c> to check</param>
-        /// <returns>Returns <c>true</c> if type can be instanced and <c>false</c> otherwise</returns>
-        public static bool CanCreateInstanceUsingDefaultConstructor(this Type type)
+        /// <param name="type">A <see cref="System.Type"/> to check for default constructor.</param>
+        /// <returns>Returns <b>true</b> if the <paramref name="type">type</paramref> can be instanced and <b>false</b> otherwise.</returns>
+        public static bool HasDefaultConstructor(this Type type)
         {
             return type.IsValueType || !type.IsAbstract && type.GetConstructor(Type.EmptyTypes) != null;
         }

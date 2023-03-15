@@ -6,7 +6,7 @@ using StansAssets.Foundation.Extensions;
 
 namespace StansAssets.Foundation.Patterns.EditorTests 
 {
-    public class ListExtensionsTests  {
+    class ListExtensionsTests  {
 
 	    readonly List<int> m_byIndexTestList = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 	    readonly List<float> m_byItemTestList = new List<float>() { 0f, 1f, 2f, 3f, 4f, 5f, 6f, 7f, 8f, 9f, 10f };

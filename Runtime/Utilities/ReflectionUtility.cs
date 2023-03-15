@@ -14,25 +14,23 @@ namespace StansAssets.Foundation
         static readonly string[] s_BuiltInAssemblyPrefixes = { "Mono.", "Unity.", "UnityEngine", "UnityEditor", "System", "mscorlib" };
 
         /// <summary>
-        /// Methods will iterate all the project Assemblies.
-        /// If typeFullName will match new object instance of that type will be created
-        /// and returned as the result.
+        /// Creates an instance of the specified <see cref="System.Type"/> using that type's parameterless constructor.
         /// </summary>
-        /// <param name="typeFullName">Full type name.</param>
-        /// <returns>New type instance.</returns>
+        /// <param name="typeFullName">Full type name of the instance to create.</param>
+        /// <returns>New <see cref="System.Object"/> instance of the specified type.</returns>
         public static object CreateInstance(string typeFullName)
         {
             var type = FindType(typeFullName);
-            return type != null && type.CanCreateInstanceUsingDefaultConstructor()
+            return type != null && type.HasDefaultConstructor()
                 ? Activator.CreateInstance(type)
                 : null;
         }
 
         /// <summary>
-        /// Methods will iterate all the project to find a type that matches sissified full type name.
+        /// Searches for the specified <see cref="System.Type"/> in all assemblies of the current application domain.
         /// </summary>
-        /// <param name="typeFullName">Full type name.</param>
-        /// <returns>Type object.</returns>
+        /// <param name="typeFullName">Full type's name to search for.</param>
+        /// <returns><see cref="System.Type"/> object found via specified <paramref name="typeFullName"/>.</returns>
         public static Type FindType(string typeFullName)
         {
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();
@@ -42,10 +40,11 @@ namespace StansAssets.Foundation
         }
 
         /// <summary>
-        /// Find all types that implement `T`.
+        /// Searched for the implementations of the <see cref="System.Type"/> specified with <typeparamref name="T"/>.
         /// </summary>
-        /// <typeparam name="T">Base type.</typeparam>
-        /// <returns>Returns all types that are implement provided base type.</returns>
+        /// <param name="ignoreBuiltIn"><c>true</c> if the built-in assemblies have to be skipped. If set to <c>false</c>, no assemblies will be skipped.</param>
+        /// <typeparam name="T">Specifies the <see cref="System.Type"/> whose implementations to search for.</typeparam>
+        /// <returns>A collection of <see cref="System.Type"/> objects that are implementations of <typeparamref name="T"/>.</returns>
         public static IEnumerable<Type> FindImplementationsOf<T>(bool ignoreBuiltIn = false)
         {
             var baseType = typeof(T);
@@ -53,10 +52,10 @@ namespace StansAssets.Foundation
         }
 
         /// <summary>
-        /// Return all project assemblies with option to filter the Unity built-in assemblies
+        /// Gets the assemblies that have been loaded into the execution context of this application domain.
         /// </summary>
-        /// <param name="ignoreBuiltIn">Ignores Unity built-in assembles</param>
-        /// <returns>Returns all assemblies that match filter criteria</returns>
+        /// <param name="ignoreBuiltIn"><c>true</c> if the built-in assemblies have to be skipped. If set to <c>false</c>, no assemblies will be skipped.</param>
+        /// <returns>A collection of assemblies in this application domain.</returns>
         public static IEnumerable<Assembly> GetAssemblies(bool ignoreBuiltIn = false)
         {
             IEnumerable<Assembly> assemblies = AppDomain.CurrentDomain.GetAssemblies();
@@ -73,53 +72,54 @@ namespace StansAssets.Foundation
         }
 
         /// <summary>
-        /// Find all types that implement `baseType`.
+        /// Searched for the implementations of the <see cref="System.Type"/> specified with <paramref name="baseType"/>.
         /// </summary>
-        /// <param name="baseType">Base type.</param>
-        /// <param name="ignoreBuiltIn">Ignores Unity built-in assembles</param>
-        /// <returns>Returns all types that are implement provided base type.</returns>
+        /// <param name="baseType">Specifies the <see cref="System.Type"/> whose implementations to search for.</param>
+        /// <param name="ignoreBuiltIn"><c>true</c> if the built-in assemblies have to be skipped. If set to <c>false</c>, no assemblies will be skipped.</param>
+        /// <returns>A collection of <see cref="System.Type"/> objects that are implementations of <paramref name="baseType"/>.</returns>
         public static IEnumerable<Type> FindImplementationsOf(Type baseType, bool ignoreBuiltIn = false)
         {
             var assemblies = GetAssemblies(ignoreBuiltIn);
 
             return assemblies
                 .SelectMany(assembly => assembly.GetTypes())
-                .Where(type => baseType.IsAssignableFrom(type) && !type.IsInterface && !type.IsAbstract);
+                .Where(type => baseType != type && baseType.IsAssignableFrom(type) && !type.IsInterface && !type.IsAbstract);
         }
 
         /// <summary>
-        /// Get property value from an object by it's name.
+        /// Returns the property value of a specified object.
         /// </summary>
-        /// <param name="src">Source object.</param>
-        /// <param name="propName">Property name.</param>
-        /// <param name="bindingAttr">Property binding Attributes. ` BindingFlags.Instance | BindingFlags.Public` by default.</param>
-        /// <returns>Property value.</returns>
+        /// <param name="src">The object whose property value will be returned.</param>
+        /// <param name="propName">The string containing the name of the public property to get.</param>
+        /// <param name="bindingAttr">A bitwise combination of the enumeration values that specify how the search is conducted.</param>
+        /// <returns>The property value of the specified object.</returns>
         public static object GetPropertyValue(object src, string propName, BindingFlags bindingAttr = BindingFlags.Instance | BindingFlags.Public)
         {
             return src.GetType().GetProperty(propName, bindingAttr)?.GetValue(src, null);
         }
 
         /// <summary>
-        /// Get property value from an object by it's name.
+        /// Sets the property value of a specified object.
         /// </summary>
-        /// <param name="src">Source object.</param>
-        /// <param name="propName">Property name.</param>
-        /// <param name="propValue">New property value.</param>
-        /// <param name="bindingAttr">Property binding Attributes. ` BindingFlags.Instance | BindingFlags.Public` by default.</param>
+        /// <param name="src">The object whose property value will be set.</param>
+        /// <param name="propName">The string containing the name of the property to get.</param>
+        /// <param name="propValue">The new property value.</param>
+        /// <param name="bindingAttr">A bitwise combination of the enumeration values that specify how the search is conducted.</param>
+        /// <typeparam name="T">Specifies the <see cref="System.Type"/> of property value to set.</typeparam>
         public static void SetPropertyValue<T>(object src, string propName, T propValue, BindingFlags bindingAttr = BindingFlags.Instance | BindingFlags.Public)
         {
             src.GetType().GetProperty(propName, bindingAttr)?.SetValue(src, propValue);
         }
 
         /// <summary>
-        /// Find all methods with custom attribute of type <c>T</c>.
+        /// Searches for the methods with custom attribute of type <typeparamref name="T"/>.
         /// </summary>
-        /// <param name="methodBindingFlags">Method binding Attributes. ` BindingFlags.Instance | BindingFlags.Public` by default.</param>
-        /// <param name="inherit"><c>true</c> to search in the member's inheritance chain to find the attributes</param>
-        /// <param name="ignoreBuiltIn"><c>true</c> to ignores the Unity built-in assemblies</param>
-        /// <typeparam name="T">Type of the custom attribute to search</typeparam>
-        /// <returns></returns>
-        public static IEnumerable<MethodInfo> FindMethodsWithCustomAttributes<T>(BindingFlags methodBindingFlags = BindingFlags.Instance | BindingFlags.Public, bool inherit = true, bool ignoreBuiltIn = false)
+        /// <param name="methodBindingFlags">A bitwise combination of the enumeration values that specify how the search is conducted.</param>
+        /// <param name="inherit"><c>true</c> to search this member's inheritance chain to find the attributes; otherwise, <c>false</c>.</param>
+        /// <param name="ignoreBuiltIn"><c>true</c> if the built-in assemblies have to be skipped. If set to <c>false</c>, no assemblies will be skipped.</param>
+        /// <typeparam name="T">Specifies the <see cref="System.Type"/> of the custom attribute to search for.</typeparam>
+        /// <returns>A collection of <see cref="System.Reflection.MethodInfo"/> objects representing all methods defined for the current <see cref="System.Type"/> that match the specified binding constraints and attributes type.</returns>
+        public static IEnumerable<MethodInfo> FindMethodsWithCustomAttributes<T>(BindingFlags methodBindingFlags = BindingFlags.Instance | BindingFlags.Public, bool inherit = true, bool ignoreBuiltIn = false) where T : Attribute
         {
             var assemblies = GetAssemblies(ignoreBuiltIn);
 
