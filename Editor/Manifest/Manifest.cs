@@ -246,6 +246,30 @@ namespace StansAssets.Foundation.Editor
             var dependency = new Dependency(name, version);
             m_Dependencies[dependency.Name] = dependency;
         }
+        
+        /// <summary>
+        /// Removes the <see cref="Dependency"/> with the specified name from current manifest.
+        /// </summary>
+        /// <param name="name">The name of <see cref="Dependency"/> to remove.</param>
+        public void RemoveDependency(string name)
+        {
+            if (IsDependencyExists(name))
+            {
+                m_Dependencies.Remove(name);
+            }
+        }
+        
+        /// <summary>
+        /// Removes the <see cref="Dependency"/> from current manifest.
+        /// </summary>
+        /// <param name="dependency">The <see cref="Dependency"/> to remove.</param>
+        public void RemoveDependency(Dependency dependency)
+        {
+            if (IsDependencyExists(dependency.Name))
+            {
+                m_Dependencies.Remove(dependency.Name);
+            }
+        }
 
         /// <summary>
         /// Writes changes back to the manifest file.
