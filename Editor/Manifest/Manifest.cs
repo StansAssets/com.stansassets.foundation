@@ -253,7 +253,7 @@ namespace StansAssets.Foundation.Editor
         /// <param name="name">Dependency name.</param>
         public void RemoveDependency(string name)
         {
-            if(m_Dependencies.ContainsKey(name))
+            if (IsDependencyExists(name))
             {
                 m_Dependencies.Remove(name);
             }
