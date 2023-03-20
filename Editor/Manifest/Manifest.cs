@@ -258,6 +258,18 @@ namespace StansAssets.Foundation.Editor
                 m_Dependencies.Remove(name);
             }
         }
+        
+        /// <summary>
+        /// Remove <see cref="Dependency"/> (if manifest contains it)
+        /// </summary>
+        /// <param name="dependency">Dependency</param>
+        public void RemoveDependency(Dependency dependency)
+        {
+            if (IsDependencyExists(dependency.Name))
+            {
+                m_Dependencies.Remove(dependency.Name);
+            }
+        }
 
         /// <summary>
         /// Writes changes back to the manifest file.
