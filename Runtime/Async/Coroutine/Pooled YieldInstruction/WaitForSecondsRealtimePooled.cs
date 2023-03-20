@@ -1,4 +1,3 @@
-#if UNITY_2020_1_OR_NEWER
 using UnityEngine;
 
 namespace StansAssets.Foundation.Async
@@ -21,13 +20,17 @@ namespace StansAssets.Foundation.Async
             }
         }
 
+#if UNITY_2020_1_OR_NEWER
         public override void Reset()
+#else
+        public new void Reset()
+#endif
         {
             m_waitUntilTime = -1f;
             YieldPool.BackToPool(this);
-            ;
+            
         }
-
+        
         public WaitForSecondsRealtimePooled Wait(float time)
         {
             m_waitTime = time;
@@ -35,4 +38,3 @@ namespace StansAssets.Foundation.Async
         }
     }
 }
-#endif
