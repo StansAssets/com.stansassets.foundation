@@ -2,6 +2,12 @@ using System;
 
 namespace StansAssets.Foundation.Async
 {
+    /// <summary>
+    ///   <para>
+    /// Custom Yield Instruction that suspends the coroutine execution until the supplied delegate evaluates to true,
+    /// and can be pooled inside Yield Pool.
+    /// </para>
+    /// </summary>
     public sealed class WaitWhilePooled : PooledYieldInstruction
     {
         Func<bool> m_Predicate;

@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace StansAssets.Foundation.Async
 {
+    /// <summary>
+    ///   <para>Custom Yield Instruction that waits for a given number of seconds using scaled time and can be pooled inside Yield Pool.</para>
+    /// </summary>
     public class WaitForSecondsPooled : PooledYieldInstruction
     {
         bool m_Waiting;

@@ -4,6 +4,9 @@ using StansAssets.Foundation.Patterns;
 
 namespace StansAssets.Foundation.Async
 {
+    /// <summary>
+    ///   <para>Stores a pool of coroutines.</para>
+    /// </summary>
     public static class YieldPool
     {
         const int k_DefaultPoolSize = 10;
