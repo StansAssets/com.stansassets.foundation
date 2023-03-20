@@ -28,7 +28,6 @@ namespace StansAssets.Foundation.Async
         {
             m_waitUntilTime = -1f;
             YieldPool.BackToPool(this);
-            
         }
         
         public WaitForSecondsRealtimePooled Wait(float time)
