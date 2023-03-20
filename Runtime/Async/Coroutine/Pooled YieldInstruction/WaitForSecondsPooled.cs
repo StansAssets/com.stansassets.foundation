@@ -4,19 +4,19 @@ namespace StansAssets.Foundation.Async
 {
     public class WaitForSecondsPooled : PooledYieldInstruction
     {
-        bool m_waiting;
-        float m_waitTime;
+        bool m_Waiting;
+        float m_WaitTime;
 
         public override bool keepWaiting
         {
             get
             {
-                m_waiting = m_waitTime > 0f;
-                if (m_waiting)
-                    m_waitTime -= Time.deltaTime;
+                m_Waiting = m_WaitTime > 0f;
+                if (m_Waiting)
+                    m_WaitTime -= Time.deltaTime;
                 else
                     Reset();
-                return m_waiting;
+                return m_Waiting;
             }
         }
 
@@ -26,13 +26,13 @@ namespace StansAssets.Foundation.Async
         public new void Reset()
 #endif      
         {
-            m_waitTime = -1f;
+            m_WaitTime = -1f;
             YieldPool.BackToPool(this);
         }
         
         public WaitForSecondsPooled Wait(float time)
         {
-            m_waitTime = time;
+            m_WaitTime = time;
             return this;
         }
     }
