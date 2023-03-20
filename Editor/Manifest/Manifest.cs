@@ -260,9 +260,9 @@ namespace StansAssets.Foundation.Editor
         }
         
         /// <summary>
-        /// Remove <see cref="Dependency"/> (if manifest contains it)
+        /// Removes the <see cref="Dependency"/> from current manifest.
         /// </summary>
-        /// <param name="dependency">Dependency</param>
+        /// <param name="dependency">The <see cref="Dependency"/> to remove.</param>
         public void RemoveDependency(Dependency dependency)
         {
             if (IsDependencyExists(dependency.Name))
