@@ -179,5 +179,45 @@ namespace StansAssets.Foundation.Editor.Extensions
         {
             return new Rect(@this.x, other.y + other.height, @this.width, @this.height);
         }
+        
+        /// <summary>
+        /// Positions the left border of a <see cref="UnityEngine.Rect"/> by the specified amount from its anchor>.
+        /// </summary>
+        /// <param name="this">The source <see cref="UnityEngine.Rect"/>.</param>
+        /// <param name="left">Offset value of left border from the left anchor</param>
+        public static void SetLeft(this RectTransform @this, float left)
+        {
+            @this.offsetMin = new Vector2(-left, @this.offsetMin.y);
+        }
+        
+        /// <summary>
+        /// Positions the right border of a <see cref="UnityEngine.Rect"/> by the specified amount from its anchor>.
+        /// </summary>
+        /// <param name="this">The source <see cref="UnityEngine.Rect"/>.</param>
+        /// <param name="right">Offset value of right border from the anchor</param>
+        public static void SetRight(this RectTransform @this, float right)
+        {
+            @this.offsetMax = new Vector2(right, @this.offsetMax.y);
+        }
+        
+        /// <summary>
+        /// Positions the top border of a <see cref="UnityEngine.Rect"/> by the specified amount from its anchor>.
+        /// </summary>
+        /// <param name="this">The source <see cref="UnityEngine.Rect"/>.</param>
+        /// <param name="top">Offset value of top border from the anchor</param>
+        public static void SetTop(this RectTransform @this, float top)
+        {
+            @this.offsetMax = new Vector2(@this.offsetMax.x, top);
+        }
+        
+        /// <summary>
+        /// Positions the bottom border of a <see cref="UnityEngine.Rect"/> by the specified amount from its anchor>.
+        /// </summary>
+        /// <param name="this">The source <see cref="UnityEngine.Rect"/>.</param>
+        /// <param name="bottom">Offset value of top border from the anchor</param>
+        public static void SetBottom(this RectTransform @this, float bottom)
+        {
+            @this.offsetMin = new Vector2(@this.offsetMin.x, -bottom);
+        }
     }
 }
