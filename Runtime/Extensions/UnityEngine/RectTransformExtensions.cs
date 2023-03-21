@@ -58,13 +58,13 @@ namespace StansAssets.Foundation.Extensions
         public static void Reset(this RectTransform rectTransform)
         {
             rectTransform.anchorMin = Vector2.zero;
-            rectTransform.anchorMax = Vector2.one;
+            rectTransform.anchorMax = Vector2.zero;
             rectTransform.offsetMin = Vector2.zero;
             rectTransform.offsetMax = Vector2.zero;
         }
         
         /// <summary>
-        /// Get's the screen rect of provided RectTransform.
+        /// Gets the screen rect of provided RectTransform.
         /// </summary>
         /// <param name="rectTransform">RectTransform to operate with.</param>
         /// <returns>Screen rect.</returns>
