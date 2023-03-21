@@ -8,43 +8,47 @@ namespace StansAssets.Foundation.Extensions
     public static class RectTransformExtensions
     {
         /// <summary>
-        /// Positions the left border of a <see cref="UnityEngine.RectTransform"/> by the specified amount from its anchor.
+        /// Positions the left border of a <see cref="UnityEngine.RectTransform"/> by the specified amount from the left border of a parent <see cref="UnityEngine.RectTransform"/>. 
+        /// Intended to be used with a Stretch Anchor Preset.
         /// </summary>
         /// <param name="rectTransform">RectTransform to operate with.</param>
-        /// <param name="left">Offset value of left border from the left anchor</param>
+        /// <param name="left">Offset value of left border from parent's left border</param>
         public static void SetLeft(this RectTransform rectTransform, float left)
         {
-            rectTransform.offsetMin = new Vector2(-left, rectTransform.offsetMin.y);
+            rectTransform.offsetMin = new Vector2(left, rectTransform.offsetMin.y);
         }
         
         /// <summary>
-        /// Positions the right border of a <see cref="UnityEngine.RectTransform"/> by the specified amount from its anchor.
+        /// Positions the right border of a <see cref="UnityEngine.RectTransform"/> by the specified amount from the right border of a parent <see cref="UnityEngine.RectTransform"/>. 
+        /// Intended to be used with a Stretch Anchor Preset.
         /// </summary>
         /// <param name="rectTransform">RectTransform to operate with.</param>
-        /// <param name="right">Offset value of right border from the anchor</param>
+        /// <param name="right">Offset value of right border from the parent's right border</param>
         public static void SetRight(this RectTransform rectTransform, float right)
         {
-            rectTransform.offsetMax = new Vector2(right, rectTransform.offsetMax.y);
+            rectTransform.offsetMax = new Vector2(-right, rectTransform.offsetMax.y);
         }
         
         /// <summary>
-        /// Positions the top border of a <see cref="UnityEngine.RectTransform"/> by the specified amount from its anchor.
+        /// Positions the top border of a <see cref="UnityEngine.RectTransform"/> by the specified amount from the top border of a parent <see cref="UnityEngine.RectTransform"/>. 
+        /// Intended to be used with a Stretch anchor preset.
         /// </summary>
         /// <param name="rectTransform">RectTransform to operate with.</param>
-        /// <param name="top">Offset value of top border from the anchor</param>
+        /// <param name="top">Offset value of top border from parent's top border</param>
         public static void SetTop(this RectTransform rectTransform, float top)
         {
-            rectTransform.offsetMax = new Vector2(rectTransform.offsetMax.x, top);
+            rectTransform.offsetMax = new Vector2(rectTransform.offsetMax.x, -top);
         }
         
         /// <summary>
-        /// Positions the bottom border of a <see cref="UnityEngine.RectTransform"/> by the specified amount from its anchor.
+        /// Positions the bottom border of a <see cref="UnityEngine.RectTransform"/> by the specified amount from the bottom border of a parent <see cref="UnityEngine.RectTransform"/>. 
+        /// Intended to be used with a Stretch anchor preset.
         /// </summary>
         /// <param name="rectTransform">RectTransform to operate with.</param>
-        /// <param name="bottom">Offset value of top border from the anchor</param>
+        /// <param name="bottom">Offset value of bottom border from parent's bottom border</param>
         public static void SetBottom(this RectTransform rectTransform, float bottom)
         {
-            rectTransform.offsetMin = new Vector2(rectTransform.offsetMin.x, -bottom);
+            rectTransform.offsetMin = new Vector2(rectTransform.offsetMin.x, bottom);
         }
         
         /// <summary>
