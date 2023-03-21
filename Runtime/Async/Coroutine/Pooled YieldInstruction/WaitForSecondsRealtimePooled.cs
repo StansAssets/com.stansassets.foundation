@@ -1,38 +1,42 @@
-#if UNITY_2020_1_OR_NEWER
 using UnityEngine;
 
 namespace StansAssets.Foundation.Async
 {
+    /// <summary>
+    /// Custom Yield Instruction that waits for a given number of seconds using realtime and can be pooled inside Yield Pool.
+    /// </summary>
     public sealed class WaitForSecondsRealtimePooled : PooledYieldInstruction
     {
-        float m_waitTime;
-        float m_waitUntilTime = -1f;
+        float m_WaitTime;
+        float m_WaitUntilTime = -1f;
 
         public override bool keepWaiting
         {
             get
             {
-                if (m_waitUntilTime < 0.0f)
-                    m_waitUntilTime = Time.realtimeSinceStartup + m_waitTime;
-                var waiting = Time.realtimeSinceStartup < m_waitUntilTime;
+                if (m_WaitUntilTime < 0.0f)
+                    m_WaitUntilTime = Time.realtimeSinceStartup + m_WaitTime;
+                var waiting = Time.realtimeSinceStartup < m_WaitUntilTime;
                 if (!waiting)
                     Reset();
                 return waiting;
             }
         }
 
+#if UNITY_2020_1_OR_NEWER
         public override void Reset()
+#else
+        public new void Reset()
+#endif
         {
-            m_waitUntilTime = -1f;
+            m_WaitUntilTime = -1f;
             YieldPool.BackToPool(this);
-            ;
         }
-
+        
         public WaitForSecondsRealtimePooled Wait(float time)
         {
-            m_waitTime = time;
+            m_WaitTime = time;
             return this;
         }
     }
 }
-#endif

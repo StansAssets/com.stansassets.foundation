@@ -4,6 +4,9 @@ using StansAssets.Foundation.Patterns;
 
 namespace StansAssets.Foundation.Async
 {
+    /// <summary>
+    /// Stores a pool of coroutines.
+    /// </summary>
     public static class YieldPool
     {
         const int k_DefaultPoolSize = 10;
@@ -15,10 +18,8 @@ namespace StansAssets.Foundation.Async
             
             Add<WaitUntilPooled>();
             Add<WaitWhilePooled>();
-#if UNITY_2020_1_OR_NEWER
             Add<WaitForSecondsPooled>();
             Add<WaitForSecondsRealtimePooled>();
-#endif
         }
 
         static void Add<T>() where T : PooledYieldInstruction, new()
@@ -37,7 +38,6 @@ namespace StansAssets.Foundation.Async
             return (T)s_Instructions[typeof(T)].Get();
         }
 
-#if UNITY_2020_1_OR_NEWER
         /// <summary>
         ///     Wait for a given number of seconds using scaled time.
         ///     <param name="seconds">Delay execution by the amount of time in seconds.</param>
@@ -55,7 +55,6 @@ namespace StansAssets.Foundation.Async
         {
             return GetFromPool<WaitForSecondsRealtimePooled>().Wait(seconds);
         }
-#endif
 
         /// <summary>
         ///     Suspends the coroutine execution until the supplied delegate evaluates to false.
