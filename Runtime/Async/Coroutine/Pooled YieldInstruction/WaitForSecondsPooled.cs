@@ -3,23 +3,22 @@ using UnityEngine;
 namespace StansAssets.Foundation.Async
 {
     /// <summary>
-    ///   <para>Custom Yield Instruction that waits for a given number of seconds using scaled time and can be pooled inside Yield Pool.</para>
+    /// Custom Yield Instruction that waits for a given number of seconds using scaled time and can be pooled inside Yield Pool.
     /// </summary>
     public class WaitForSecondsPooled : PooledYieldInstruction
     {
-        bool m_Waiting;
         float m_WaitTime;
 
         public override bool keepWaiting
         {
             get
             {
-                m_Waiting = m_WaitTime > 0f;
-                if (m_Waiting)
+                var waiting = m_WaitTime > 0f;
+                if (waiting)
                     m_WaitTime -= Time.deltaTime;
                 else
                     Reset();
-                return m_Waiting;
+                return waiting;
             }
         }
 

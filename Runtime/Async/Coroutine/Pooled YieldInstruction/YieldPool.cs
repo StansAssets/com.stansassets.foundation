@@ -5,7 +5,7 @@ using StansAssets.Foundation.Patterns;
 namespace StansAssets.Foundation.Async
 {
     /// <summary>
-    ///   <para>Stores a pool of coroutines.</para>
+    /// Stores a pool of coroutines.
     /// </summary>
     public static class YieldPool
     {

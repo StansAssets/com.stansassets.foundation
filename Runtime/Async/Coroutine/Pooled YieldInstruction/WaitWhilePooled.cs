@@ -3,31 +3,26 @@ using System;
 namespace StansAssets.Foundation.Async
 {
     /// <summary>
-    ///   <para>
-    /// Custom Yield Instruction that suspends the coroutine execution until the supplied delegate evaluates to true,
-    /// and can be pooled inside Yield Pool.
-    /// </para>
+    /// Custom Yield Instruction that suspends the coroutine execution until the supplied delegate evaluates to true, and can be pooled inside Yield Pool.
     /// </summary>
     public sealed class WaitWhilePooled : PooledYieldInstruction
     {
         Func<bool> m_Predicate;
-        bool m_Waiting;
 
         public override bool keepWaiting
         {
             get
             {
-                m_Waiting = m_Predicate();
-                if (!m_Waiting)
+                var waiting = m_Predicate();
+                if (!waiting)
                     YieldPool.BackToPool(this);
-                return m_Waiting;
+                return waiting;
             }
         }
 
         public WaitWhilePooled Wait(Func<bool> predicate)
         {
             m_Predicate = predicate;
-            m_Waiting = false;
             return this;
         }
     }
