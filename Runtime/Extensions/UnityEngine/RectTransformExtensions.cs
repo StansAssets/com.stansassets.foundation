@@ -31,7 +31,7 @@ namespace StansAssets.Foundation.Extensions
         
         /// <summary>
         /// Positions the top border of a <see cref="UnityEngine.RectTransform"/> by the specified amount from the top border of a parent <see cref="UnityEngine.RectTransform"/>. 
-        /// Intended to be used with a Stretch anchor preset.
+        /// Intended to be used with a Stretch Anchor Preset.
         /// </summary>
         /// <param name="rectTransform">RectTransform to operate with.</param>
         /// <param name="top">Offset value of top border from parent's top border</param>
@@ -42,7 +42,7 @@ namespace StansAssets.Foundation.Extensions
         
         /// <summary>
         /// Positions the bottom border of a <see cref="UnityEngine.RectTransform"/> by the specified amount from the bottom border of a parent <see cref="UnityEngine.RectTransform"/>. 
-        /// Intended to be used with a Stretch anchor preset.
+        /// Intended to be used with a Stretch Anchor Preset.
         /// </summary>
         /// <param name="rectTransform">RectTransform to operate with.</param>
         /// <param name="bottom">Offset value of bottom border from parent's bottom border</param>
