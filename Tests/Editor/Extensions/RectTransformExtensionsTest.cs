@@ -7,7 +7,7 @@ namespace StansAssets.Foundation.Tests.Extensions
     public class RectTransformExtensionsTest
     {
         [Test]
-        public void SetLeft_SetsCorrectOffset()
+        public void SetLeftTest()
         {
             // Arrange
             RectTransform rectTransform = new GameObject().AddComponent<RectTransform>();
@@ -19,29 +19,33 @@ namespace StansAssets.Foundation.Tests.Extensions
             rectTransform.SetLeft(left);
 
             // Assert
-            Assert.AreEqual(new Vector2(-left, initOffsetMin.y), rectTransform.offsetMin);
-            Assert.AreEqual(initOffsetMax, rectTransform.offsetMax);
+            Assert.AreEqual(left, rectTransform.offsetMin.x, "X Min Offset if wrong");
+            Assert.AreEqual(initOffsetMin.y, rectTransform.offsetMin.y, "Y Min Offset if wrong");
+            Assert.AreEqual(initOffsetMax.x, rectTransform.offsetMax.x, "X Max Offset if wrong");
+            Assert.AreEqual(initOffsetMax.y, rectTransform.offsetMax.y, "Y Max Offset if wrong");
         }
 
         [Test]
-        public void SetRight_SetsCorrectOffset()
+        public void SetRightTest()
         {
             // Arrange
             RectTransform rectTransform = new GameObject().AddComponent<RectTransform>();
             Vector2 initOffsetMin = rectTransform.offsetMin;
             Vector2 initOffsetMax = rectTransform.offsetMax;
-            float right = 100f;
+            float right = -100f;
 
             // Act
             rectTransform.SetRight(right);
 
             // Assert
-            Assert.AreEqual(initOffsetMin, rectTransform.offsetMin);
-            Assert.AreEqual(new Vector2(right, initOffsetMax.y), rectTransform.offsetMax);
+            Assert.AreEqual(initOffsetMin.y, rectTransform.offsetMin.x, "X Min Offset if wrong");
+            Assert.AreEqual(initOffsetMin.y, rectTransform.offsetMin.y, "Y Min Offset if wrong");
+            Assert.AreEqual(-right, rectTransform.offsetMax.x, "X Max Offset if wrong");
+            Assert.AreEqual(initOffsetMax.y, rectTransform.offsetMax.y, "Y Max Offset if wrong");
         }
 
         [Test]
-        public void SetTop_SetsCorrectOffset()
+        public void SetTopTest()
         {
             // Arrange
             RectTransform rectTransform = new GameObject().AddComponent<RectTransform>();
@@ -53,26 +57,46 @@ namespace StansAssets.Foundation.Tests.Extensions
             rectTransform.SetTop(top);
 
             // Assert
-            Assert.AreEqual(initOffsetMin, rectTransform.offsetMin);
-            Assert.AreEqual(new Vector2(initOffsetMax.x, top), rectTransform.offsetMax);
+            Assert.AreEqual(initOffsetMin.x, rectTransform.offsetMin.x, "X Min Offset if wrong");
+            Assert.AreEqual(initOffsetMin.y, rectTransform.offsetMin.y, "Y Min Offset if wrong");
+            Assert.AreEqual(initOffsetMax.x, rectTransform.offsetMax.x, "X Max Offset if wrong");
+            Assert.AreEqual(-top, rectTransform.offsetMax.y, "Y Max Offset if wrong");
         }
 
         [Test]
-        public void SetBottom_SetsCorrectOffset()
+        public void SetBottomTest()
         {
             // Arrange
             RectTransform rectTransform = new GameObject().AddComponent<RectTransform>();
             Vector2 initOffsetMin = rectTransform.offsetMin;
             Vector2 initOffsetMax = rectTransform.offsetMax;
-            float bottom = 100f;
+            float bottom = -100f;
 
             // Act
             rectTransform.SetBottom(bottom);
 
             // Assert
-            Assert.AreEqual(new Vector2(initOffsetMin.x, -bottom), rectTransform.offsetMin);
-            Assert.AreEqual(initOffsetMax, rectTransform.offsetMax);
+            Assert.AreEqual(initOffsetMin.x, rectTransform.offsetMin.x, "X Min Offset if wrong");
+            Assert.AreEqual(bottom, rectTransform.offsetMin.y, "Y Min Offset if wrong");
+            Assert.AreEqual(initOffsetMax.x, rectTransform.offsetMax.x, "X Max Offset if wrong");
+            Assert.AreEqual(initOffsetMax.y, rectTransform.offsetMax.y, "Y Max Offset if wrong");
 
+        }
+        
+        [Test]
+        public void ResetTest()
+        {
+            // Arrange
+            RectTransform rectTransform = new GameObject().AddComponent<RectTransform>();
+
+            // Act
+            rectTransform.Reset();
+
+            // Assert
+            Assert.AreEqual(rectTransform.anchorMin, Vector2.zero, "X Min Offset if wrong");
+            Assert.AreEqual(rectTransform.anchorMax, Vector2.zero, "X Min Offset if wrong");
+            Assert.AreEqual(rectTransform.offsetMin, Vector2.zero, "X Min Offset if wrong");
+            Assert.AreEqual(rectTransform.offsetMax, Vector2.zero, "X Min Offset if wrong");
         }
     }
 }
