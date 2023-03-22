@@ -55,15 +55,14 @@ namespace StansAssets.Foundation.Extensions
             if (transform.childCount == 0)
                 return transform;
 
-
-            var children = transform.GetComponentsInChildren<Transform>();
-
-            foreach (var child in children)
+            for(int i = transform.childCount-1; i >= 0; --i)
             {
-                if (child == transform || child == null) continue;
-                if (activeOnly && !child.gameObject.activeSelf)  continue;
-                Object.DestroyImmediate(child.gameObject);
+                GameObject child = transform.GetChild(i).gameObject;
+                if (child == null) continue;
+                if (activeOnly && !child.activeSelf) continue;
+                Object.DestroyImmediate(transform.GetChild(i).gameObject);
             }
+           
             return transform;
         }
 
