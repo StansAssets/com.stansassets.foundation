@@ -76,8 +76,7 @@ namespace StansAssets.Foundation.Extensions
             var part = transform.Find(name);
             if (part == null) {
                 part = new GameObject(name).transform;
-                part.parent = transform;
-                part.Reset();
+                part.SetParent(transform, false);
             }
             return part;
         }
