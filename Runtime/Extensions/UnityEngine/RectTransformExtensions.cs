@@ -8,21 +8,65 @@ namespace StansAssets.Foundation.Extensions
     public static class RectTransformExtensions
     {
         /// <summary>
-        /// Resets `anchorMin`, `anchorMax`, `offsetMin`, `offsetMax` to `Vector2.zero`.
+        /// Offsets the left border of a <see cref="UnityEngine.RectTransform"/> by the specified amount from the left border of a parent <see cref="UnityEngine.RectTransform"/>. 
+        /// Intended to be used with a Stretch Anchor Preset.
         /// </summary>
-        /// <param name="rectTransform">RectTransform to operate with.</param>
+        /// <param name="rectTransform"><see cref="UnityEngine.RectTransform"/> to operate with.</param>
+        /// <param name="left">Offset value of left border from parent's left border</param>
+        public static void SetLeft(this RectTransform rectTransform, float left)
+        {
+            rectTransform.offsetMin = new Vector2(left, rectTransform.offsetMin.y);
+        }
+        
+        /// <summary>
+        /// Offsets the right border of a <see cref="UnityEngine.RectTransform"/> by the specified amount from the right border of a parent <see cref="UnityEngine.RectTransform"/>. 
+        /// Intended to be used with a Stretch Anchor Preset.
+        /// </summary>
+        /// <param name="rectTransform"><see cref="UnityEngine.RectTransform"/> to operate with.</param>
+        /// <param name="right">Offset value of right border from the parent's right border</param>
+        public static void SetRight(this RectTransform rectTransform, float right)
+        {
+            rectTransform.offsetMax = new Vector2(-right, rectTransform.offsetMax.y);
+        }
+        
+        /// <summary>
+        /// Offsets the top border of a <see cref="UnityEngine.RectTransform"/> by the specified amount from the top border of a parent <see cref="UnityEngine.RectTransform"/>. 
+        /// Intended to be used with a Stretch Anchor Preset.
+        /// </summary>
+        /// <param name="rectTransform"><see cref="UnityEngine.RectTransform"/> to operate with.</param>
+        /// <param name="top">Offset value of top border from parent's top border</param>
+        public static void SetTop(this RectTransform rectTransform, float top)
+        {
+            rectTransform.offsetMax = new Vector2(rectTransform.offsetMax.x, -top);
+        }
+        
+        /// <summary>
+        /// Offsets the bottom border of a <see cref="UnityEngine.RectTransform"/> by the specified amount from the bottom border of a parent <see cref="UnityEngine.RectTransform"/>. 
+        /// Intended to be used with a Stretch Anchor Preset.
+        /// </summary>
+        /// <param name="rectTransform"><see cref="UnityEngine.RectTransform"/> to operate with.</param>
+        /// <param name="bottom">Offset value of bottom border from parent's bottom border</param>
+        public static void SetBottom(this RectTransform rectTransform, float bottom)
+        {
+            rectTransform.offsetMin = new Vector2(rectTransform.offsetMin.x, bottom);
+        }
+        
+        /// <summary>
+        /// Resets <c>anchorMin</c>, <c>anchorMax</c>, <c>offsetMin</c>, <c>offsetMax</c> to <c>Vector2.zero</c>.
+        /// </summary>
+        /// <param name="rectTransform"><see cref="UnityEngine.RectTransform"/> to operate with.</param>
         public static void Reset(this RectTransform rectTransform)
         {
             rectTransform.anchorMin = Vector2.zero;
-            rectTransform.anchorMax = Vector2.one;
+            rectTransform.anchorMax = Vector2.zero;
             rectTransform.offsetMin = Vector2.zero;
             rectTransform.offsetMax = Vector2.zero;
         }
         
         /// <summary>
-        /// Get's the screen rect of provided RectTransform.
+        /// Gets the screen rect of provided <see cref="UnityEngine.RectTransform"/>.
         /// </summary>
-        /// <param name="rectTransform">RectTransform to operate with.</param>
+        /// <param name="rectTransform"><see cref="UnityEngine.RectTransform"/> to operate with.</param>
         /// <returns>Screen rect.</returns>
         public static Rect GetScreenRect(this RectTransform rectTransform)
         {
