@@ -7,10 +7,11 @@ namespace Tests.Editor.Extensions
     public class TransformExtenstionsTest
     {
         [Test]
-        [TestCase(0, false, ExpectedResult = 0)]
-        [TestCase(10, false, ExpectedResult = 0)]
-        [TestCase(10, true, ExpectedResult = 10)]
-        public int ClearTest(int amount, bool activeOnly)
+        [TestCase(0, false, false,ExpectedResult = 0)]
+        [TestCase(10, false, false, ExpectedResult = 0)]
+        [TestCase(10, true, false, ExpectedResult = 0)]
+        [TestCase(10, true, true, ExpectedResult = 10)]
+        public int ClearTest(int amount, bool disactivateAtSpawn, bool deleteActiveOnly)
         {
             //Arrange
             Transform parentTransform = new GameObject().transform;
@@ -20,14 +21,14 @@ namespace Tests.Editor.Extensions
                 Transform childTransform = new GameObject().transform;
                 childTransform.parent = parentTransform;
                 
-                if (activeOnly)
+                if (disactivateAtSpawn)
                     childTransform.gameObject.SetActive(false);
             }
             
             //Act
-            parentTransform.Clear(activeOnly);
+            parentTransform.Clear(deleteActiveOnly);
             
-            //Return
+            //Result
             return parentTransform.childCount;
         }
     }
