@@ -15,7 +15,7 @@ namespace Tests.Editor.Extensions
         {
             //Arrange
             Transform parentTransform = new GameObject().transform;
-
+            
             for (int i = 0; i < amount; i++)
             {
                 Transform childTransform = new GameObject().transform;
@@ -30,6 +30,33 @@ namespace Tests.Editor.Extensions
             
             //Result
             return parentTransform.childCount;
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public void FindOrCreateTest(bool createChild)
+        {
+            //Arrange
+            string objectName = "object";
+            
+            Transform parentTransform = new GameObject().transform;
+            parentTransform.localScale = new Vector3(5, 1, 5);
+            if (createChild)
+            {
+                Transform childTransform = new GameObject(objectName).transform;
+                childTransform.parent = parentTransform;
+                childTransform.Reset();
+            }
+            
+            //Act
+            Transform foundedTransform = parentTransform.FindOrCreateChild(objectName);
+            
+            //Assert
+            Assert.IsNotNull(foundedTransform, "Founded Transform is null");
+            Assert.AreEqual(objectName, foundedTransform.gameObject.name, "Name of found object isn't correct");
+            Assert.AreEqual(Vector3.zero, foundedTransform.localPosition, "Position has not been reset");
+            Assert.AreEqual(Vector3.one, foundedTransform.localScale, "Scale has not been reset");
         }
     }
 }
