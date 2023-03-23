@@ -26,7 +26,7 @@ namespace Tests.Editor.Extensions
             }
             
             //Act
-            parentTransform.Clear(deleteActiveOnly);
+            parentTransform.ClearHierarchy(deleteActiveOnly);
             
             //Result
             return parentTransform.childCount;
