@@ -4,14 +4,14 @@ using UnityEngine;
 
 namespace Tests.Editor.Extensions
 {
-    public class TransformExtenstionsTest
+    public class TransformExtensionsTest
     {
         [Test]
-        [TestCase(0, false, false,ExpectedResult = 0)]
-        [TestCase(10, false, false, ExpectedResult = 0)]
-        [TestCase(10, true, false, ExpectedResult = 0)]
-        [TestCase(10, true, true, ExpectedResult = 10)]
-        public int ClearTest(int amount, bool disactivateAtSpawn, bool deleteActiveOnly)
+        [TestCase(0, false, false, ExpectedResult = 0, TestName = "Empty Hierarchy clears without exceptions")]
+        [TestCase(10, false, false, ExpectedResult = 0, TestName = "Hierarchy with active objects cleared correctly")]
+        [TestCase(10, true, false, ExpectedResult = 0, TestName = "Hierarchy with inactive objects cleared correctly")]
+        [TestCase(10, true, true, ExpectedResult = 10, TestName = "Hierarchy with inactive objects is not cleared")]
+        public int ClearHierarchyTest(int amount, bool deactivateChildrenAtSpawn, bool deleteActiveOnly)
         {
             //Arrange
             Transform parentTransform = new GameObject().transform;
@@ -21,7 +21,7 @@ namespace Tests.Editor.Extensions
                 Transform childTransform = new GameObject().transform;
                 childTransform.parent = parentTransform;
                 
-                if (disactivateAtSpawn)
+                if (deactivateChildrenAtSpawn)
                     childTransform.gameObject.SetActive(false);
             }
             
@@ -33,8 +33,8 @@ namespace Tests.Editor.Extensions
         }
 
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
+        [TestCase(true, TestName = "Existing object has been found") ]
+        [TestCase(false, TestName = "The object hasn't been found and has been created")]
         public void FindOrCreateTest(bool createChild)
         {
             //Arrange
@@ -50,13 +50,13 @@ namespace Tests.Editor.Extensions
             }
             
             //Act
-            Transform foundedTransform = parentTransform.FindOrCreateChild(objectName);
+            Transform foundTransform = parentTransform.FindOrCreateChild(objectName);
             
             //Assert
-            Assert.IsNotNull(foundedTransform, "Founded Transform is null");
-            Assert.AreEqual(objectName, foundedTransform.gameObject.name, "Name of found object isn't correct");
-            Assert.AreEqual(Vector3.zero, foundedTransform.localPosition, "Position has not been reset");
-            Assert.AreEqual(Vector3.one, foundedTransform.localScale, "Scale has not been reset");
+            Assert.IsNotNull(foundTransform, "Found Transform is null");
+            Assert.AreEqual(objectName, foundTransform.gameObject.name, "Name of found object isn't correct");
+            Assert.AreEqual(Vector3.zero, foundTransform.localPosition, "Position has not been reset");
+            Assert.AreEqual(Vector3.one, foundTransform.localScale, "Scale has not been reset");
         }
     }
 }
