@@ -93,10 +93,10 @@ namespace StansAssets.Foundation.Tests.Extensions
             rectTransform.Reset();
 
             // Assert
-            Assert.AreEqual(rectTransform.anchorMin, Vector2.zero, "X Min Offset if wrong");
-            Assert.AreEqual(rectTransform.anchorMax, Vector2.zero, "X Min Offset if wrong");
-            Assert.AreEqual(rectTransform.offsetMin, Vector2.zero, "X Min Offset if wrong");
-            Assert.AreEqual(rectTransform.offsetMax, Vector2.zero, "X Min Offset if wrong");
+            Assert.AreEqual(rectTransform.anchorMin, Vector2.zero, "Anchor Min is not zero.");
+            Assert.AreEqual(rectTransform.anchorMax, Vector2.zero, "Anchor Max is not zero.");
+            Assert.AreEqual(rectTransform.offsetMin, Vector2.zero, "Offset Min is not zero.");
+            Assert.AreEqual(rectTransform.offsetMax, Vector2.zero, "Offset Max is not zero.");
         }
     }
 }

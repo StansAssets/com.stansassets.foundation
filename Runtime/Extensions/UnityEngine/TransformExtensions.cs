@@ -50,21 +50,18 @@ namespace StansAssets.Foundation.Extensions
         /// <param name="transform">Transform component.</param>
         /// <param name="activeOnly">Will ignore disabled game-objects when set to <c>true</c>. </param>
         /// <returns></returns>
-        public static Transform Clear(this Transform transform, bool activeOnly = false)
+        public static void ClearHierarchy(this Transform transform, bool activeOnly = false)
         {
             if (transform.childCount == 0)
-                return transform;
+                return;
 
-
-            var children = transform.GetComponentsInChildren<Transform>();
-
-            foreach (var child in children)
+            for(int i = transform.childCount-1; i >= 0; --i)
             {
-                if (child == transform || child == null) continue;
-                if (activeOnly && !child.gameObject.activeSelf)  continue;
-                Object.DestroyImmediate(child.gameObject);
+                GameObject child = transform.GetChild(i).gameObject;
+                if (child == null) continue;
+                if (activeOnly && !child.activeSelf) continue;
+                Object.DestroyImmediate(transform.GetChild(i).gameObject);
             }
-            return transform;
         }
 
         /// <summary>
@@ -77,8 +74,7 @@ namespace StansAssets.Foundation.Extensions
             var part = transform.Find(name);
             if (part == null) {
                 part = new GameObject(name).transform;
-                part.parent = transform;
-                part.Reset();
+                part.SetParent(transform, false);
             }
             return part;
         }
