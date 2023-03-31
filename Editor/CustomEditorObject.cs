@@ -21,7 +21,7 @@ namespace StansAssets.Foundation.Editor
 
         public override void OnInspectorGUI()
         {
-            DrawDefaultInspector();
+            base.OnInspectorGUI();
             DrawInspectorButtons();
         }
 
