@@ -12,7 +12,7 @@ namespace StansAssets.Foundation
         /// Check's if a given string can be parsed to a specified enum type.
         /// </summary>
         /// <param name="value">String enum value.</param>
-        public static bool CanBeParsedToEnum<T>(string value)
+        public static bool CanBeParsed<T>(string value) where T : struct, Enum
         {
             try
             {
@@ -29,8 +29,8 @@ namespace StansAssets.Foundation
         /// Tries to parse string value to a specified enum type.
         /// </summary>
         /// <param name="value">String enum value.</param>
-        /// <param name="result">Enum result.</param>
-        public static bool TryParseEnum<T>(string value, out T result)
+        /// <param name="result">Enum result</param>
+        public static bool TryParse<T>(string value, out T result) where T : struct, Enum
         {
             try
             {
@@ -49,7 +49,7 @@ namespace StansAssets.Foundation
         /// Will print a warning in case of failure, and return default value for a given Enum type.
         /// </summary>
         /// <param name="value">String enum value.</param>
-        public static T ParseEnum<T>(string value)
+        public static T ParseOrDefault<T>(string value) where T : struct, Enum
         {
             try
             {
