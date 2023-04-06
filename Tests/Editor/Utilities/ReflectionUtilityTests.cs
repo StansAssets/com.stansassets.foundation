@@ -5,7 +5,7 @@ using System.Reflection;
 using JetBrains.Annotations;
 using NUnit.Framework;
 
-namespace StansAssets.Foundation.Utilities.Tests
+namespace StansAssets.Foundation.Tests.Utilities
 {
     class ReflectionUtilityTests
     {

@@ -1,5 +1,4 @@
 ﻿using System;
-using UnityEngine;
 
 namespace StansAssets.Foundation
 {
@@ -9,58 +8,45 @@ namespace StansAssets.Foundation
     public static class EnumUtility
     {
         /// <summary>
-        /// Check's if a given string can be parsed to a specified enum type.
+        /// Checks if the string representation of the name or numeric value of one or more enumerated constants can be converted to an equivalent enumerated object.
         /// </summary>
-        /// <param name="value">String enum value.</param>
-        public static bool CanBeParsed<T>(string value) where T : struct, Enum
+        /// <param name="value">The string representation of the name or numeric value of one or more enumerated constants.</param>
+        /// <param name="ignoreCase"><c>true</c> to read <paramref name="value"/> in case insensitive mode; <c>false</c> to read <paramref name="value"/> in case sensitive mode.</param>
+        /// <typeparam name="T">The enum type to use for parsing.</typeparam>
+        /// <returns>Returns <c>true</c> if the parsed <paramref name="value"/> can be converted to an equivalent enumerated object.</returns>
+        public static bool CanBeParsed<T>(string value, bool ignoreCase = true) where T : struct, Enum
         {
-            try
-            {
-                var unused = Enum.Parse(typeof(T), value, true);
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            return Enum.TryParse(value, ignoreCase, out T _);
         }
 
         /// <summary>
-        /// Tries to parse string value to a specified enum type.
+        /// Converts the string representation of the name or numeric value of one or more enumerated constants to an equivalent enumerated object.
         /// </summary>
-        /// <param name="value">String enum value.</param>
-        /// <param name="result">Enum result</param>
-        public static bool TryParse<T>(string value, out T result) where T : struct, Enum
+        /// <param name="value">The string representation of the name or numeric value of one or more enumerated constants.</param>
+        /// <param name="result">When this method returns <c>true</c>, contains an enumeration constant that represents the parsed <paramref name="value"/>.</param>
+        /// <param name="ignoreCase"><c>true</c> to read <paramref name="value"/> in case insensitive mode; <c>false</c> to read <paramref name="value"/> in case sensitive mode.</param>
+        /// <typeparam name="T">The enum type to use for parsing.</typeparam>
+        /// <returns><c>true</c> if the conversion succeeded; <c>false</c> otherwise.</returns>
+        public static bool TryParse<T>(string value, out T result, bool ignoreCase = true) where T : struct, Enum
         {
-            try
-            {
-                result = (T)Enum.Parse(typeof(T), value, true);
-                return true;
-            }
-            catch (Exception)
+            return Enum.TryParse(value, ignoreCase, out result);
+        }
+
+        /// <summary>
+        /// Converts the string representation of the name or numeric value of one or more enumerated constants to an equivalent enumerated object.
+        /// </summary>
+        /// <param name="value">The string representation of the name or numeric value of one or more enumerated constants.</param>
+        /// <param name="ignoreCase"><c>true</c> to read <paramref name="value"/> in case insensitive mode; <c>false</c> to read <paramref name="value"/> in case sensitive mode.</param>
+        /// <typeparam name="T">The enum type to use for parsing.</typeparam>
+        /// <returns>Enumeration constant that represents the parsed <paramref name="value"/> if it can be converted to an equivalent enumerated object. If not, returns default value of type <typeparamref name="T"/></returns>
+        public static T ParseOrDefault<T>(string value, bool ignoreCase = true) where T : struct, Enum
+        {
+            if (!Enum.TryParse(value, ignoreCase, out T result))
             {
                 result = default;
-                return false;
             }
-        }
 
-        /// <summary>
-        /// Tries to parse string value to a specified enum type.
-        /// Will print a warning in case of failure, and return default value for a given Enum type.
-        /// </summary>
-        /// <param name="value">String enum value.</param>
-        public static T ParseOrDefault<T>(string value) where T : struct, Enum
-        {
-            try
-            {
-                var val = (T)Enum.Parse(typeof(T), value, true);
-                return val;
-            }
-            catch (Exception ex)
-            {
-                Debug.LogWarning("Enum Parsing failed: " + ex.Message);
-                return default;
-            }
+            return result;
         }
     }
 }

@@ -1,53 +1,49 @@
 using NUnit.Framework;
-using UnityEngine;
 
-namespace StansAssets.Foundation.Utilities.Tests
+namespace StansAssets.Foundation.Tests.Utilities
 {
     class EnumUtilityTests
     {
-        const string k_fullyMatchString = "First";
-        const string k_caseMismatchString = "seconD";
-        const string k_multipleMatchCommaString = "First,Second,Third";
-        const string k_multipleMatchSpaceString = "First Second Third";
-        const string k_multipleMatchDotString = "First.Second.Third";
-        
+        const string k_FullyMatchString = "First";
+        const string k_CaseMismatchString = "seconD";
+        const string k_MultipleMatchCommaString = "First,Second,Third";
+        const string k_MultipleMatchSpaceString = "First Second Third";
+        const string k_MultipleMatchDotString = "First.Second.Third";
+
         [Test]
-        [TestCase(k_fullyMatchString, ExpectedResult = true, TestName = "Fully match string can be parsed")]
-        [TestCase(k_caseMismatchString, ExpectedResult = true, TestName = "Match string but with wrong case can be parsed")]
-        [TestCase(k_multipleMatchCommaString, ExpectedResult = true, TestName = "Multiple match string with comma separator can be parsed")]
-        [TestCase(k_multipleMatchSpaceString, ExpectedResult = false, TestName = "Multiple match string with space separator can't be parsed")]
-        [TestCase(k_multipleMatchDotString, ExpectedResult = false, TestName = "Multiple match string with dot separator can't be parsed")]
+        [TestCase(k_FullyMatchString, ExpectedResult = true, TestName = "Fully matched string can be parsed")]
+        [TestCase(k_CaseMismatchString, ExpectedResult = true, TestName = "Match string but with wrong case can be parsed")]
+        [TestCase(k_MultipleMatchCommaString, ExpectedResult = true, TestName = "Multiple match string with comma separator can be parsed")]
+        [TestCase(k_MultipleMatchSpaceString, ExpectedResult = false, TestName = "Multiple match string with space separator can't be parsed")]
+        [TestCase(k_MultipleMatchDotString, ExpectedResult = false, TestName = "Multiple match string with dot separator can't be parsed")]
         public bool CanBeParsedTest(string inputString)
         {
             return EnumUtility.CanBeParsed<TestEnum>(inputString);
         }
-        
+
         [Test]
-        [TestCase(k_fullyMatchString, ExpectedResult = TestEnum.First, TestName = "Fully match string input returns right result")]
-        [TestCase(k_caseMismatchString, ExpectedResult = TestEnum.Second, TestName = "Match string but with wrong case returns right result")]
-        [TestCase(k_multipleMatchCommaString, ExpectedResult = TestEnum.Third, TestName = "Multiple match string with comma separator returns right result")]
-        [TestCase(k_multipleMatchSpaceString, ExpectedResult = TestEnum.Default, TestName = "Multiple match string with space separator returns default result")]
-        [TestCase(k_multipleMatchDotString, ExpectedResult = TestEnum.Default, TestName = "Multiple match string with dot separator returns default result")]
+        [TestCase(k_FullyMatchString, ExpectedResult = TestEnum.First, TestName = "Fully matched string input returns the correct result")]
+        [TestCase(k_CaseMismatchString, ExpectedResult = TestEnum.Second, TestName = "Match string but with wrong case returns the correct result")]
+        [TestCase(k_MultipleMatchCommaString, ExpectedResult = TestEnum.Third, TestName = "Multiple match string with comma separator returns the correct result")]
+        [TestCase(k_MultipleMatchSpaceString, ExpectedResult = TestEnum.Default, TestName = "Multiple match string with space separator returns default result")]
+        [TestCase(k_MultipleMatchDotString, ExpectedResult = TestEnum.Default, TestName = "Multiple match string with dot separator returns default result")]
         public TestEnum TryParseTest(string inputString)
         {
-            TestEnum result;
-            bool parsedWithoutExceptions = EnumUtility.TryParse(inputString, out result);
-
-            Debug.Log($"String: \"{inputString}\". Parsed without exceptions: {parsedWithoutExceptions}");
+            _ = EnumUtility.TryParse(inputString, out TestEnum result);
             return result;
         }
-        
+
         [Test]
-        [TestCase(k_fullyMatchString, ExpectedResult = TestEnum.First, TestName = "Fully match string input returns right result")]
-        [TestCase(k_caseMismatchString, ExpectedResult = TestEnum.Second, TestName = "Match string but with wrong case returns right result")]
-        [TestCase(k_multipleMatchCommaString, ExpectedResult = TestEnum.Third, TestName = "Multiple match string with comma separator returns right result")]
-        [TestCase(k_multipleMatchSpaceString, ExpectedResult = TestEnum.Default, TestName = "Multiple match string with space separator returns default result")]
-        [TestCase(k_multipleMatchDotString, ExpectedResult = TestEnum.Default, TestName = "Multiple match string with dot separator returns default result")]
+        [TestCase(k_FullyMatchString, ExpectedResult = TestEnum.First, TestName = "Fully matched string input returns the correct result")]
+        [TestCase(k_CaseMismatchString, ExpectedResult = TestEnum.Second, TestName = "Match string but with wrong case returns the correct result")]
+        [TestCase(k_MultipleMatchCommaString, ExpectedResult = TestEnum.Third, TestName = "Multiple match string with comma separator returns the correct result")]
+        [TestCase(k_MultipleMatchSpaceString, ExpectedResult = TestEnum.Default, TestName = "Multiple match string with space separator returns default result")]
+        [TestCase(k_MultipleMatchDotString, ExpectedResult = TestEnum.Default, TestName = "Multiple match string with dot separator returns default result")]
         public TestEnum ParseOrDefaultTest(string inputString)
         {
             return EnumUtility.ParseOrDefault<TestEnum>(inputString);
         }
-        
+
         public enum TestEnum
         {
             Default,
