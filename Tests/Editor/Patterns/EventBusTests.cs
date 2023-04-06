@@ -1,6 +1,7 @@
 using NUnit.Framework;
+using StansAssets.Foundation.Patterns;
 
-namespace StansAssets.Foundation.Patterns.EditorTests
+namespace StansAssets.Foundation.Tests.Patterns
 {
     class EventBusTests
     {
@@ -106,7 +107,7 @@ namespace StansAssets.Foundation.Patterns.EditorTests
 
 
             m_EventReceived = false;
-            using (SamplePooledEvent.GetPoolable("Hello World", out var evt))
+            using (SamplePooledEvent.GetPoolable("Hello World", out _))
             {
                 StaticBus<SamplePooledEvent>.Post(e);
             }

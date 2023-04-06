@@ -2,7 +2,7 @@
 using StansAssets.Foundation.Extensions;
 using UnityEngine;
 
-namespace Tests.Editor.Extensions
+namespace StansAssets.Foundation.Tests.Extensions
 {
     public class TransformExtensionsTest
     {

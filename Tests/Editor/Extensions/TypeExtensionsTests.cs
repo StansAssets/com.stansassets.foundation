@@ -1,8 +1,9 @@
 ﻿using System;
 using JetBrains.Annotations;
 using NUnit.Framework;
+using StansAssets.Foundation.Extensions;
 
-namespace StansAssets.Foundation.Extensions.Tests
+namespace StansAssets.Foundation.Tests.Extensions
 {
     class TypeExtensionsTests
     {

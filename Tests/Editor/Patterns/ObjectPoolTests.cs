@@ -1,13 +1,14 @@
 ﻿using System;
 using NUnit.Framework;
+using StansAssets.Foundation.Patterns;
 using UnityEngine;
 
-namespace StansAssets.Foundation.Patterns.EditorTests
+namespace StansAssets.Foundation.Tests.Patterns
 {
     class TestClassObject
     {
-        public int IntValue { get; } = 1;
-        public string StringValue  { get; } = string.Empty;
+        public int IntValue => 1;
+        public string StringValue => string.Empty;
     }
 
     [TestFixture(typeof(TestClassObject))]
