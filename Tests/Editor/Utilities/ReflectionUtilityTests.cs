@@ -95,7 +95,7 @@ namespace StansAssets.Foundation.Tests.Utilities
         [TestCase(typeof(ClassWithPrivateConstructor))]
         public void CreateInstanceInvalid(Type type)
         {
-            Assert.IsNull(ReflectionUtility.CreateInstance(type.FullName), $"Failed to create instance for:{type.FullName}");
+            Assert.Throws<ArgumentException>(() => ReflectionUtility.CreateInstance(type.FullName), $"Failed to create instance for:{type.FullName}");
         }
 
         [TestCase("System.Int32")]
@@ -108,7 +108,7 @@ namespace StansAssets.Foundation.Tests.Utilities
         [TestCase("System.ClassDoesNotExist")]
         public void FindTypeInvalid(string fullTypeName)
         {
-            Assert.IsNull(ReflectionUtility.FindType(fullTypeName), $"Type {fullTypeName} not found");
+            Assert.Throws<InvalidOperationException>(() => ReflectionUtility.FindType(fullTypeName), $"Type {fullTypeName} should NOT be found in this case");
         }
 
         class TestAssembly
@@ -148,7 +148,7 @@ namespace StansAssets.Foundation.Tests.Utilities
         [Test]
         public void GetAllAssembliesWithoutBuiltIn()
         {
-            var assemblies = ReflectionUtility.GetAssemblies(true).ToList();
+            var assemblies = ReflectionUtility.GetAssemblies(ReflectionUtility.BuiltInAssemblyPrefixes).ToList();
             Assert.True(assemblies.Any(), "Assemblies collection is empty");
 
             var assembliesSearchMap = new Dictionary<TestAssembly, bool>();
@@ -270,8 +270,8 @@ namespace StansAssets.Foundation.Tests.Utilities
         [Test]
         public void FindMethodsWithCustomAttributes()
         {
-            var allMethodInfos = ReflectionUtility.FindMethodsWithCustomAttributes<FancyAttribute>(ignoreBuiltIn: true).ToList();
-            var nonInheritedMethodInfos = ReflectionUtility.FindMethodsWithCustomAttributes<FancyAttribute>(inherit: false, ignoreBuiltIn: true).ToList();
+            var allMethodInfos = ReflectionUtility.FindMethodsWithCustomAttributes<FancyAttribute>(ignoreAssemblyPrefixes: ReflectionUtility.BuiltInAssemblyPrefixes).ToList();
+            var nonInheritedMethodInfos = ReflectionUtility.FindMethodsWithCustomAttributes<FancyAttribute>(inherit: false, ignoreAssemblyPrefixes: ReflectionUtility.BuiltInAssemblyPrefixes).ToList();
 
             Assert.True(allMethodInfos.Count == 2, "Incorrect amount of methods with custom attribute (inheritances included)");
             Assert.True(nonInheritedMethodInfos.Count == 1, "Incorrect amount of methods with custom attribute (inheritances NOT included)");
