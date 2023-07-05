@@ -57,6 +57,12 @@ namespace StansAssets.Foundation.Patterns
         /// </summary>
         public static void Instantiate()
         {
+            if (HasInstance)
+            {
+                Debug.LogWarning($"You are trying to Instantiate {typeof(T).FullName}, but it already has an Instance. Please use Instance property instead.");
+                return;
+            }
+            
             var name = typeof(T).FullName;
             s_Instance = new GameObject(name).AddComponent<T>();
         }
