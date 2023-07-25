@@ -55,7 +55,7 @@ namespace StansAssets.Foundation.Patterns
         /// But it may be useful if you want manually control when the instance is created,
         /// even if you do not this specific instance at the moment
         /// </summary>
-        public static void Instantiate()
+        static void Instantiate()
         {
             if (HasInstance)
             {

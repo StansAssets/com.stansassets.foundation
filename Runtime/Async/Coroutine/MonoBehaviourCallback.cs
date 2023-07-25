@@ -12,12 +12,12 @@ namespace StansAssets.Foundation.Async
     /// </summary>
     public class MonoBehaviourCallback : MonoSingleton<MonoBehaviourCallback>
     {
-        event Action m_OnUpdate;
-        event Action m_OnLateUpdate;
-        event Action m_OnFixedUpdate;
-        event Action m_OnApplicationQuit;
-        event Action<bool> m_ApplicationOnPause;
-        event Action<bool> m_OnApplicationFocus;
+        event Action m_OnUpdate = delegate { };
+        event Action m_OnLateUpdate = delegate { };
+        event Action m_OnFixedUpdate = delegate { };
+        event Action m_OnApplicationQuit = delegate { };
+        event Action<bool> m_ApplicationOnPause = delegate { };
+        event Action<bool> m_OnApplicationFocus = delegate { };
         
         /// <summary>
         /// Update is called every frame.
@@ -80,16 +80,16 @@ namespace StansAssets.Foundation.Async
             remove => Instance.m_OnApplicationFocus -= value;
         }
 
-        void Update() => m_OnUpdate?.Invoke();
-        void LateUpdate() => m_OnLateUpdate?.Invoke();
-        void FixedUpdate() => m_OnFixedUpdate?.Invoke();
-        void OnApplicationPause(bool pauseStatus) => m_ApplicationOnPause?.Invoke(pauseStatus);
-        void OnApplicationFocus(bool hasFocus) => m_OnApplicationFocus?.Invoke(hasFocus);
+        void Update() => m_OnUpdate.Invoke();
+        void LateUpdate() => m_OnLateUpdate.Invoke();
+        void FixedUpdate() => m_OnFixedUpdate.Invoke();
+        void OnApplicationPause(bool pauseStatus) => m_ApplicationOnPause.Invoke(pauseStatus);
+        void OnApplicationFocus(bool hasFocus) => m_OnApplicationFocus.Invoke(hasFocus);
 
         protected override void OnApplicationQuit()
         {
             base.OnApplicationQuit();
-            m_OnApplicationQuit?.Invoke();
+            m_OnApplicationQuit.Invoke();
         }
     }
 }
