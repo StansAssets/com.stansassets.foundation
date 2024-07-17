@@ -40,6 +40,9 @@ namespace StansAssets.Foundation.Async
         /// <param name="routine">The <see cref="IEnumerator"/> routine you would like to stop.</param>
         public static void Stop(IEnumerator routine)
         {
+            if(GlobalCoroutine.IsDestroyed)
+                return;
+            
             GlobalCoroutine.Instance.StopCoroutine(routine);
         }
 
@@ -50,6 +53,9 @@ namespace StansAssets.Foundation.Async
         /// <param name="routine">The <see cref="Coroutine"/> to stop the manually created <see cref="Coroutine"/></param>
         public static void Stop(Coroutine routine)
         {
+            if(GlobalCoroutine.IsDestroyed)
+                return;
+            
             GlobalCoroutine.Instance.StopCoroutine(routine);
         }
 
@@ -60,6 +66,9 @@ namespace StansAssets.Foundation.Async
         /// <param name="action">The callback action.</param>
         public static void WaitForEndOfFrame(Action action)
         {
+            if(GlobalCoroutine.IsDestroyed)
+                return;
+            
             GlobalCoroutine.Instance.StartInstruction(new WaitForEndOfFrame(), action);
         }
 
@@ -70,6 +79,9 @@ namespace StansAssets.Foundation.Async
         /// </summary>
         public static void WaitForFixedUpdate(Action action)
         {
+            if(GlobalCoroutine.IsDestroyed)
+                return;
+            
             GlobalCoroutine.Instance.StartInstruction(new WaitForFixedUpdate(), action);
         }
 
@@ -81,6 +93,9 @@ namespace StansAssets.Foundation.Async
         /// </summary>
         public static void WaitForSeconds(float seconds, Action action)
         {
+            if(GlobalCoroutine.IsDestroyed)
+                return;
+            
             GlobalCoroutine.Instance.StartInstruction(new WaitForSeconds(seconds), action);
         }
 
@@ -92,6 +107,9 @@ namespace StansAssets.Foundation.Async
         /// <param name="action">The callback action.</param>
         public static void WaitForSecondsRealtime(float seconds, Action action)
         {
+            if(GlobalCoroutine.IsDestroyed)
+                return;
+            
             GlobalCoroutine.Instance.StartInstruction(new WaitForSecondsRealtime(seconds), action);
         }
 
@@ -103,6 +121,9 @@ namespace StansAssets.Foundation.Async
         /// <param name="action">The callback action.</param>
         public static void WaitForSecondsWithRandomInterval(float min, float max, Action action)
         {
+            if(GlobalCoroutine.IsDestroyed)
+                return;
+            
             var delay = UnityEngine.Random.Range(min, max);
             WaitForSeconds(delay, action);
         }
